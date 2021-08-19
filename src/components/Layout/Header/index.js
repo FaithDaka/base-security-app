@@ -8,15 +8,15 @@ const index = () => {
           <div className="header-logo">
             <a className="logo-link">
               <span className="logo-sm">
-                <img />
+                <img src=""/>
               </span>
               <span className="logo-sm">
                 <img />
               </span>
             </a>
           </div>
-          <button className="btn btn-sm" id="vertical-menu-btn" type="button">
-            <i className="fa fa-bars"></i>
+          <button className="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn" type="button">
+            <i className="fa fa-fw fa-bars"></i>
           </button>
           <form className="app-search d-none d-lg-block">
             <div>
@@ -25,20 +25,23 @@ const index = () => {
                 className="form-control"
                 placeholder="Search..."
               />
-              <span className="bx-search-alt"></span>
+              <span className="bx bx-search-alt"></span>
             </div>
           </form>
         </div>
         <div className="d-flex">
           <div className="dropdown d-inline-block">
-            <button type="button" className="btn profile-btn">
-              <img className="rounded-circle profile-pic" />
-              <span className="profile-name"></span>
+            <button type="button" className="btn header-item waves-effect" id="page-header-user-dropdown">
+              <img className="rounded-circle header-profile-user" 
+              src="../../../assets/img/logo512.png"
+              alt="avatar"/>
+              <span className="d-none d-xl-inline-block ms-1"></span>
+              <i className="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
             </button>
           </div>
           <div className="dropdown d-inline-block">
-            <button type="button" className="btn header-settings">
-              <i className="fa fa-cogs"></i>
+            <button type="button" className="btn header-item noti-icon right-bar-toggle waves-effect">
+              <i className="fa fa-cog"></i>
             </button>
           </div>
         </div>
