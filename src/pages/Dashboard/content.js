@@ -11,118 +11,57 @@ const Content = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="row">
-        <div className="col-xl-4">
-          <div className="card overflow-hidden">
-            <div className="bg-primary bg-soft">
-              <div className="row">
-                <div className="col-7">
-                  <div className="text-primary p-3">
-                    <h5 className="text-primary">Welcome Back !</h5>
-                    <p>Skote Dashboard</p>
-                  </div>
-                </div>
-                <div className="col-5 align-self-end">
-                  <img src="" alt="" className="img-fluid" />
-                </div>
-              </div>
-            </div>
-            <div className="card-body pt-0">
-              <div className="row">
-                <div className="col-sm-4">
-                  <div className="avatar-md profile-user-wid mb-4">
-                    <img
-                      src=""
-                      alt=""
-                      className="img-thumbnail rounded-circle"
-                    />
-                  </div>
-                  <h5 className="font-size-15 text-truncate">Henry Price</h5>
-                  <p className="text-muted mb-0 text-truncate">
-                    UI/UX Designer
-                  </p>
-                </div>
-                <div className="col-sm-8">
-                  <div className="pt-4">
-                    <div className="row">
-                      <div className="col-6">
-                        <h5 className="font-size-15">125</h5>
-                        <p className="text-muted mb-0">Projects</p>
-                      </div>
-                      <div className="col-6">
-                        <h5 className="font-size-15">$1245</h5>
-                        <p className="text-muted mb-0">Revenue</p>
-                      </div>
+        <div className="row">
+          <div className="col-xl-4">
+            <div className="card overflow-hidden">
+              <div className="bg-primary bg-soft">
+                <div className="row">
+                  <div className="col-7">
+                    <div className="text-primary p-3">
+                      <h5 className="text-primary">Welcome Back !</h5>
+                      <p>Skote Dashboard</p>
                     </div>
-                    <div className="mt-4">
-                      <a
-                        href="javascript: void(0);"
-                        className="btn btn-primary waves-effect waves-light btn-sm"
-                      >
-                        View Profile{" "}
-                        <i className="mdi mdi-arrow-right ms-1"></i>
-                      </a>
-                    </div>
+                  </div>
+                  <div className="col-5 align-self-end">
+                    <img src="" alt="" className="img-fluid" />
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div className="col-xl-8">
-          <div className="row">
-            <div className="col-md-4">
-              <div className="card mini-stats-wid">
-                <div className="card-body">
-                  <div className="d-flex">
-                    <div className="flex-grow-1">
-                      <p className="text-muted fw-medium">Orders</p>
-                      <h4 className="mb-0">1,235</h4>
+              <div className="card-body pt-0">
+                <div className="row">
+                  <div className="col-sm-4">
+                    <div className="avatar-md profile-user-wid mb-4">
+                      <img
+                        src=""
+                        alt=""
+                        className="img-thumbnail rounded-circle"
+                      />
                     </div>
-                    <div className="flex-shrink-0 align-self-center">
-                      <div className="mini-stat-icon avatar-sm rounded-circle bg-primary">
-                        <span className="avatar-title">
-                          <i className="bx bx-copy-alt font-size-24"></i>
-                        </span>
-                      </div>
-                    </div>
+                    <h5 className="font-size-15 text-truncate">Henry Price</h5>
+                    <p className="text-muted mb-0 text-truncate">
+                      UI/UX Designer
+                    </p>
                   </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-4">
-              <div className="card mini-stats-wid">
-                <div className="card-body">
-                  <div className="d-flex">
-                    <div className="flex-grow-1">
-                      <p className="text-muted fw-medium">Revenue</p>
-                      <h4 className="mb-0">$35, 723</h4>
-                    </div>
-                    <div className="flex-shrink-0 align-self-center ">
-                      <div className="avatar-sm rounded-circle bg-primary mini-stat-icon">
-                        <span className="avatar-title rounded-circle bg-primary">
-                          <i className="bx bx-archive-in font-size-24"></i>
-                        </span>
+                  <div className="col-sm-8">
+                    <div className="pt-4">
+                      <div className="row">
+                        <div className="col-6">
+                          <h5 className="font-size-15">125</h5>
+                          <p className="text-muted mb-0">Projects</p>
+                        </div>
+                        <div className="col-6">
+                          <h5 className="font-size-15">$1245</h5>
+                          <p className="text-muted mb-0">Revenue</p>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-4">
-              <div className="card mini-stats-wid">
-                <div className="card-body">
-                  <div className="d-flex">
-                    <div className="flex-grow-1">
-                      <p className="text-muted fw-medium">Average Price</p>
-                      <h4 className="mb-0">$16.2</h4>
-                    </div>
-                    <div className="flex-shrink-0 align-self-center">
-                      <div className="avatar-sm rounded-circle bg-primary mini-stat-icon">
-                        <span className="avatar-title rounded-circle bg-primary">
-                          <i className="bx bx-purchase-tag-alt font-size-24"></i>
-                        </span>
+                      <div className="mt-4">
+                        <a
+                          href="javascript: void(0);"
+                          className="btn btn-primary waves-effect waves-light btn-sm"
+                        >
+                          View Profile{" "}
+                          <i className="mdi mdi-arrow-right ms-1"></i>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -130,8 +69,68 @@ const Content = () => {
               </div>
             </div>
           </div>
-        </div>
-        {/* <div className="row">
+          <div className="col-xl-8">
+            <div className="row">
+              <div className="col-md-4">
+                <div className="card mini-stats-wid">
+                  <div className="card-body">
+                    <div className="d-flex">
+                      <div className="flex-grow-1">
+                        <p className="text-muted fw-medium">Orders</p>
+                        <h4 className="mb-0">1,235</h4>
+                      </div>
+                      <div className="flex-shrink-0 align-self-center">
+                        <div className="mini-stat-icon avatar-sm rounded-circle bg-primary">
+                          <span className="avatar-title">
+                            <i className="bx bx-copy-alt font-size-24"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div className="card mini-stats-wid">
+                  <div className="card-body">
+                    <div className="d-flex">
+                      <div className="flex-grow-1">
+                        <p className="text-muted fw-medium">Revenue</p>
+                        <h4 className="mb-0">$35, 723</h4>
+                      </div>
+                      <div className="flex-shrink-0 align-self-center ">
+                        <div className="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                          <span className="avatar-title rounded-circle bg-primary">
+                            <i className="bx bx-archive-in font-size-24"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div className="card mini-stats-wid">
+                  <div className="card-body">
+                    <div className="d-flex">
+                      <div className="flex-grow-1">
+                        <p className="text-muted fw-medium">Average Price</p>
+                        <h4 className="mb-0">$16.2</h4>
+                      </div>
+                      <div className="flex-shrink-0 align-self-center">
+                        <div className="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                          <span className="avatar-title rounded-circle bg-primary">
+                            <i className="bx bx-purchase-tag-alt font-size-24"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* <div className="row">
           <div className="col-xl-4">
             <div className="card">
               <div className="card-body">
@@ -192,6 +191,7 @@ const Content = () => {
             </div>
           </div>
         </div>*/}
+        </div>
       </div>
     </div>
   );
