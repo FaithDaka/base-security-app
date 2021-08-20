@@ -26,14 +26,19 @@ const index = ({ children }) => {
     setMargin(width);
     setHeader(0);
   }, []);
+  
   return (
-    <div className="" >
+    <div className="layout-wrapper">
       <Sidebar width={width} xPos={xPosition}></Sidebar>
-      <div style={{ marginLeft: `${margin}px` }} className="main-content">
-      <Header toggle={ToggleMenu} margin={header}></Header>
-      {children}
+      <div style={{ marginLeft: `${margin}px` }}>
+        <div id="page-topbar">
+          <Header toggle={ToggleMenu} margin={header}></Header>
+        </div>
+        <div style={{ marginLeft: "20px" }} className="main-content">
+          <div className="page-content">{children}</div>
+          <Footer></Footer>
+        </div>
       </div>
-      <Footer></Footer>
     </div>
   );
 };

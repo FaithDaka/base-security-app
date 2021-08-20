@@ -1,12 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const index = ({ width, xPos }) => {
   return (
     <>
-      {
-      width > 0 ? (
+      {width > 0 ? (
         <div
           className="vertical-menu"
+          id="vertical-menu"
           style={{ width: `${width}px`, transform: `translatex(${xPos}px)` }}
         >
           <div className="h-100">
@@ -26,17 +27,33 @@ const index = ({ width, xPos }) => {
                           className="metismenu list-unstyled mm-show"
                           id="side-menu"
                         >
-                          <li className="menu-title" key="t-menu">
-                            Dashboard
+                          <li
+                            className="menu-title"
+                            id="menu-title"
+                            key="t-menu"
+                          >
+                            BASE ADMIN
                           </li>
                           <li>
-                            <a href="" className="waves-effect mm-active">
-                              <i className="bx bx-home-circle"></i>
-                              <span className="badge rounded-pill bg-info float-end">
-                                04
+                            <Link
+                              to="/dashboard"
+                              className="waves-effect mm-active"
+                              id="icon-link"
+                            >
+                              <i
+                                className="fa fa-home"
+                                style={{ fontSize: "18px", marginRight: "8px" }}
+                              ></i>
+                              <span
+                                key="t-dashboards"
+                                style={{
+                                  fontSize: "16px",
+                                  textTransform: "uppercase",
+                                }}
+                              >
+                                Dashboard
                               </span>
-                              <span key="t-dashboards">Dashboard</span>
-                            </a>
+                            </Link>
                             <ul
                               className="sub-menu mm-collapse mm-show"
                               aria-expanded="false"
@@ -51,24 +68,59 @@ const index = ({ width, xPos }) => {
                                 </a>
                               </li>
                               <li>
-                                <a href="dashboard-saas.html" key="t-saas">
+                                <a href="" key="t-saas">
                                   Saas
                                 </a>
                               </li>
                               <li>
-                                <a href="dashboard-crypto.html" key="t-crypto">
+                                <a href="" key="t-crypto">
                                   Crypto
                                 </a>
                               </li>
                               <li>
-                                <a href="dashboard-blog.html" key="t-blog">
+                                <a href="" key="t-blog">
                                   Blog
                                 </a>
                               </li>
                             </ul>
                           </li>
-                          <li></li>
-                          <li></li>
+                          <li>
+                            <Link
+                              to="/guards"
+                              className="waves-effect"
+                              id="icon-link"
+                            >
+                              <i
+                                className="fa fa-table"
+                                style={{ fontSize: "18px", marginRight: "8px" }}
+                              ></i>
+                              <span
+                                key="t-dashboards"
+                                style={{
+                                  fontSize: "16px",
+                                  textTransform: "uppercase",
+                                }}
+                              >
+                                Guards
+                              </span>
+                            </Link>
+                          </li>
+                          <li>
+                          <Link to="/armory" className="waves-effect" id="icon-link" >
+                              <i className="fa fa-table"
+                              style={{fontSize:'18px', marginRight:'8px'}}></i>
+                              <span key="t-dashboards"
+                              style={{fontSize:'16px', textTransform:'uppercase'}}>armory</span>
+                            </Link>
+                          </li>
+                          <li>
+                          <Link to="/users" className="waves-effect" id="icon-link" >
+                              <i className="fa fa-table"
+                              style={{fontSize:'18px', marginRight:'8px'}}></i>
+                              <span key="t-dashboards"
+                              style={{fontSize:'16px', textTransform:'uppercase'}}>users</span>
+                            </Link>
+                          </li>
                         </ul>
                       </div>
                     </div>
@@ -108,10 +160,7 @@ const index = ({ width, xPos }) => {
           </div>
         </div>
       ) : (
-        <div
-          className="vertical-menu"
-          style={{ width: '80px' }}
-        >
+        <div className="vertical-menu" style={{ width: "80px" }}>
           <div className="h-100">
             <div className="simplebar-wrapper">
               <div className="simplebar-height-auto-observer-wrapper">
@@ -129,6 +178,17 @@ const index = ({ width, xPos }) => {
                           className="metismenu list-unstyled mm-show"
                           id="side-menu"
                         >
+                          <li className="mm-active">
+                            <a
+                              href="javascript: void(0);"
+                              className="waves-effect mm-active"
+                            >
+                              <i className="bx bx-home-circle"></i>
+                              <span className="badge rounded-pill bg-info float-end">
+                                04
+                              </span>
+                              <span key="t-dashboards">Dashboards</span>
+                            </a>
                             <ul
                               className="sub-menu mm-collapse mm-show"
                               aria-expanded="false"
@@ -158,8 +218,37 @@ const index = ({ width, xPos }) => {
                                 </a>
                               </li>
                             </ul>
-                          <li></li>
-                          <li></li>
+                          </li>
+                          <li>
+                            <a
+                              href="javascript: void(0);"
+                              className="has-arrow waves-effect"
+                            >
+                              <i className="fa fa-receipt"></i>
+                              <span key="t-invoices">Invoices</span>
+                            </a>
+                            <ul
+                              className="sub-menu mm-collapse"
+                              aria-expanded="false"
+                            >
+                              <li>
+                                <a
+                                  href="invoices-list.html"
+                                  key="t-invoice-list"
+                                >
+                                  Invoice List
+                                </a>
+                              </li>
+                              <li>
+                                <a
+                                  href="invoices-detail.html"
+                                  key="t-invoice-detail"
+                                >
+                                  Invoice Detail
+                                </a>
+                              </li>
+                            </ul>
+                          </li>
                         </ul>
                       </div>
                     </div>
