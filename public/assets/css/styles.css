@@ -32,11 +32,11 @@
 .navbar-brand-box {
 	padding: 0 1.5rem;
 	text-align: center;
-	width: 250px
+	width: 220px
 }
 
 .logo {
-	line-height: 70px
+	line-height: 70px;
 }
 
 .logo .logo-sm {
@@ -497,13 +497,13 @@ body[data-layout=horizontal] .footer {
 
 .menu-title {
 	padding: 12px 20px!important;
-	letter-spacing: .05em;
+	letter-spacing: .03em;
 	pointer-events: none;
 	cursor: default;
 	font-size: 11px;
 	text-transform: uppercase;
 	color: #7f8387;
-	font-weight: 600
+	font-weight: 700
 }
 
 .mm-active {
