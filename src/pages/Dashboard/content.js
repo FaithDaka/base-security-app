@@ -1,4 +1,5 @@
 import React from "react";
+import img from '../../assets/img/plainlogo.png'
 
 const Content = () => {
   return (
@@ -12,34 +13,34 @@ const Content = () => {
           </div>
         </div>
         <div className="row">
-          <div className="col-xl-4">
+          <div className="col-xl-12 mb-3">
             <div className="card overflow-hidden">
-              <div className="bg-primary bg-soft">
+              <div className="bg-soft bg-danger">
                 <div className="row">
-                  <div className="col-7">
-                    <div className="text-primary p-3">
-                      <h5 className="text-primary">Welcome Back !</h5>
-                      <p>Skote Dashboard</p>
+                  <div className="col-8">
+                    <div className="p-3">
+                      <h5 className="text-warning">Welcome Back !</h5>
+                      <p>Your Dashboard</p>
                     </div>
                   </div>
-                  <div className="col-5 align-self-end">
-                    <img src="" alt="" className="img-fluid" />
+                  <div className="col-4 align-self-end" style={{textAlign:'right'}}>
+                    <img src={img} alt="" className="img-fluid" style={{height:'240px'}}/>
                   </div>
                 </div>
               </div>
               <div className="card-body pt-0">
-                <div className="row">
+                <div className="row align-self-end">
                   <div className="col-sm-4">
                     <div className="avatar-md profile-user-wid mb-4">
                       <img
-                        src=""
+                        src={img}
                         alt=""
                         className="img-thumbnail rounded-circle"
                       />
                     </div>
                     <h5 className="font-size-15 text-truncate">Henry Price</h5>
                     <p className="text-muted mb-0 text-truncate">
-                      UI/UX Designer
+                      Admin
                     </p>
                   </div>
                   <div className="col-sm-8">
@@ -60,7 +61,7 @@ const Content = () => {
                           className="btn btn-primary waves-effect waves-light btn-sm"
                         >
                           View Profile{" "}
-                          <i className="mdi mdi-arrow-right ms-1"></i>
+                          <i className="fa fa-arrow-right ms-1"></i>
                         </a>
                       </div>
                     </div>
@@ -69,20 +70,20 @@ const Content = () => {
               </div>
             </div>
           </div>
-          <div className="col-xl-8">
+          <div className="col-xl-12 mt-3 mb-3">
             <div className="row">
               <div className="col-md-4">
                 <div className="card mini-stats-wid">
                   <div className="card-body">
                     <div className="d-flex">
                       <div className="flex-grow-1">
-                        <p className="text-muted fw-medium">Orders</p>
+                        <p className="text-muted fw-medium">Guards</p>
                         <h4 className="mb-0">1,235</h4>
                       </div>
                       <div className="flex-shrink-0 align-self-center">
                         <div className="mini-stat-icon avatar-sm rounded-circle bg-primary">
                           <span className="avatar-title">
-                            <i className="bx bx-copy-alt font-size-24"></i>
+                            <i className="fa fa-home font-size-24"></i>
                           </span>
                         </div>
                       </div>
@@ -101,7 +102,7 @@ const Content = () => {
                       <div className="flex-shrink-0 align-self-center ">
                         <div className="avatar-sm rounded-circle bg-primary mini-stat-icon">
                           <span className="avatar-title rounded-circle bg-primary">
-                            <i className="bx bx-archive-in font-size-24"></i>
+                            <i className="fa fa-dollar-sign font-size-24"></i>
                           </span>
                         </div>
                       </div>
@@ -120,7 +121,7 @@ const Content = () => {
                       <div className="flex-shrink-0 align-self-center">
                         <div className="avatar-sm rounded-circle bg-primary mini-stat-icon">
                           <span className="avatar-title rounded-circle bg-primary">
-                            <i className="bx bx-purchase-tag-alt font-size-24"></i>
+                            <i className="fa fa-dollar-sign font-size-24"></i>
                           </span>
                         </div>
                       </div>
@@ -130,11 +131,11 @@ const Content = () => {
               </div>
             </div>
           </div>
-          {/* <div className="row">
-          <div className="col-xl-4">
+          {/* <div className="row ml-2">
+          <div className="col-xl-12">
             <div className="card">
               <div className="card-body">
-                <h4 className="card-title mb-4">Top Guards</h4>
+                <h4 className="card-title mb-4">Visible Guards</h4>
                 <div className="text-center">
                   <div className="mb-4">
                     <i className="fa fa-map-pin text-primary display-4"></i>
@@ -147,7 +148,7 @@ const Content = () => {
                      <tbody>
                         <tr>
                            <td style={{width: '30%'}}>
-                              <p className="mb-0">San Francisco</p>
+                              <p className="mb-0">Kansanga</p>
                            </td>
                            <td style={{width: '25%'}}>
                               <h5 className="mb-0">1,456</h5>
@@ -160,7 +161,7 @@ const Content = () => {
                         </tr>
                         <tr>
                            <td>
-                              <p className="mb-0">Los Angeles</p>
+                              <p className="mb-0">Ntinda</p>
                            </td>
                            <td>
                               <h5 className="mb-0">1,123</h5>
@@ -173,7 +174,7 @@ const Content = () => {
                         </tr>
                         <tr>
                            <td>
-                              <p className="mb-0">San Diego</p>
+                              <p className="mb-0">Kawempe</p>
                            </td>
                            <td>
                               <h5 className="mb-0">1,026</h5>
@@ -190,7 +191,7 @@ const Content = () => {
               </div>
             </div>
           </div>
-        </div>*/}
+          </div> */}
         </div>
       </div>
     </div>

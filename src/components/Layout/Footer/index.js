@@ -1,17 +1,17 @@
 import React from "react";
 
-const index = () => {
+const index = ({margin}) => {
   return (
-    <footer className="footer">
+    <footer className="base-footer" style={{ marginLeft: `${margin}px`, marginTop:'50px' }}>
       <div className="container-fluid">
-        <div className="flex-row">
-          <div className="col-sm-4">
+        <div className="row justify-content-between">
+          <div className="col-5" style={{textAlign:'right'}}>
             2021 ©
             SailGlobal.
           </div>
-          <div className="col-6">
+          <div className="col-7" style={{textAlign:'right'}}>
             <div className="text-sm-end d-none d-sm-block">
-              Design &amp; Developed by Lorem
+              Designed &amp; Developed by Lorem
             </div>
           </div>
         </div>
