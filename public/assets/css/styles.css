@@ -1,4 +1,8 @@
 @import url(https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap);
+body{
+	font-family:"Poppins", sans-serif;
+	overflow-x:hidden;
+}
 #page-topbar {
 	position: fixed;
 	top: 0;
@@ -32,7 +36,8 @@
 .navbar-brand-box {
 	padding: 0 1.5rem;
 	text-align: center;
-	width: 220px
+	width: 230px;
+	background-color: #2a3042;
 }
 
 .logo {
@@ -398,13 +403,13 @@ body[data-layout=horizontal] .footer {
 .vertical-menu {
 	width: 250px;
 	z-index: 1001;
-	background: #fff;
+	background: #2a3042;
 	bottom: 0;
 	margin-top: 0;
 	position: fixed;
 	top: 70px;
-	-webkit-box-shadow: 0 .75rem 1.5rem rgba(18, 38, 63, .03);
-	box-shadow: 0 .75rem 1.5rem rgba(18, 38, 63, .03)
+	/* -webkit-box-shadow: 0 .75rem 1.5rem rgba(18, 38, 63, .03);
+	box-shadow: 0 .75rem 1.5rem rgba(18, 38, 63, .03) */
 }
 
 .main-content {
@@ -441,11 +446,13 @@ body[data-layout=horizontal] .footer {
 #sidebar-menu ul li a {
 	display: block;
 	padding: .625rem 1.5rem;
-	color: #545a6d;
+	color: #a6b0cf;
 	position: relative;
 	font-size: 13px;
 	-webkit-transition: all .4s;
-	transition: all .4s
+	transition: all .4s;
+	opacity:0.75;
+	letter-spacing: 0.4px;
 }
 
 #sidebar-menu ul li a i {
@@ -455,17 +462,17 @@ body[data-layout=horizontal] .footer {
 	font-size: 1.25rem;
 	line-height: 1.40625rem;
 	vertical-align: middle;
-	color: #7f8387;
+	color: #a6b0cf;
 	-webkit-transition: all .4s;
 	transition: all .4s
 }
 
 #sidebar-menu ul li a:hover {
-	color: #383c40
+	color:#fff
 }
 
 #sidebar-menu ul li a:hover i {
-	color: #383c40
+	color:#fff;
 }
 
 #sidebar-menu ul li .badge {
@@ -479,11 +486,11 @@ body[data-layout=horizontal] .footer {
 #sidebar-menu ul li ul.sub-menu li a {
 	padding: .4rem 1.5rem .4rem 3.5rem;
 	font-size: 13px;
-	color: #545a6d
+	color: #a6b0cf
 }
 
 #sidebar-menu ul li ul.sub-menu li a:hover {
-	color: #383c40
+	color: #a6b0cf
 }
 
 #sidebar-menu ul li ul.sub-menu li ul.sub-menu {
@@ -500,34 +507,34 @@ body[data-layout=horizontal] .footer {
 	letter-spacing: .03em;
 	pointer-events: none;
 	cursor: default;
-	font-size: 11px;
+	font-size: 12px;
 	text-transform: uppercase;
-	color: #7f8387;
+	color: #f4f4f4;
 	font-weight: 700
 }
 
 .mm-active {
-	color: #556ee6!important
+	color: #fff!important
 }
 
 .mm-active>a {
-	color: #556ee6!important
+	color: #fff!important
 }
 
 .mm-active>a i {
-	color: #556ee6!important
+	color: #fff!important
 }
 
 .mm-active .active {
-	color: #556ee6!important
+	color: #fff!important
 }
 
 .mm-active .active i {
-	color: #556ee6!important
+	color: #fff!important
 }
 
 .mm-active>i {
-	color: #556ee6!important
+	color: #fff!important
 }
 
 @media (max-width:992px) {

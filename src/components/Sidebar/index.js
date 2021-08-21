@@ -60,7 +60,7 @@ const index = ({ width, xPos }) => {
                             >
                               <li className="mm-active">
                                 <a
-                                  href="index.html"
+                                  href="#"
                                   key="t-default"
                                   className="active"
                                 >
@@ -68,17 +68,17 @@ const index = ({ width, xPos }) => {
                                 </a>
                               </li>
                               <li>
-                                <a href="" key="t-saas">
+                                <a href="#" key="t-saas">
                                   Saas
                                 </a>
                               </li>
                               <li>
-                                <a href="" key="t-crypto">
+                                <a href="#" key="t-crypto">
                                   Crypto
                                 </a>
                               </li>
                               <li>
-                                <a href="" key="t-blog">
+                                <a href="#" key="t-blog">
                                   Blog
                                 </a>
                               </li>

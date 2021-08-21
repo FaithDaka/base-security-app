@@ -34,11 +34,11 @@ const index = ({ children }) => {
         <div id="page-topbar">
           <Header toggle={ToggleMenu} margin={header}></Header>
         </div>
-        <div style={{ marginLeft: "20px" }} className="main-content">
+        <div style={{ marginLeft: "15px" }} className="main-content">
           <div className="page-content">{children}</div>
-          <Footer></Footer>
         </div>
       </div>
+      <Footer margin={header}></Footer>
     </div>
   );
 };
