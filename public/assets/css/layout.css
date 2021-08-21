@@ -34,8 +34,8 @@
 }
 
 .modal-header {
-    background-color: #0080ff;
-    border: 1px solid #0080ff;
+    background-color: #555;
+    border: 1px solid #aaa;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
@@ -43,6 +43,11 @@
 .modal-title {
     color: #ffffff;
     font-size: 18px;
+    letter-spacing: 0.8px;
+    text-transform:uppercase;
+    font-weight:600;
+    margin-top:14px;
+    margin-left:8px
 }
 
 .modal-header .close {
@@ -75,6 +80,13 @@
     color: #ffffff;
     background-color: #0080ff;
     border-color: #0080ff;
+    box-shadow: none;
+}
+
+.btn-primary:hover {
+    color: #ffffff;
+    background-color: #93b4d4;
+    border-color: #93b4d4;
     box-shadow: none;
 }
 /* MODAL */

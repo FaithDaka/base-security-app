@@ -1,53 +1,49 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import Armory from "./index";
+import Modal from "../../components/Modal";
+import AddGun from "./AddGun";
+import UpdateGun from "./UpdateGun";
 import AlertDialog from "../../utils/Dialog";
-import Guards from "./index";
-// import Pagination from '../../components/Pagination'
 
-const GuardsList = () => {
+const ArmoryList = () => {
+  const [add, setAdd] = useState();
+  const [update, setUpdate] = useState();
   const [open, setOpen] = useState(false);
-  //   const [show, setShow] = useState(false);
-  //   const openModal = () => setShow(true);
-  //   const closeModal = () => setShow(false);
 
-  //   const [currentpage, setCurrentPage] = useState(1);
-  //   const [guardsPerPage] = useState(10);
-  //   const lastGuard = currentpage * guardsPerPage;
-  //   const firstGuard = lastGuard - guardsPerPage;
-  //   const currentGuards = guard.slice(firstGuard, lastGuard);
-  //   const totalGuards = guard.length;
+  const openAdd = () => setAdd(true);
+  const closeAdd = () => setAdd(false);
+  
+  const openUpdate = () => setUpdate(true);
+  const closeUpdate = () => setUpdate(false);
 
   const handleOpen = () => setOpen(true);
   const handleNo = () => setOpen(false);
 
-  const handleDelete = ()=> handleOpen();
+  const handleDelete = ()=> handleOpen()
 
-  const history = useHistory();
-  const addGuard = () => {
-    history.push("/guards/add");
-  };
-  const updateGuard = () => {
-    history.push("/guards/update");
-  };
-  const deleteGuard=()=>{
-    console.log('guard deleted')
-    handleNo();
-}
+
+  const deleteGun=()=>{
+      console.log('gun deleted')
+      handleNo();
+  }
 
   return (
-    <Guards>
-      {/* <Modal show={show} close={closeModal} title="Add New Guard">
-        <AddGuard></AddGuard>
-      </Modal> */}
+    <Armory>
+      <Modal show={add} close={closeAdd} title="Add New Gun">
+          <AddGun/>
+      </Modal>
+      <Modal show={update} close={closeUpdate} title="Update Gun Details">
+          <UpdateGun/>
+      </Modal>
       <div className="container-fluid">
         <div className="row">
           <div className="col-12">
             <div className="page-title-box d-sm-flex align-items-center justify-content-between">
-              <h4 className="mb-sm-0 font-size-18">Guards</h4>
+              <h4 className="mb-sm-0 font-size-18">Armory</h4>
             </div>
           </div>
         </div>
-        <AlertDialog title="guard" open={open} Yes={deleteGuard} No={handleNo}/>
+        <AlertDialog title="gun" open={open} Yes={deleteGun} No={handleNo}/>
         <div className="row">
           <div className="col-12">
             <div className="card">
@@ -68,11 +64,12 @@ const GuardsList = () => {
                   <div className="col-3">
                     <div className="text-sm-end" style={{ textAlign: "right" }}>
                       <button
-                        onClick={addGuard}
+                        onClick={openAdd}
                         type="button"
                         className="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
                       >
-                        <i className="fa fa-plus-circle me-1"></i> Add New Guard
+                        <i className="fa fa-plus-circle me-1"></i> Add Gun to
+                        Armory
                       </button>
                     </div>
                   </div>
@@ -95,9 +92,8 @@ const GuardsList = () => {
                           </div>
                         </th>
                         <th className="align-middle"> ID</th>
-                        <th className="align-middle"> Name</th>
-                        <th className="align-middle"> Date Joined</th>
-                        <th className="align-middle"> Weapon</th>
+                        <th className="align-middle"> Gun Name</th>
+                        <th className="align-middle"> Date Registered</th>
                         <th className="align-middle"> Actions</th>
                       </tr>
                     </thead>
@@ -119,7 +115,6 @@ const GuardsList = () => {
                         <td>BS-001</td>
                         <td>John Doe</td>
                         <td>02/10/21</td>
-                        <td style={{ textTransform: "uppercase" }}>ak-15</td>
                         <td>
                           <div className="button-list">
                             <a
@@ -127,7 +122,7 @@ const GuardsList = () => {
                               className="btn-tab btn-sucess-rgba"
                               title="Update details"
                               style={{ marginRight: "20px", color: "green" }}
-                              onClick={() => updateGuard()}
+                              onClick={openUpdate}
                             >
                               <i className="far fa-edit" />
                             </a>
@@ -156,8 +151,8 @@ const GuardsList = () => {
           paginate={paginate}
         /> */}
       </div>
-    </Guards>
+    </Armory>
   );
 };
 
-export default GuardsList;
+export default ArmoryList;

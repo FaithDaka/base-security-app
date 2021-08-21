@@ -5,6 +5,7 @@ import Auth from './pages/Auth';
 import GuardsList from './pages/Guards/GuardsList';
 import AddGuard from './pages/Guards/AddGuard';
 import UpdateGuard from './pages/Guards/UpdateGuard';
+import ArmoryList from './pages/Armory/ArmoryList';
 
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
       <Route exact path="/guards" component={ GuardsList }/>
       <Route exact path="/guards/add" component={ AddGuard }/>
       <Route exact path="/guards/update" component={ UpdateGuard }/>
+      <Route exact path="/armory" component={ ArmoryList }/>
     </Switch>
     </BrowserRouter>
   )
