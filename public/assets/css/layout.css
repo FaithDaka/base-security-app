@@ -1,3 +1,9 @@
+/* LOGIN */
+.bsa-login{
+    background-color: #2a3042;
+}
+
+/* LOGIN*/
 /* MODAL */
 .modal {
     position: fixed;
@@ -28,7 +34,7 @@
 }
 
 .modal-header {
-    background-color: #555;
+    background-color: #2a3042;
     border: 1px solid #aaa;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
