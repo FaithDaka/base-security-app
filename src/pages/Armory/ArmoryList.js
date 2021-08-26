@@ -43,7 +43,7 @@ const ArmoryList = () => {
             </div>
           </div>
         </div>
-        <AlertDialog title="gun" open={open} Yes={deleteGun} No={handleNo}/>
+        <AlertDialog open={open} Yes={deleteGun} No={handleNo}/>
         <div className="row">
           <div className="col-12">
             <div className="card">

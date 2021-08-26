@@ -6,6 +6,8 @@ import GuardsList from './pages/Guards/GuardsList';
 import AddGuard from './pages/Guards/AddGuard';
 import UpdateGuard from './pages/Guards/UpdateGuard';
 import ArmoryList from './pages/Armory/ArmoryList';
+import Maintenance from './utils/maintenance';
+import PageNotFound from './utils/PageNotFound';
 
 
 const App = () => {
@@ -18,6 +20,8 @@ const App = () => {
       <Route exact path="/guards/add" component={ AddGuard }/>
       <Route exact path="/guards/update" component={ UpdateGuard }/>
       <Route exact path="/armory" component={ ArmoryList }/>
+      <Route exact path="/maintenance" component={ Maintenance }/>
+      <Route exact path="/pagenotfound" component={ PageNotFound }/>
     </Switch>
     </BrowserRouter>
   )

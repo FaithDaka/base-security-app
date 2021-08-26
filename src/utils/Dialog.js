@@ -7,8 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 // eslint-disable-next-line react/prop-types
-const AlertDialog = ({ title, open, Yes, No }) => {
-
+const AlertDialog = ({ open, Yes, No }) => {
 
   return (
     <div>
@@ -18,21 +17,26 @@ const AlertDialog = ({ title, open, Yes, No }) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
+        <div style={{padding:'18px'}}>
         <DialogTitle id="alert-dialog-title"
-        style={{textTransform:'uppercase'}}>Delete {title}</DialogTitle>
+        style={{textAlign:'center', fontWeight:'800'}}>
+          <div style={{textAlign:'center', borderRadius:'100%', padding:'15px', color:'orange', width:'35%', 
+          fontWeight:'800', fontSize:'45px', border:'2px solid orange', marginLeft:'32%', marginBottom:'5px'}}>!</div>
+          Are you sure?</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete this {title}?
+            {'You wont be able to reverse this action!'}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={Yes} style={{fontWeight:'600', color:'blue'}}>
-            Yes
+          <Button onClick={Yes} style={{fontWeight:'600', backgroundColor: 'rgb(52, 195, 143)', outline:'none', color:'#fff'}}>
+            Yes, delete
           </Button>
-          <Button onClick={No} style={{fontWeight:'600', color:'blue', outline:'0.2px solid #aaa '}} autoFocus>
-            No
+          <Button onClick={No} style={{fontWeight:'600', backgroundColor: 'rgb(244, 106, 106)', outline:'none', color:'#fff'}} autoFocus>
+            Cancel
           </Button>
         </DialogActions>
+        </div>
       </Dialog>
     </div>
   );

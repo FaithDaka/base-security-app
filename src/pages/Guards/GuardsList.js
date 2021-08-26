@@ -47,7 +47,7 @@ const GuardsList = () => {
             </div>
           </div>
         </div>
-        <AlertDialog title="guard" open={open} Yes={deleteGuard} No={handleNo}/>
+        <AlertDialog open={open} Yes={deleteGuard} No={handleNo}/>
         <div className="row">
           <div className="col-12">
             <div className="card">
