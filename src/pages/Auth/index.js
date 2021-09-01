@@ -1,12 +1,36 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
+import React , { useState} from "react";
+import API from '../../helpers/api';
 import img from '../../assets/img/plainlogo.png'
 
-const index = () => {
-    const history= useHistory();
-    const login =()=>{
-        history.push("/dashboard");
-    }
+const Login = ({history}) => {
+
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = { email, password };
+
+    API.post("/api/admin/login", data)
+      .then((res) => {
+        console.log("Login Response Data ====>", res)
+        setSuccess(true);
+        if (res.data.accessToken) {
+          localStorage.setItem("user", JSON.stringify(res.data));
+          history.push("/dashboard")
+        }
+      })
+      .catch((err) => {
+        setError(true);
+        setTimeout(() => {
+          setError(false);
+        }, 3000)
+        console.log(err.message);
+      });
+  };
+
   return (
     <div className="bsa-login">
       <div className="account-pages my-5 pt-sm-5">
@@ -30,9 +54,19 @@ const index = () => {
                     </div>
                   </div>
                 </div>
+                {success && (
+                  <div className="alert alert-success" role="alert">
+                    Successfuly Logged on
+                  </div>
+                )}
+                {error && (
+                  <div className="alert alert-danger" role="alert">
+                    Login Failed
+                  </div>
+                )}
                 <div className="card-body pt-0">
                   <div className="auth-logo">
-                    <a href="index.html" className="auth-logo-dark">
+                    <a href="#" className="auth-logo-dark">
                       <div className="avatar-md profile-user-wid mb-4">
                         <span className="avatar-title rounded-circle bg-light">
                           <img
@@ -46,15 +80,18 @@ const index = () => {
                     </a>
                   </div>
                   <div className="p-2">
-                    <form className="form-horizontal">
+                    <form className="form-horizontal" onSubmit={handleSubmit}>
                       <div className="mb-3">
                         <label htmlFor="username" className="form-label">
                           Email
                         </label>
                         <input
                           type="text"
+                          name="email"
                           className="form-control"
                           placeholder="Enter username"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
                         />
                       </div>
                       <div className="mb-3">
@@ -62,10 +99,13 @@ const index = () => {
                         <div className="input-group auth-pass-inputgroup">
                           <input
                             type="password"
+                            name="password"
                             className="form-control"
                             placeholder="Enter password"
                             aria-label="Password"
                             aria-describedby="password-addon"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                           />
                           <button
                             className="btn btn-light"
@@ -88,8 +128,6 @@ const index = () => {
                       <div className="mt-3 d-grid">
                         <button
                           className="btn btn-primary waves-effect waves-light"
-                          type=""
-                          onClick={login}
                         >
                           Log In
                         </button>
@@ -134,7 +172,7 @@ const index = () => {
                 </div>
               </div>
               <div className="mt-5 text-center">
-                
+
               </div>
             </div>
           </div>
@@ -144,4 +182,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Login;

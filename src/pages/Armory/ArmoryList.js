@@ -1,39 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Armory from "./index";
 import Modal from "../../components/Modal";
 import AddGun from "./AddGun";
 import UpdateGun from "./UpdateGun";
 import AlertDialog from "../../utils/Dialog";
+import API from '../../helpers/api';
 
 const ArmoryList = () => {
   const [add, setAdd] = useState();
   const [update, setUpdate] = useState();
   const [open, setOpen] = useState(false);
+  const [guns, setGuns] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const openAdd = () => setAdd(true);
   const closeAdd = () => setAdd(false);
-  
+
   const openUpdate = () => setUpdate(true);
   const closeUpdate = () => setUpdate(false);
 
   const handleOpen = () => setOpen(true);
   const handleNo = () => setOpen(false);
 
-  const handleDelete = ()=> handleOpen()
+  const handleDelete = () => handleOpen()
 
-
-  const deleteGun=()=>{
-      console.log('gun deleted')
-      handleNo();
+  const getGuns = async () => {
+    try {
+      const res = await API.get("/api/gun/list");
+      console.log("Users Backend ===>", res)
+      setGuns(res.data);
+      setLoading(false);
+    } catch (error) {
+      console.log('error', error);
+    }
   }
+
+
+  const deleteGun = () => {
+    console.log('gun deleted')
+    handleNo();
+  }
+
+  useEffect(() => {
+    getGuns();
+  }, []);
 
   return (
     <Armory>
       <Modal show={add} close={closeAdd} title="Add New Gun">
-          <AddGun/>
+        <AddGun close={closeAdd} guns={getGuns} />
       </Modal>
       <Modal show={update} close={closeUpdate} title="Update Gun Details">
-          <UpdateGun/>
+        <UpdateGun />
       </Modal>
       <div className="container-fluid">
         <div className="row">
@@ -43,7 +61,7 @@ const ArmoryList = () => {
             </div>
           </div>
         </div>
-        <AlertDialog open={open} Yes={deleteGun} No={handleNo}/>
+        <AlertDialog open={open} Yes={deleteGun} No={handleNo} />
         <div className="row">
           <div className="col-12">
             <div className="card">
@@ -91,53 +109,59 @@ const ArmoryList = () => {
                             ></label>
                           </div>
                         </th>
-                        <th className="align-middle"> ID</th>
-                        <th className="align-middle"> Gun Name</th>
-                        <th className="align-middle"> Date Registered</th>
+                        <th className="align-middle"> Name</th>
+                        <th className="align-middle"> Serial Number</th>
+                        <th className="align-middle"> Status</th>
+                        <th className="align-middle"> isAssigned</th>
                         <th className="align-middle"> Actions</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>
-                          <div className="form-check font-size-16">
-                            <input
-                              className="form-check-input"
-                              type="checkbox"
-                              id="orderidcheck01"
-                            />
-                            <label
-                              className="form-check-label"
-                              htmlFor="orderidcheck01"
-                            ></label>
-                          </div>
-                        </td>
-                        <td>BS-001</td>
-                        <td>John Doe</td>
-                        <td>02/10/21</td>
-                        <td>
-                          <div className="button-list">
-                            <a
-                              href="#"
-                              className="btn-tab btn-sucess-rgba"
-                              title="Update details"
-                              style={{ marginRight: "20px", color: "green" }}
-                              onClick={openUpdate}
-                            >
-                              <i className="far fa-edit" />
-                            </a>
-                            <a
-                              href="#"
-                              className="btn-tab btn-danger-rgba"
-                              style={{ color: "red" }}
-                              title="Delete guard"
-                              onClick={()=>handleDelete()}
-                            >
-                              <i className="far fa-trash-alt" />
-                            </a>
-                          </div>
-                        </td>
-                      </tr>
+                      {guns.map((gun) => {
+                        return (
+                          <tr>
+                            <td>
+                              <div className="form-check font-size-16">
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  id="orderidcheck01"
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="orderidcheck01"
+                                ></label>
+                              </div>
+                            </td>
+                            <td>{gun.name}</td>
+                            <td>{gun.serialNumber}</td>
+                            <td>{gun.status}</td>
+                            <td>{gun.isAssigned}</td>
+                            <td>
+                              <div className="button-list">
+                                <a
+                                  href="#"
+                                  className="btn-tab btn-sucess-rgba"
+                                  title="Update details"
+                                  style={{ marginRight: "20px", color: "green" }}
+                                  onClick={openUpdate}
+                                >
+                                  <i className="far fa-edit" />
+                                </a>
+                                <a
+                                  href="#"
+                                  className="btn-tab btn-danger-rgba"
+                                  style={{ color: "red" }}
+                                  title="Delete guard"
+                                  onClick={() => handleDelete()}
+                                >
+                                  <i className="far fa-trash-alt" />
+                                </a>
+                              </div>
+                            </td>
+                          </tr>
+                        )
+                      })}
                     </tbody>
                   </table>
                 </div>

@@ -106,6 +106,27 @@ const index = ({ width, xPos }) => {
                             </Link>
                           </li>
                           <li>
+                            <Link
+                              to="/admins"
+                              className="waves-effect"
+                              id="icon-link"
+                            >
+                              <i
+                                className="fa fa-table"
+                                style={{ fontSize: "18px", marginRight: "8px" }}
+                              ></i>
+                              <span
+                                key="t-dashboards"
+                                style={{
+                                  fontSize: "16px",
+                                  textTransform: "uppercase",
+                                }}
+                              >
+                                Admins
+                              </span>
+                            </Link>
+                          </li>
+                          <li>
                           <Link to="/armory" className="waves-effect" id="icon-link" >
                               <i className="fa fa-table"
                               style={{fontSize:'18px', marginRight:'8px'}}></i>
