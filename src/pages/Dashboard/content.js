@@ -1,7 +1,8 @@
 import React from "react";
 import img from '../../assets/img/plainlogo.png'
 
-const Content = () => {
+const Content = ({history}) => {
+  
   return (
     <div>
       <div className="container-fluid">

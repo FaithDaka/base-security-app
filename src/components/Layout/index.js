@@ -3,7 +3,7 @@ import Sidebar from "../Sidebar";
 import Header from "./Header";
 import Footer from "./Footer";
 
-const index = ({ children }) => {
+const Layout = ({ children }) => {
   const width = 230;
   const [xPosition, setX] = useState(-width);
   const [margin, setMargin] = useState(width);
@@ -43,4 +43,4 @@ const index = ({ children }) => {
   );
 };
 
-export default index;
+export default Layout;
