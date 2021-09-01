@@ -1,7 +1,11 @@
 import React from "react";
 import logo from '../../../assets/img/logo.png'
 
-const index = ({ toggle, margin }) => {
+const Header = ({ toggle, margin, history }) => {
+  const logout = () => {
+    localStorage.removeItem("user");
+    history.push("/")
+  };
   return (
     <header>
       {margin >= 0 ? (
@@ -116,6 +120,7 @@ const index = ({ toggle, margin }) => {
               <button
                 type="button"
                 className="btn header-item noti-icon right-bar-toggle waves-effect"
+                onClick={logout}
               >
                 <i className="fa fa-cog"></i>
               </button>
@@ -127,4 +132,4 @@ const index = ({ toggle, margin }) => {
   );
 };
 
-export default index;
+export default Header;
