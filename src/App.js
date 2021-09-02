@@ -13,6 +13,7 @@ import AddAdmin from './pages/Admins/AddAdmin';
 import ArmoryList from './pages/Armory/ArmoryList';
 import Maintenance from './utils/maintenance';
 import PageNotFound from './utils/PageNotFound';
+import Reports from './pages/Reports';
 
 
 const App = () => {
@@ -21,14 +22,15 @@ const App = () => {
     <Switch>
       <Route exact path="/" component={ Auth }/>
       <ProtectedRoute exact path="/dashboard" component={ Dashboard }/>
-      <Route exact path="/guards" component={ GuardsList }/>
-      <Route exact path="/guards/add" component={ AddGuard }/>
-      <Route exact path="/guards/update" component={ UpdateGuard }/>
+      <ProtectedRoute exact path="/guards" component={ GuardsList }/>
+      <ProtectedRoute exact path="/guards/add" component={ AddGuard }/>
+      <ProtectedRoute exact path="/guards/update" component={ UpdateGuard }/>
       <ProtectedRoute exact path="/admins" component={ AdminList }/>
       <ProtectedRoute exact path="/admin/add" component={ AddAdmin }/>
       <ProtectedRoute exact path="/armory" component={ ArmoryList }/>
-      <Route exact path="/maintenance" component={ Maintenance }/>
-      <Route exact path="/pagenotfound" component={ PageNotFound }/>
+      <ProtectedRoute exact path="/maintenance" component={ Maintenance }/>
+      <ProtectedRoute exact path="/pagenotfound" component={ PageNotFound }/>
+      <ProtectedRoute exact path="/reports" component={ Reports }/>
     </Switch>
     </BrowserRouter>
   )

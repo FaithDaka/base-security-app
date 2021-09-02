@@ -20,7 +20,7 @@ const AlertDialog = ({ open, Yes, No }) => {
         <div style={{padding:'18px'}}>
         <DialogTitle id="alert-dialog-title"
         style={{textAlign:'center', fontWeight:'800'}}>
-          <div style={{textAlign:'center', borderRadius:'100%', padding:'15px', color:'orange', width:'35%', 
+          <div style={{textAlign:'center', borderRadius:'100%', padding:'15px', color:'orange', width:'38%', 
           fontWeight:'800', fontSize:'45px', border:'2px solid orange', marginLeft:'32%', marginBottom:'5px'}}>!</div>
           Are you sure?</DialogTitle>
         <DialogContent>

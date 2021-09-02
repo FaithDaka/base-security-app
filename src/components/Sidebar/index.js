@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const index = ({ width, xPos }) => {
+const Sidebar = ({ width, xPos }) => {
   return (
     <>
       {width > 0 ? (
@@ -41,7 +41,7 @@ const index = ({ width, xPos }) => {
                               id="icon-link"
                             >
                               <i
-                                className="fa fa-home"
+                                className="fas fa-house-user"
                                 style={{ fontSize: "18px", marginRight: "8px" }}
                               ></i>
                               <span
@@ -91,7 +91,7 @@ const index = ({ width, xPos }) => {
                               id="icon-link"
                             >
                               <i
-                                className="fa fa-table"
+                                className="fas fa-user-ninja"
                                 style={{ fontSize: "18px", marginRight: "8px" }}
                               ></i>
                               <span
@@ -106,13 +106,29 @@ const index = ({ width, xPos }) => {
                             </Link>
                           </li>
                           <li>
+                          <Link to="/armory" className="waves-effect" id="icon-link" >
+                              <i className="fas fa-shield-alt"
+                              style={{fontSize:'18px', marginRight:'8px'}}></i>
+                              <span key="t-dashboards"
+                              style={{fontSize:'16px', textTransform:'uppercase'}}>armory</span>
+                            </Link>
+                          </li>
+                          <li>
+                          <Link to="/reports" className="waves-effect" id="icon-link" >
+                              <i className="fas fa-server"
+                              style={{fontSize:'18px', marginRight:'8px'}}></i>
+                              <span key="t-dashboards"
+                              style={{fontSize:'16px', textTransform:'uppercase'}}>reports</span>
+                            </Link>
+                          </li>
+                          <li>
                             <Link
                               to="/admins"
                               className="waves-effect"
                               id="icon-link"
                             >
                               <i
-                                className="fa fa-table"
+                                className="fas fa-users"
                                 style={{ fontSize: "18px", marginRight: "8px" }}
                               ></i>
                               <span
@@ -124,22 +140,6 @@ const index = ({ width, xPos }) => {
                               >
                                 Admins
                               </span>
-                            </Link>
-                          </li>
-                          <li>
-                          <Link to="/armory" className="waves-effect" id="icon-link" >
-                              <i className="fa fa-table"
-                              style={{fontSize:'18px', marginRight:'8px'}}></i>
-                              <span key="t-dashboards"
-                              style={{fontSize:'16px', textTransform:'uppercase'}}>armory</span>
-                            </Link>
-                          </li>
-                          <li>
-                          <Link to="/users" className="waves-effect" id="icon-link" >
-                              <i className="fa fa-table"
-                              style={{fontSize:'18px', marginRight:'8px'}}></i>
-                              <span key="t-dashboards"
-                              style={{fontSize:'16px', textTransform:'uppercase'}}>users</span>
                             </Link>
                           </li>
                         </ul>
@@ -284,4 +284,4 @@ const index = ({ width, xPos }) => {
   );
 };
 
-export default index;
+export default Sidebar;
