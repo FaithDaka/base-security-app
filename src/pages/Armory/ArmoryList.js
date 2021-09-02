@@ -35,7 +35,6 @@ const ArmoryList = () => {
     }
   }
 
-
   const deleteGun = () => {
     console.log('gun deleted')
     handleNo();
@@ -86,8 +85,7 @@ const ArmoryList = () => {
                         type="button"
                         className="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
                       >
-                        <i className="fa fa-plus-circle me-1"></i> Add Gun to
-                        Armory
+                        <i className="fa fa-plus-circle me-1"></i> Add Gun to Armory
                       </button>
                     </div>
                   </div>
@@ -112,7 +110,7 @@ const ArmoryList = () => {
                         <th className="align-middle"> Name</th>
                         <th className="align-middle"> Serial Number</th>
                         <th className="align-middle"> Status</th>
-                        <th className="align-middle"> isAssigned</th>
+                        <th className="align-middle"> Assigned</th>
                         <th className="align-middle"> Actions</th>
                       </tr>
                     </thead>

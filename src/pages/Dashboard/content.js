@@ -321,6 +321,57 @@ const Content = ({ history }) => {
             </div>
           </div>
         </div>
+        <div className="row mb-3 mt-4">
+          <div className="col-xl-6">
+            <div className="card overflow-hidden">
+              <div className="card-body">
+                <div className="d-flex flex-row justify-content-between">
+                  <h4 className="card-title mb-4"> Alerts</h4>
+                  <span style={{ fontSize: "23px"}}>
+                    <i className="fas fa-exclamation-triangle text-warning"></i>
+                  </span>
+                </div>
+                <table className="table align-middle table-nowrap">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Location</th>
+                      <th>Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <span>No Alerts Yet</span>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div className="col-xl-6">
+            <div className="card overflow-hidden">
+              <div className="card-body">
+              <div className="d-flex flex-row justify-content-between">
+                  <h4 className="card-title mb-4"> Reports</h4>
+                  <span style={{ fontSize: "23px"}}>
+                    <i className="fas fa-calendar text-success"></i>
+                  </span>
+                </div>
+                <table className="table align-middle table-nowrap">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Report</th>
+                      <th>Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <span>No Reports Yet</span>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
