@@ -13,7 +13,7 @@ const Login = ({history}) => {
     e.preventDefault();
     const data = { email, password };
 
-    API.post("/api/admin/login", data)
+    API.post("/api/auth/login", data)
       .then((res) => {
         console.log("Login Response Data ====>", res)
         setSuccess(true);
