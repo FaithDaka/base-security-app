@@ -1,7 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import img from "../../assets/img/plainlogo.png";
+import API from "../../helpers/api";
+import { getGuards } from "../../helpers/getApi";
 
 const Content = ({ history }) => {
+  const [guards, setGuards] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  // const getGuards = async()=>{
+  //   try{
+  //     const data = await API.get('/api/guards/list')
+  //     setGuards(data.data)
+  //     console.log("Users Backend ===>", data)
+  //   }
+  //   catch(error){
+  //     setLoading(false);
+  //     console.log('error', error);
+  //   }
+  // }
+
+  useEffect(()=>{
+    setGuards(getGuards());
+  }, [guards])
   return (
     <div>
       <div className="container-fluid">
@@ -15,7 +35,7 @@ const Content = ({ history }) => {
         <div className="row">
           <div className="col-xl-12 mb-3">
             <div className="card overflow-hidden">
-              <div className="bg-soft bg-danger">
+              <div className="bg-soft bg-secondary">
                 <div className="row">
                   <div className="col-8">
                     <div className="p-3">
@@ -76,9 +96,9 @@ const Content = ({ history }) => {
               </div>
             </div>
           </div>
-          <div className="col-xl-12 mt-3 mb-3">
+          <div className="col-xl-12">
             <div className="row">
-              <div className="col-md-3">
+              <div className="col-lg-3 col-md-6 mt-3 mb-3">
                 <div className="card mini-stats-wid">
                   <div className="card-body">
                     <div className="d-flex">
@@ -92,7 +112,7 @@ const Content = ({ history }) => {
                         >
                           Guards
                         </p>
-                        <h4 className="mb-0">1,235</h4>
+                        <h4 className="mb-0 font-size-20">1,235</h4>
                       </div>
                       <div className="flex-shrink-0 align-self-center">
                         <div className="mini-stat-icon avatar-sm rounded-circle bg-primary">
@@ -105,7 +125,7 @@ const Content = ({ history }) => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-3">
+              <div className="col-lg-3 col-md-6 mt-3 mb-3">
                 <div className="card mini-stats-wid">
                   <div className="card-body">
                     <div className="d-flex">
@@ -119,7 +139,7 @@ const Content = ({ history }) => {
                         >
                           Reports
                         </p>
-                        <h4 className="mb-0">17</h4>
+                        <h4 className="mb-0 font-size-20">17</h4>
                       </div>
                       <div className="flex-shrink-0 align-self-center">
                         <div className="avatar-sm rounded-circle bg-primary mini-stat-icon">
@@ -132,7 +152,7 @@ const Content = ({ history }) => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-3">
+              <div className="col-lg-3 col-md-6 mt-3 mb-3">
                 <div className="card mini-stats-wid">
                   <div className="card-body">
                     <div className="d-flex">
@@ -146,7 +166,7 @@ const Content = ({ history }) => {
                         >
                           Alerts
                         </p>
-                        <h4 className="mb-0">5</h4>
+                        <h4 className="mb-0 font-size-20">5</h4>
                       </div>
                       <div className="flex-shrink-0 align-self-center">
                         <div className="avatar-sm rounded-circle bg-primary mini-stat-icon">
@@ -159,7 +179,7 @@ const Content = ({ history }) => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-3">
+              <div className="col-lg-3 col-md-6 mt-3 mb-3">
                 <div className="card mini-stats-wid">
                   <div className="card-body">
                     <div className="d-flex">
@@ -173,7 +193,7 @@ const Content = ({ history }) => {
                         >
                           Tasks
                         </p>
-                        <h4 className="mb-0">500</h4>
+                        <h4 className="mb-0 font-size-20">500</h4>
                       </div>
                       <div className="flex-shrink-0 align-self-center ">
                         <div className="avatar-sm rounded-circle bg-primary mini-stat-icon">
@@ -193,7 +213,7 @@ const Content = ({ history }) => {
           <div className="col-xl-12">
             <div className="card">
               <div className="card-body">
-                <h4 className="card-title mb-4">Visible Guards</h4>
+                <h4 className="card-title mb-4 title">Visible Guards</h4>
                 <div className="text-center">
                   <div className="mb-4">
                     <i className="fa fa-map-pin text-primary display-4"></i>
@@ -214,7 +234,7 @@ const Content = ({ history }) => {
                         <td>
                           <div className="progress bg-transparent progress-sm">
                             <div
-                              className="progress-bar bg-primary rounded"
+                              className="progress-bar bg-secondary rounded"
                               role="progressbar"
                               style={{ width: "94%" }}
                               aria-valuenow="94"
@@ -234,7 +254,7 @@ const Content = ({ history }) => {
                         <td>
                           <div className="progress bg-transparent progress-sm">
                             <div
-                              className="progress-bar bg-success rounded"
+                              className="progress-bar bg-secondary rounded"
                               role="progressbar"
                               style={{ width: "82%" }}
                               aria-valuenow="82"
@@ -254,7 +274,7 @@ const Content = ({ history }) => {
                         <td>
                           <div className="progress bg-transparent progress-sm">
                             <div
-                              className="progress-bar bg-warning rounded"
+                              className="progress-bar bg-secondary rounded"
                               role="progressbar"
                               style={{ width: "70%" }}
                               aria-valuenow="70"
@@ -271,12 +291,12 @@ const Content = ({ history }) => {
             </div>
           </div>
         </div>
-        <div className="row mb-3 mt-4">
-          <div className="col-xl-6">
+        <div className="row">
+          <div className="col-xl-6 col-lg-6 mb-3 mt-4">
             <div className="card overflow-hidden">
               <div className="card-body">
                 <div className="d-flex flex-row justify-content-between">
-                  <h4 className="card-title mb-4"> Clocked In</h4>
+                  <h4 className="card-title mb-4 title"> Clocked In</h4>
                   <span style={{ fontSize: "23px"}}>
                     <i className="fas fa-user-clock text-primary"></i>
                   </span>
@@ -284,9 +304,9 @@ const Content = ({ history }) => {
                 <table className="table align-middle table-nowrap">
                   <thead>
                     <tr>
-                      <th>Name</th>
-                      <th>Location</th>
-                      <th>Time</th>
+                      <th className='th'>Name</th>
+                      <th className='th'>Location</th>
+                      <th className='th'>Time</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -296,11 +316,11 @@ const Content = ({ history }) => {
               </div>
             </div>
           </div>
-          <div className="col-xl-6">
+          <div className="col-xl-6 col-lg-6 mb-3 mt-4">
             <div className="card overflow-hidden">
               <div className="card-body">
               <div className="d-flex flex-row justify-content-between">
-                  <h4 className="card-title mb-4"> Clocked Out</h4>
+                  <h4 className="card-title mb-4 title"> Clocked Out</h4>
                   <span style={{ fontSize: "23px"}}>
                     <i className="fas fa-user-times text-danger"></i>
                   </span>
@@ -308,9 +328,9 @@ const Content = ({ history }) => {
                 <table className="table align-middle table-nowrap">
                   <thead>
                     <tr>
-                      <th>Name</th>
-                      <th>Location</th>
-                      <th>Time</th>
+                      <th className='th'>Name</th>
+                      <th className='th'>Location</th>
+                      <th className='th'>Time</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -321,12 +341,12 @@ const Content = ({ history }) => {
             </div>
           </div>
         </div>
-        <div className="row mb-3 mt-4">
-          <div className="col-xl-6">
+        <div className="row">
+          <div className="col-xl-6 col-lg-6 mb-3 mt-4">
             <div className="card overflow-hidden">
               <div className="card-body">
                 <div className="d-flex flex-row justify-content-between">
-                  <h4 className="card-title mb-4"> Alerts</h4>
+                  <h4 className="card-title mb-4 title"> Alerts</h4>
                   <span style={{ fontSize: "23px"}}>
                     <i className="fas fa-exclamation-triangle text-warning"></i>
                   </span>
@@ -334,10 +354,10 @@ const Content = ({ history }) => {
                 <table className="table align-middle table-nowrap">
                   <thead>
                     <tr>
-                      <th>Name</th>
-                      <th>Type</th>
-                      <th>Location</th>
-                      <th>Time</th>
+                      <th className='th'>Name</th>
+                      <th className='th'>Type</th>
+                      <th className='th'>Location</th>
+                      <th className='th'>Time</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -347,11 +367,11 @@ const Content = ({ history }) => {
               </div>
             </div>
           </div>
-          <div className="col-xl-6">
+          <div className="col-xl-6 col-lg-6 mb-3 mt-4">
             <div className="card overflow-hidden">
               <div className="card-body">
               <div className="d-flex flex-row justify-content-between">
-                  <h4 className="card-title mb-4"> Reports</h4>
+                  <h4 className="card-title mb-4 title"> Reports</h4>
                   <span style={{ fontSize: "23px"}}>
                     <i className="fas fa-calendar text-success"></i>
                   </span>
@@ -359,9 +379,9 @@ const Content = ({ history }) => {
                 <table className="table align-middle table-nowrap">
                   <thead>
                     <tr>
-                      <th>Name</th>
-                      <th>Report</th>
-                      <th>Time</th>
+                      <th className='th'>Name</th>
+                      <th className='th'>Report</th>
+                      <th className='th'>Time</th>
                     </tr>
                   </thead>
                   <tbody>

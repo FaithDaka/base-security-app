@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Sidebar = ({ width, xPos }) => {
   return (
     <>
-      {width > 0 ? (
+      {width >= 0 ? (
         <div
           className="vertical-menu"
           id="vertical-menu"
@@ -54,7 +54,7 @@ const Sidebar = ({ width, xPos }) => {
                                 Dashboard
                               </span>
                             </Link>
-                            <ul
+                            {/* <ul
                               className="sub-menu mm-collapse mm-show"
                               aria-expanded="false"
                             >
@@ -82,7 +82,7 @@ const Sidebar = ({ width, xPos }) => {
                                   Blog
                                 </a>
                               </li>
-                            </ul>
+                            </ul> */}
                           </li>
                           <li>
                             <Link
@@ -181,7 +181,7 @@ const Sidebar = ({ width, xPos }) => {
           </div>
         </div>
       ) : (
-        <div className="vertical-menu" style={{ width: "80px" }}>
+        <div className="vertical-collpsed vertical-menu" >
           <div className="h-100">
             <div className="simplebar-wrapper">
               <div className="simplebar-height-auto-observer-wrapper">
@@ -210,7 +210,7 @@ const Sidebar = ({ width, xPos }) => {
                               </span>
                               <span key="t-dashboards">Dashboards</span>
                             </a>
-                            <ul
+                            {/* <ul
                               className="sub-menu mm-collapse mm-show"
                               aria-expanded="false"
                             >
@@ -238,11 +238,11 @@ const Sidebar = ({ width, xPos }) => {
                                   Blog
                                 </a>
                               </li>
-                            </ul>
+                            </ul> */}
                           </li>
                           <li>
                             <a
-                              href="javascript: void(0);"
+                              href="#"
                               className="has-arrow waves-effect"
                             >
                               <i className="fa fa-receipt"></i>

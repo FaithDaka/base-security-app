@@ -5,6 +5,7 @@ import AddGun from "./AddGun";
 import UpdateGun from "./UpdateGun";
 import AlertDialog from "../../utils/Dialog";
 import API from '../../helpers/api';
+import { getGuns } from "../../helpers/getApi";
 
 const ArmoryList = () => {
   const [add, setAdd] = useState();
@@ -24,16 +25,16 @@ const ArmoryList = () => {
 
   const handleDelete = () => handleOpen()
 
-  const getGuns = async () => {
-    try {
-      const res = await API.get("/api/gun/list");
-      console.log("Users Backend ===>", res)
-      setGuns(res.data);
-      setLoading(false);
-    } catch (error) {
-      console.log('error', error);
-    }
-  }
+  // const getGuns = async () => {
+  //   try {
+  //     const res = await API.get("/api/gun/list");
+  //     console.log("Users Backend ===>", res)
+  //     setGuns(res.data);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.log('error', error);
+  //   }
+  // }
 
   const deleteGun = () => {
     console.log('gun deleted')
@@ -41,7 +42,7 @@ const ArmoryList = () => {
   }
 
   useEffect(() => {
-    getGuns();
+    setGuns(getGuns());
   }, []);
 
   return (

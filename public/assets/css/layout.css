@@ -1,9 +1,28 @@
+.font-size-20{
+    font-size:20px;
+}
+.title{
+    text-transform: uppercase;
+    font-size:18px;
+    font-weight:600;
+    letter-spacing: 0.5px;
+}
+.th{
+    font-size:16px;
+    font-weight:500;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.guard .mb-3 label{
+    font-size:15px;
+}
+
 /* LOGIN */
 .bsa-login{
     background-color: #2a3042;
 }
 
 /* LOGIN*/
+
 /* MODAL */
 .modal {
     position: fixed;

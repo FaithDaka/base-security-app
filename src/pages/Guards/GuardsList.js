@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import LoadSpinner from "../../components/Handlers/Loadspinner";
+import API from "../../helpers/api";
 import AlertDialog from "../../utils/Dialog";
 import Guards from "./index";
 // import Pagination from '../../components/Pagination'
 
 const GuardsList = () => {
   const [open, setOpen] = useState(false);
-  //   const [show, setShow] = useState(false);
-  //   const openModal = () => setShow(true);
-  //   const closeModal = () => setShow(false);
+  const [loading, setLoading] = useState(false)
 
   //   const [currentpage, setCurrentPage] = useState(1);
   //   const [guardsPerPage] = useState(10);
@@ -16,12 +16,24 @@ const GuardsList = () => {
   //   const firstGuard = lastGuard - guardsPerPage;
   //   const currentGuards = guard.slice(firstGuard, lastGuard);
   //   const totalGuards = guard.length;
+  const [guards, setGuards] = useState([]);
 
   const handleOpen = () => setOpen(true);
   const handleNo = () => setOpen(false);
 
   const handleDelete = ()=> handleOpen();
 
+  const getGuards = async () => {
+    try {
+      const res = await API.get("/api/guard/list");
+      console.log("Users Backend ===>", res)
+      setGuards(res.data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log('error', error);
+    }
+  }
   const history = useHistory();
   const addGuard = () => {
     history.push("/guards/add");
@@ -32,7 +44,11 @@ const GuardsList = () => {
   const deleteGuard=()=>{
     console.log('guard deleted')
     handleNo();
-}
+  }
+
+  useEffect(()=>{
+    getGuards();
+  })
 
   return (
     <Guards>
@@ -79,6 +95,7 @@ const GuardsList = () => {
                 </div>
                 <div className="table-responsive">
                   <table className="table align-middle table-nowrap table-check">
+                  {loading && <LoadSpinner />}
                     <thead className="table-primary">
                       <tr>
                         <th style={{ width: "20px" }} className="align-middle">
@@ -94,14 +111,18 @@ const GuardsList = () => {
                             ></label>
                           </div>
                         </th>
-                        <th className="align-middle"> ID</th>
                         <th className="align-middle"> Name</th>
-                        <th className="align-middle"> Date Joined</th>
+                        <th className="align-middle"> Email</th>
+                        <th className="align-middle"> Phone</th>
+                        <th className="align-middle"> Sex</th>
+                        <th className="align-middle"> Role</th>
                         <th className="align-middle"> Weapon</th>
+                        <th className="align-middle"> Status</th>
                         <th className="align-middle"> Actions</th>
                       </tr>
                     </thead>
                     <tbody>
+                      {guards.map((guard)=>(
                       <tr>
                         <td>
                           <div className="form-check font-size-16">
@@ -116,10 +137,13 @@ const GuardsList = () => {
                             ></label>
                           </div>
                         </td>
-                        <td>BS-001</td>
-                        <td>John Doe</td>
-                        <td>02/10/21</td>
-                        <td style={{ textTransform: "uppercase" }}>ak-15</td>
+                        <td>{guard.fname + guard.lname}</td>
+                        <td>{guard.email}</td>
+                        <td>{guard.phone}</td>
+                        <td>{guard.sex}</td>
+                        <td>{guard.role}</td>
+                        <td>{guard.status}</td>
+                        <td>{guard.gunId}</td>
                         <td>
                           <div className="button-list">
                             <a
@@ -143,6 +167,7 @@ const GuardsList = () => {
                           </div>
                         </td>
                       </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
