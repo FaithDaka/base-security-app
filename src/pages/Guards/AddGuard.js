@@ -30,7 +30,7 @@ const AddGuard = () => {
     };
 
     setLoading(true);
-    await API.post('/api/guard/register', data)
+    await API.post('/api/guard', data)
       .then((res) => {
         setLoading(false);
         console.log('Guard added successfully', res)

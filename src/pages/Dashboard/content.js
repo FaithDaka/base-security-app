@@ -1,27 +1,31 @@
 import React, { useEffect, useState } from "react";
 import img from "../../assets/img/plainlogo.png";
+import LoadSpinner from "../../components/Handlers/Loadspinner";
 import API from "../../helpers/api";
-import { getGuards } from "../../helpers/getApi";
 
 const Content = ({ history }) => {
-  const [guards, setGuards] = useState([]);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // const getGuards = async()=>{
-  //   try{
-  //     const data = await API.get('/api/guards/list')
-  //     setGuards(data.data)
-  //     console.log("Users Backend ===>", data)
-  //   }
-  //   catch(error){
-  //     setLoading(false);
-  //     console.log('error', error);
-  //   }
-  // }
+  const guards = data.filter((a) => a.role === "guard");
+  const getGuards = async () => {
+    setLoading(true)
+    try {
+      const res = await API.get("/api/user");
+      console.log("Guard Users Backend ===>", res);
+      setData(res.data);
+      setLoading(false);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
-  useEffect(()=>{
-    setGuards(getGuards());
-  }, [guards])
+  useEffect(() => {
+    getGuards();
+  }, []);
+
+  
+
   return (
     <div>
       <div className="container-fluid">
@@ -35,7 +39,7 @@ const Content = ({ history }) => {
         <div className="row">
           <div className="col-xl-12 mb-3">
             <div className="card overflow-hidden">
-              <div className="bg-soft bg-secondary">
+              <div className="bg-soft bg-success">
                 <div className="row">
                   <div className="col-8">
                     <div className="p-3">
@@ -56,6 +60,7 @@ const Content = ({ history }) => {
                   </div>
                 </div>
               </div>
+              {loading && <LoadSpinner/>}
               <div className="card-body pt-0">
                 <div className="row align-self-end">
                   <div className="col-sm-4">
@@ -112,7 +117,7 @@ const Content = ({ history }) => {
                         >
                           Guards
                         </p>
-                        <h4 className="mb-0 font-size-20">1,235</h4>
+                        <h4 className="mb-0 font-size-20">{guards.length}</h4>
                       </div>
                       <div className="flex-shrink-0 align-self-center">
                         <div className="mini-stat-icon avatar-sm rounded-circle bg-primary">

@@ -3,22 +3,23 @@ import { useHistory } from "react-router-dom";
 import AlertDialog from "../../utils/Dialog";
 import Guards from "./index";
 import API from "../../helpers/api";
-// import Pagination from '../../components/Pagination'
+import LoadSpinner from "../../components/Handlers/Loadspinner";
+import Pagination from '../../components/Pagination'
 
 const AdminList = () => {
   const [open, setOpen] = useState(false);
   const [admin, setAdmin] = useState([]);
   const [loading, setLoading] = useState(true);
-  //   const [show, setShow] = useState(false);
-  //   const openModal = () => setShow(true);
-  //   const closeModal = () => setShow(false);
+  const admins = admin.filter(a => a.role ==='admin');
 
-  //   const [currentpage, setCurrentPage] = useState(1);
-  //   const [guardsPerPage] = useState(10);
-  //   const lastGuard = currentpage * guardsPerPage;
-  //   const firstGuard = lastGuard - guardsPerPage;
-  //   const currentGuards = guard.slice(firstGuard, lastGuard);
-  //   const totalGuards = guard.length;
+  const [currentpage, setCurrentPage] = useState(1);
+  const [adminsPerPage] = useState(10);
+  const lastAdmin = currentpage * adminsPerPage;
+  const firstAdmin = lastAdmin - adminsPerPage;
+  const currentAdmins = admins.slice(firstAdmin, lastAdmin);
+  const totalAdmins = admins.length;
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const getAdminUsers = async () => {
     try {
@@ -52,18 +53,14 @@ const AdminList = () => {
     getAdminUsers();
   }, []);
 
-  const admins = admin.filter(a => a.role ==='admin')
-
+  
   return (
     <Guards>
-      {/* <Modal show={show} close={closeModal} title="Add New Guard">
-        <AddGuard></AddGuard>
-      </Modal> */}
       <div className="container-fluid">
         <div className="row">
           <div className="col-12">
             <div className="page-title-box d-sm-flex align-items-center justify-content-between">
-              <h4 className="mb-sm-0 font-size-18">Guards</h4>
+              <h4 className="mb-sm-0 font-size-18">Administrators</h4>
             </div>
           </div>
         </div>
@@ -75,14 +72,6 @@ const AdminList = () => {
                 <div className="d-flex flex-row mb-2 justify-content-between">
                   <div className="col-sm-4">
                     <div className="search-box me-2 mb-2 d-inline-block">
-                      <div className="position-relative">
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Search..."
-                        />
-                        <i className="fa fa-search search-icon mt-3 font-size-13"></i>
-                      </div>
                     </div>
                   </div>
                   <div className="col-3">
@@ -98,9 +87,10 @@ const AdminList = () => {
                   </div>
                 </div>
                 <div className="table-responsive">
-                  <table className="table align-middle table-nowrap table-check">
+                  <table className="table align-middle table-nowrap table-check table-bordered">
+                  {loading && <LoadSpinner />}
                     <thead className="table-primary">
-                      <tr>
+                      <tr className="tr-head">
                         <th style={{ width: "20px" }} className="align-middle">
                           <div className="form-check font-size-16">
                             <input
@@ -122,9 +112,9 @@ const AdminList = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {admins.map((user) => {
+                      {currentAdmins.map((user) => {
                         return (
-                          <tr>
+                          <tr className="tr-body">
                             <td>
                               <div className="form-check font-size-16">
                                 <input
@@ -140,7 +130,7 @@ const AdminList = () => {
                             </td>
                             <td>{user.fname}</td>
                             <td>{user.lname}</td>
-                            <td>{user.email}</td>
+                            <td className="tr_email">{user.email}</td>
                             <td style={{ textTransform: "uppercase" }}>
                               {user.location}
                             </td>
@@ -179,11 +169,11 @@ const AdminList = () => {
             </div>
           </div>
         </div>
-        {/* <Pagination
-          productsPerPage={brandsPerPage}
-          totalProducts={totalBrands}
+        <Pagination
+          productsPerPage={adminsPerPage}
+          totalProducts={totalAdmins}
           paginate={paginate}
-        /> */}
+        />
       </div>
     </Guards>
   );

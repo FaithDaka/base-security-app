@@ -13,7 +13,7 @@ import AddAdmin from './pages/Admins/AddAdmin';
 import ArmoryList from './pages/Armory/ArmoryList';
 import Maintenance from './utils/maintenance';
 import PageNotFound from './utils/PageNotFound';
-import Reports from './pages/Reports';
+import ReportPage from './pages/Reports/content';
 
 
 const App = () => {
@@ -30,7 +30,7 @@ const App = () => {
       <ProtectedRoute exact path="/armory" component={ ArmoryList }/>
       <ProtectedRoute exact path="/maintenance" component={ Maintenance }/>
       <ProtectedRoute exact path="/pagenotfound" component={ PageNotFound }/>
-      <ProtectedRoute exact path="/reports" component={ Reports }/>
+      <ProtectedRoute exact path="/reports" component={ ReportPage }/>
     </Switch>
     </BrowserRouter>
   )

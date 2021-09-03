@@ -5,7 +5,8 @@ import AddGun from "./AddGun";
 import UpdateGun from "./UpdateGun";
 import AlertDialog from "../../utils/Dialog";
 import API from '../../helpers/api';
-import { getGuns } from "../../helpers/getApi";
+import LoadSpinner from "../../components/Handlers/Loadspinner";
+import Pagination from '../../components/Pagination'
 
 const ArmoryList = () => {
   const [add, setAdd] = useState();
@@ -13,6 +14,15 @@ const ArmoryList = () => {
   const [open, setOpen] = useState(false);
   const [guns, setGuns] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [currentpage, setCurrentPage] = useState(1);
+  const [gunsPerPage] = useState(10);
+  const lastGun = currentpage * gunsPerPage;
+  const firstGun = lastGun - gunsPerPage;
+  const currentGuns = guns.slice(firstGun, lastGun);
+  const totalGuns = guns.length;
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const openAdd = () => setAdd(true);
   const closeAdd = () => setAdd(false);
@@ -25,24 +35,39 @@ const ArmoryList = () => {
 
   const handleDelete = () => handleOpen()
 
-  // const getGuns = async () => {
-  //   try {
-  //     const res = await API.get("/api/gun/list");
-  //     console.log("Users Backend ===>", res)
-  //     setGuns(res.data);
-  //     setLoading(false);
-  //   } catch (error) {
-  //     console.log('error', error);
-  //   }
-  // }
+  const getGuns = async () => {
+    setLoading(true)
+    try {
+      const res = await API.get("/api/gun");
+      console.log("Users Backend ===>", res)
+      setGuns(res.data);
+      setLoading(false);
+    } 
+    catch (error) {
+      console.log('error', error);
+      setLoading(false)
+    }
+  }
 
-  const deleteGun = () => {
-    console.log('gun deleted')
-    handleNo();
+  const deleteGun = async(id) => {
+    setLoading(true)
+    try{
+      const res = await API.delete(`/api/gun/${id}`)
+      .then(()=>{
+        console.log('gun deleted', res)
+        setLoading(false)
+      })
+    }
+    catch(error){
+      setLoading(false)
+      console.log('Gun delete error', error);
+    }
+    setOpen(false);
+    getGuns();
   }
 
   useEffect(() => {
-    setGuns(getGuns());
+    getGuns();
   }, []);
 
   return (
@@ -92,9 +117,10 @@ const ArmoryList = () => {
                   </div>
                 </div>
                 <div className="table-responsive">
-                  <table className="table align-middle table-nowrap table-check">
+                  <table className="table align-middle table-nowrap table-check table-bordered">
+                  {loading && <LoadSpinner />}
                     <thead className="table-primary">
-                      <tr>
+                      <tr className="tr-head">
                         <th style={{ width: "20px" }} className="align-middle">
                           <div className="form-check font-size-16">
                             <input
@@ -116,9 +142,9 @@ const ArmoryList = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {guns.map((gun) => {
+                      {currentGuns.map((gun) => {
                         return (
-                          <tr>
+                          <tr key={gun.id} className="tr-body">
                             <td>
                               <div className="form-check font-size-16">
                                 <input
@@ -168,11 +194,11 @@ const ArmoryList = () => {
             </div>
           </div>
         </div>
-        {/* <Pagination
-          productsPerPage={brandsPerPage}
-          totalProducts={totalBrands}
+        <Pagination
+          productsPerPage={gunsPerPage}
+          totalProducts={totalGuns}
           paginate={paginate}
-        /> */}
+        />
       </div>
     </Armory>
   );
