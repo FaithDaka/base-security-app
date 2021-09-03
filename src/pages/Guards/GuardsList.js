@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable no-undef */
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import AlertDialog from "../../utils/Dialog";
 import Guards from "./index";
+import API from "../../helpers/api";
 // import Pagination from '../../components/Pagination'
 
 const GuardsList = () => {
   const [open, setOpen] = useState(false);
+  const [guardUsers, setGuardUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
   //   const [show, setShow] = useState(false);
   //   const openModal = () => setShow(true);
   //   const closeModal = () => setShow(false);
@@ -20,7 +25,7 @@ const GuardsList = () => {
   const handleOpen = () => setOpen(true);
   const handleNo = () => setOpen(false);
 
-  const handleDelete = ()=> handleOpen();
+  const handleDelete = () => handleOpen();
 
   const history = useHistory();
   const addGuard = () => {
@@ -29,10 +34,27 @@ const GuardsList = () => {
   const updateGuard = () => {
     history.push("/guards/update");
   };
-  const deleteGuard=()=>{
-    console.log('guard deleted')
+  const deleteGuard = () => {
+    console.log("guard deleted");
     handleNo();
-}
+  };
+
+  const getGuards = async () => {
+    try {
+      const res = await API.get("/api/user");
+      console.log("Guard Users Backend ===>", res);
+      setGuardUsers(res.data);
+      setLoading(false);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  useEffect(() => {
+    getGuards();
+  }, []);
+
+  const guards = guardUsers.filter((a) => a.role === "guard");
 
   return (
     <Guards>
@@ -47,7 +69,7 @@ const GuardsList = () => {
             </div>
           </div>
         </div>
-        <AlertDialog open={open} Yes={deleteGuard} No={handleNo}/>
+        <AlertDialog open={open} Yes={deleteGuard} No={handleNo} />
         <div className="row">
           <div className="col-12">
             <div className="card">
@@ -94,55 +116,64 @@ const GuardsList = () => {
                             ></label>
                           </div>
                         </th>
-                        <th className="align-middle"> ID</th>
-                        <th className="align-middle"> Name</th>
-                        <th className="align-middle"> Date Joined</th>
-                        <th className="align-middle"> Weapon</th>
+                        <th className="align-middle"> FirstName</th>
+                        <th className="align-middle"> LastName</th>
+                        <th className="align-middle"> Email</th>
+                        <th className="align-middle"> Location</th>
                         <th className="align-middle"> Actions</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>
-                          <div className="form-check font-size-16">
-                            <input
-                              className="form-check-input"
-                              type="checkbox"
-                              id="orderidcheck01"
-                            />
-                            <label
-                              className="form-check-label"
-                              htmlFor="orderidcheck01"
-                            ></label>
-                          </div>
-                        </td>
-                        <td>BS-001</td>
-                        <td>John Doe</td>
-                        <td>02/10/21</td>
-                        <td style={{ textTransform: "uppercase" }}>ak-15</td>
-                        <td>
-                          <div className="button-list">
-                            <a
-                              href="#"
-                              className="btn-tab btn-sucess-rgba"
-                              title="Update details"
-                              style={{ marginRight: "20px", color: "green" }}
-                              onClick={() => updateGuard()}
-                            >
-                              <i className="far fa-edit" />
-                            </a>
-                            <a
-                              href="#"
-                              className="btn-tab btn-danger-rgba"
-                              style={{ color: "red" }}
-                              title="Delete guard"
-                              onClick={()=>handleDelete()}
-                            >
-                              <i className="far fa-trash-alt" />
-                            </a>
-                          </div>
-                        </td>
-                      </tr>
+                      {guards.map((user) => {
+                        return (
+                          <tr>
+                            <td>
+                              <div className="form-check font-size-16">
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  id="orderidcheck01"
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="orderidcheck01"
+                                ></label>
+                              </div>
+                            </td>
+                            <td>{user.fname}</td>
+                            <td>{user.lname}</td>
+                            <td>{user.email}</td>
+                            <td style={{ textTransform: "uppercase" }}>
+                              {user.location}
+                            </td>
+                            <td>
+                              <div className="button-list">
+                                <a
+                                  href="#"
+                                  className="btn-tab btn-sucess-rgba"
+                                  title="Update details"
+                                  style={{
+                                    marginRight: "20px",
+                                    color: "green",
+                                  }}
+                                  onClick={() => updateGuard()}
+                                >
+                                  <i className="far fa-edit" />
+                                </a>
+                                <a
+                                  href="#"
+                                  className="btn-tab btn-danger-rgba"
+                                  style={{ color: "red" }}
+                                  title="Delete guard"
+                                  onClick={() => handleDelete()}
+                                >
+                                  <i className="far fa-trash-alt" />
+                                </a>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>
