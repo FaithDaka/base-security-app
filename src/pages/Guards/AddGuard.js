@@ -1,8 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import LoadSpinner from "../../components/Handlers/Loadspinner";
+import API from "../../helpers/api";
 import Guards from "./index";
 
 const AddGuard = () => {
+  const [fName, setFName] = useState('');
+  const [lName, setLName] = useState('');
+  const [sex, setSex] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState();
+  const [role, setRole] = useState('');
+  const [status, setStatus] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const data = {
+      fname: fName,
+      lname: lName,
+      sex: sex,
+      email:email,
+      phone: phone,
+      role: role,
+      maritalStatus: status,
+      password: password
+    };
+
+    setLoading(true);
+    await API.post('/api/guard', data)
+      .then((res) => {
+        setLoading(false);
+        console.log('Guard added successfully', res)
+      })
+      .catch((res) => {
+        setLoading(false);
+        console.log('Failed to add guard', res)
+      });
+  };
+
   return (
     <Guards>
       <div className="container-fluid">
@@ -23,72 +61,90 @@ const AddGuard = () => {
             <div className="card">
               <div className="card-body">
                 <h4 className="card-title">Basic Information</h4>
-                <p className="card-title-desc">Fill all information below</p>
-                <form>
-                  <div className="row">
+                <p className="card-title-desc">Fill all the information below</p>
+                <form onSubmit={handleSubmit}>
+                  <div className="row guard">
                     <div className="col-sm-6">
                       <div className="mb-3">
-                        <label htmlFor="productname">Product Name</label>
+                        <label>First Name</label>
                         <input
-                          id="productname"
-                          name="productname"
                           type="text"
                           className="form-control"
-                        />
+                          value={fName}
+                          onChange={(e) => setFName(e.target.value)}
+                        required/>
                       </div>
                       <div className="mb-3">
-                        <label htmlFor="manufacturername">
-                          Manufacturer Name
+                        <label>
+                          Last Name
                         </label>
                         <input
-                          id="manufacturername"
-                          name="manufacturername"
                           type="text"
                           className="form-control"
-                        />
+                          value={lName}
+                          onChange={(e) => setLName(e.target.value)}
+                        required/>
                       </div>
                       <div className="mb-3">
-                        <label htmlFor="manufacturerbrand">
-                          Manufacturer Brand
-                        </label>
+                        <label>Email</label>
                         <input
-                          id="manufacturerbrand"
-                          name="manufacturerbrand"
-                          type="text"
+                          type="email"
                           className="form-control"
-                        />
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                        required/>
                       </div>
                       <div className="mb-3">
-                        <label htmlFor="price">Price</label>
+                        <label >Password</label>
                         <input
-                          id="price"
-                          name="price"
-                          type="text"
-                          className="form-control"
-                        />
+                        className="form-control"
+                        value={password}
+                        onChange={(e)=> setPassword(e.target.value)}
+                        required/>
                       </div>
                     </div>
                     <div className="col-sm-6">
+                    <div className="mb-3">
+                        <label>Phone Number</label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          value={phone}
+                          onChange={(e) => setPhone(e.target.value)}
+                        required/>
+                      </div>
                       <div className="mb-3">
-                        <label className="control-label">Category</label>
+                        <label >Guard Role</label>
+                        <input
+                        className="form-control"
+                        value={role}
+                        onChange={(e)=> setRole(e.target.value)}/>
+                      </div>
+                      <div className="mb-3">
+                        <label>
+                          Sex
+                        </label>
                         <select
-                          className="form-control select2 select2-hidden-accessible"
-                          data-select2-id="1"
-                          tabIndex="-1"
-                          aria-hidden="true"
-                        >
-                          <option data-select2-id="3">Select</option>
-                          <option value="FA">Fashion</option>
-                          <option value="EL">Electronic</option>
+                        className="form-control select2 select2-hidden-accessible"
+                        value={sex}
+                        onChange={(e) => setSex(e.target.value)}>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
                         </select>
                       </div>
                       <div className="mb-3">
-                        <label htmlFor="productdesc">Product Description</label>
-                        <textarea
-                          className="form-control"
-                          id="productdesc"
-                          rows="5"
-                        ></textarea>
+                        <label>
+                          Marital Status
+                        </label>
+                        <select
+                        className="form-control select2 select2-hidden-accessible"
+                        value={status}
+                        onChange={(e) => setStatus(e.target.value)}>
+                        <option value="Single">Single</option>
+                        <option value="Married">Married</option>
+                        <option value="Divorced">Divorced</option>
+                        </select>
                       </div>
                     </div>
                   </div>
@@ -97,7 +153,7 @@ const AddGuard = () => {
                       type="submit"
                       className="btn btn-primary waves-effect waves-light"
                     >
-                      Save Changes
+                      {loading ? <LoadSpinner /> : 'Add Guard'}
                     </button>
                   </div>
                 </form>

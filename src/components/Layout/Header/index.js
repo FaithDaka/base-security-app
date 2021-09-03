@@ -1,7 +1,9 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import logo from '../../../assets/img/logo.png'
 
-const Header = ({ toggle, margin, history }) => {
+const Header = ({ toggle, margin }) => {
+  const history = useHistory();
   const logout = () => {
     localStorage.removeItem("user");
     history.push("/")
@@ -118,11 +120,12 @@ const Header = ({ toggle, margin, history }) => {
             </div>
             <div className="dropdown d-inline-block">
               <button
+                title="logout"
                 type="button"
                 className="btn header-item noti-icon right-bar-toggle waves-effect"
                 onClick={logout}
               >
-                <i className="fa fa-cog"></i>
+                <i className="fas fa-power"></i>
               </button>
             </div>
           </div>

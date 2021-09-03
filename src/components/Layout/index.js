@@ -26,10 +26,10 @@ const Layout = ({ children }) => {
     setMargin(width);
     setHeader(0);
   }, []);
-  
+
   return (
     <div className="layout-wrapper">
-      <Sidebar width={width} xPos={xPosition}></Sidebar>
+      <Sidebar width={margin} xPos={xPosition}></Sidebar>
       <div style={{ marginLeft: `${margin}px` }}>
         <div id="page-topbar">
           <Header toggle={ToggleMenu} margin={header}></Header>
