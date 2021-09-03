@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/role-supports-aria-props */
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -54,35 +56,6 @@ const Sidebar = ({ width, xPos }) => {
                                 Dashboard
                               </span>
                             </Link>
-                            {/* <ul
-                              className="sub-menu mm-collapse mm-show"
-                              aria-expanded="false"
-                            >
-                              <li className="mm-active">
-                                <a
-                                  href="#"
-                                  key="t-default"
-                                  className="active"
-                                >
-                                  Default
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#" key="t-saas">
-                                  Saas
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#" key="t-crypto">
-                                  Crypto
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#" key="t-blog">
-                                  Blog
-                                </a>
-                              </li>
-                            </ul> */}
                           </li>
                           <li>
                             <Link

@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable no-undef */
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import LoadSpinner from "../../components/Handlers/Loadspinner";
 import API from "../../helpers/api";
@@ -9,6 +11,10 @@ import Guards from "./index";
 const GuardsList = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false)
+  const [guardUsers, setGuardUsers] = useState([]);
+  //   const [show, setShow] = useState(false);
+  //   const openModal = () => setShow(true);
+  //   const closeModal = () => setShow(false);
 
   //   const [currentpage, setCurrentPage] = useState(1);
   //   const [guardsPerPage] = useState(10);
@@ -16,24 +22,23 @@ const GuardsList = () => {
   //   const firstGuard = lastGuard - guardsPerPage;
   //   const currentGuards = guard.slice(firstGuard, lastGuard);
   //   const totalGuards = guard.length;
-  const [guards, setGuards] = useState([]);
 
   const handleOpen = () => setOpen(true);
   const handleNo = () => setOpen(false);
 
-  const handleDelete = ()=> handleOpen();
+  const handleDelete = () => handleOpen();
 
-  const getGuards = async () => {
-    try {
-      const res = await API.get("/api/guard/list");
-      console.log("Users Backend ===>", res)
-      setGuards(res.data);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      console.log('error', error);
-    }
-  }
+  // const getGuards = async () => {
+  //   try {
+  //     const res = await API.get("/api/guard/list");
+  //     console.log("Users Backend ===>", res)
+  //     setGuards(res.data);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     setLoading(false);
+  //     console.log('error', error);
+  //   }
+  // }
   const history = useHistory();
   const addGuard = () => {
     history.push("/guards/add");
@@ -41,14 +46,27 @@ const GuardsList = () => {
   const updateGuard = () => {
     history.push("/guards/update");
   };
-  const deleteGuard=()=>{
-    console.log('guard deleted')
+  const deleteGuard = () => {
+    console.log("guard deleted");
     handleNo();
-  }
+  };
 
-  useEffect(()=>{
+  const getGuards = async () => {
+    try {
+      const res = await API.get("/api/user");
+      console.log("Guard Users Backend ===>", res);
+      setGuardUsers(res.data);
+      setLoading(false);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  useEffect(() => {
     getGuards();
-  })
+  }, []);
+
+  const guards = guardUsers.filter((a) => a.role === "guard");
 
   return (
     <Guards>
@@ -63,7 +81,7 @@ const GuardsList = () => {
             </div>
           </div>
         </div>
-        <AlertDialog open={open} Yes={deleteGuard} No={handleNo}/>
+        <AlertDialog open={open} Yes={deleteGuard} No={handleNo} />
         <div className="row">
           <div className="col-12">
             <div className="card">
