@@ -1,35 +1,39 @@
 import React, { useState } from "react";
-import API from '../../helpers/api';
+import LoadSpinner from "../../components/Handlers/Loadspinner";
+import API from "../../helpers/api";
 
-const AddGun = ({close, guns}) => {
-  const [name, setName] = useState('')
-  const [serialNumber, setSerialNumber] = useState('')
-  const [status, setStatus] = useState('Active')
-  const [isAssigned, setisAssigned] = useState(false)
+const AddGun = ({ close, guns }) => {
+  const [name, setName] = useState("");
+  const [serialNumber, setSerialNumber] = useState("");
+  const [status, setStatus] = useState("Active");
+  const [isAssigned, setisAssigned] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    const data = { name, serialNumber, status, isAssigned }
+    const data = { name, serialNumber, status, isAssigned };
 
     try {
-      const response = await API.post('/api/gun/register', data);
-      close()
-      guns()
-      console.log("Posted Data ===>", response)
-
+      const response = await API.post("/api/gun", data);
+      console.log("Posted Data ===>", response);
+      setLoading(false);
+      close();
+      guns();
     } catch (error) {
-      console.log('error', error);
+      console.log("error", error);
+      setLoading(false);
     }
-  }
+    };
+
   return (
     <>
       <div className="card">
-        <div className="card-header"></div>
-        <div className="card-body">
+        <div className="card-body gun">
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label>Name:</label>
+              <label>Name</label>
               <input
                 type="text"
                 className="form-control"
@@ -37,7 +41,9 @@ const AddGun = ({close, guns}) => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              <label>Serial Number:</label>
+            </div>
+            <div className="form-group">
+              <label>Serial Number</label>
               <input
                 type="text"
                 className="form-control"
@@ -47,10 +53,30 @@ const AddGun = ({close, guns}) => {
               />
             </div>
             <div className="form-group">
-              <label>Date Registered:</label>
-              <input type="date" className="form-control" />
+              <label>Assigned</label>
+              <select
+                className="form-control select2 select2-hidden-accessible"
+                value={isAssigned}
+                onChange={(e) => setisAssigned(e.target.value)}
+              >
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+              </select>
             </div>
-            <button type="submit" className="btn btn-primary"> Save</button>
+            <div className="form-group">
+              <label>Gun Status</label>
+              <select
+                className="form-control select2 select2-hidden-accessible"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+              >
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+            <button type="submit" className="btn btn-primary">
+              {loading ? <LoadSpinner /> : 'Save Gun'}
+            </button>
           </form>
         </div>
       </div>
