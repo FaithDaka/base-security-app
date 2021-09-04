@@ -4,19 +4,20 @@ import Modal from "../../components/Modal";
 import AddGun from "./AddGun";
 import UpdateGun from "./UpdateGun";
 import AlertDialog from "../../utils/Dialog";
-import API from '../../helpers/api';
+import API from "../../helpers/api";
 import LoadSpinner from "../../components/Handlers/Loadspinner";
-import Pagination from '../../components/Pagination'
+import Pagination from "../../components/Pagination";
 
 const ArmoryList = () => {
   const [add, setAdd] = useState();
   const [update, setUpdate] = useState();
+  const [id, setId] = useState();
   const [open, setOpen] = useState(false);
   const [guns, setGuns] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [currentpage, setCurrentPage] = useState(1);
-  const [gunsPerPage] = useState(10);
+  const [gunsPerPage] = useState(8);
   const lastGun = currentpage * gunsPerPage;
   const firstGun = lastGun - gunsPerPage;
   const currentGuns = guns.slice(firstGun, lastGun);
@@ -27,44 +28,46 @@ const ArmoryList = () => {
   const openAdd = () => setAdd(true);
   const closeAdd = () => setAdd(false);
 
-  const openUpdate = () => setUpdate(true);
+  const openUpdate = (e, _id) => {
+    if(e){
+    setId(_id)
+    setUpdate(true);
+    }
+  }
   const closeUpdate = () => setUpdate(false);
 
   const handleOpen = () => setOpen(true);
   const handleNo = () => setOpen(false);
 
-  const handleDelete = () => handleOpen()
+  const handleDelete = () => handleOpen();
 
   const getGuns = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
       const res = await API.get("/api/gun");
-      console.log("Users Backend ===>", res)
+      console.log("Users Backend ===>", res);
       setGuns(res.data);
       setLoading(false);
-    } 
-    catch (error) {
-      console.log('error', error);
-      setLoading(false)
+    } catch (error) {
+      console.log("error", error);
+      setLoading(false);
     }
-  }
+  };
 
-  const deleteGun = async(id) => {
-    setLoading(true)
-    try{
-      const res = await API.delete(`/api/gun/${id}`)
-      .then(()=>{
-        console.log('gun deleted', res)
-        setLoading(false)
-      })
-    }
-    catch(error){
-      setLoading(false)
-      console.log('Gun delete error', error);
+  const deleteGun = async (id) => {
+    setLoading(true);
+    try {
+      const res = await API.delete(`/api/gun/${id}`).then(() => {
+        console.log("gun deleted", res);
+        setLoading(false);
+      });
+    } catch (error) {
+      setLoading(false);
+      console.log("Gun delete error", error);
     }
     setOpen(false);
     getGuns();
-  }
+  };
 
   useEffect(() => {
     getGuns();
@@ -76,7 +79,7 @@ const ArmoryList = () => {
         <AddGun close={closeAdd} guns={getGuns} />
       </Modal>
       <Modal show={update} close={closeUpdate} title="Update Gun Details">
-        <UpdateGun />
+        <UpdateGun close={closeUpdate} guns={getGuns} id={id} show={update}/>
       </Modal>
       <div className="container-fluid">
         <div className="row">
@@ -111,14 +114,15 @@ const ArmoryList = () => {
                         type="button"
                         className="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
                       >
-                        <i className="fa fa-plus-circle me-1"></i> Add Gun to Armory
+                        <i className="fa fa-plus-circle me-1"></i> Add Gun to
+                        Armory
                       </button>
                     </div>
                   </div>
                 </div>
                 <div className="table-responsive">
                   <table className="table align-middle table-nowrap table-check table-bordered">
-                  {loading && <LoadSpinner />}
+                    {loading && <LoadSpinner />}
                     <thead className="table-primary">
                       <tr className="tr-head">
                         <th style={{ width: "20px" }} className="align-middle">
@@ -136,15 +140,15 @@ const ArmoryList = () => {
                         </th>
                         <th className="align-middle"> Name</th>
                         <th className="align-middle"> Serial Number</th>
-                        <th className="align-middle"> Status</th>
                         <th className="align-middle"> Assigned</th>
+                        <th className="align-middle"> Status</th>
                         <th className="align-middle"> Actions</th>
                       </tr>
                     </thead>
                     <tbody>
                       {currentGuns.map((gun) => {
                         return (
-                          <tr key={gun.id} className="tr-body">
+                          <tr key={gun._id} className="tr-body">
                             <td>
                               <div className="form-check font-size-16">
                                 <input
@@ -160,16 +164,22 @@ const ArmoryList = () => {
                             </td>
                             <td>{gun.name}</td>
                             <td>{gun.serialNumber}</td>
+                            {
+                            gun.isAssigned === true ? 
+                            <td>Yes</td> : <td>No</td>
+                            }
                             <td>{gun.status}</td>
-                            <td>{gun.isAssigned}</td>
                             <td>
                               <div className="button-list">
                                 <a
                                   href="#"
                                   className="btn-tab btn-sucess-rgba"
                                   title="Update details"
-                                  style={{ marginRight: "20px", color: "green" }}
-                                  onClick={openUpdate}
+                                  style={{
+                                    marginRight: "20px",
+                                    color: "green",
+                                  }}
+                                  onClick={(e)=>openUpdate(e, gun._id)}
                                 >
                                   <i className="far fa-edit" />
                                 </a>
@@ -178,14 +188,14 @@ const ArmoryList = () => {
                                   className="btn-tab btn-danger-rgba"
                                   style={{ color: "red" }}
                                   title="Delete guard"
-                                  onClick={() => handleDelete()}
+                                  onClick={(e) => handleDelete()}
                                 >
                                   <i className="far fa-trash-alt" />
                                 </a>
                               </div>
                             </td>
                           </tr>
-                        )
+                        );
                       })}
                     </tbody>
                   </table>
