@@ -20,7 +20,7 @@ const AddAdmin = ({ history }) => {
         const data = { fname, lname, phone, location, sex, email, password, role, maritualStatus }
 
         try {
-            const response = await API.post('/api/admin/register', data);
+            const response = await API.post('/api/auth/register', data);
             console.log("Posted Data ===>", response)
                 history.push("/admins");
 
