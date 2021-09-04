@@ -4,13 +4,13 @@ import LoadSpinner from "../../components/Handlers/Loadspinner";
 import API from "../../helpers/api";
 import Guards from "./index";
 
-const AddGuard = () => {
+const AddGuard = ({history}) => {
   const [fName, setFName] = useState('');
   const [lName, setLName] = useState('');
   const [sex, setSex] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState();
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState('guard');
   const [status, setStatus] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -24,15 +24,16 @@ const AddGuard = () => {
       sex: sex,
       email:email,
       phone: phone,
-      role: role,
+      role,
       maritalStatus: status,
       password: password
     };
 
     setLoading(true);
-    await API.post('/api/guard', data)
+    await API.post('/api/auth/register', data)
       .then((res) => {
         setLoading(false);
+        history.push("/guards");
         console.log('Guard added successfully', res)
       })
       .catch((res) => {
