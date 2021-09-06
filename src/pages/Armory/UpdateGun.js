@@ -4,13 +4,14 @@ import API from "../../helpers/api";
 import SweetAlert from "react-bootstrap-sweetalert";
 
 const UpdateGun = ({close, guns, id, show}) => {
-  const [gun, setGun]=useState({
-    name:'', serialNumber:'', status:'', isAssigned:false
-  })
-  // const [name, setName] = useState("");
-  // const [serialNumber, setSerialNumber] = useState("");
-  // const [status, setStatus] = useState("Active");
-  // const [isAssigned, setisAssigned] = useState(false);
+  // const [gun, setGun]=useState({
+  //   name:'', serialNumber:'', status:'', isAssigned:false
+  // })
+  const [name, setName] = useState("");
+  const [serialNumber, setSerialNumber] = useState("");
+  const [status, setStatus] = useState("Active");
+  const [isAssigned, setisAssigned] = useState(false);
+
   const [update, setUpdate] = useState({});
   const [data, setData] = useState({})
 
@@ -26,12 +27,16 @@ const UpdateGun = ({close, guns, id, show}) => {
         const res = await API.get(`/api/gun/${id}`)
           console.log('Fetched gun', res)
           setLoading(false);
-          setData({
-            name: res.data.name,
-            serialNumber: res.data.serialNumber,
-            status: res.data.status,
-            isAssigned: res.data.isAssigned,
-          });
+          // setData({
+          //   name: res.data.name,
+          //   serialNumber: res.data.serialNumber,
+          //   status: res.data.status,
+          //   isAssigned: res.data.isAssigned,
+          // });
+          setName(res.data.name)
+          setSerialNumber(res.data.serialNumber)
+          setStatus(res.data.status)
+          setisAssigned(res.data.isAssigned)
       } catch (error) {
         console.log("Fetch gun details error", error);
         setLoading(false)
@@ -40,21 +45,21 @@ const UpdateGun = ({close, guns, id, show}) => {
     else setLoading(false);
   };
 
-  const handleChange = event => {
-    const { name, value } = event.target
-    setGun({ ...gun, [name]: value })
-  }
+  // const handleChange = event => {
+  //   const { name, value } = event.target
+  //   setGun({ ...gun, [name]: value })
+  // }
 
   const handleSubmit = async(e)=>{
     e.preventDefault();
     const newData = {
-      gun
+      name, serialNumber, isAssigned, status
     }
     setUpdate(newData);
     setLoading(true);
 
     try{
-    const res = await API.patch(`/api/gun/${id}`, update)
+    const res = await API.patch(`/api/gun/${id}`, newData)
     setLoading(false);
     console.log('Updated gun', res);
     close();
@@ -72,7 +77,7 @@ const UpdateGun = ({close, guns, id, show}) => {
 
   useEffect(()=>{
     getGun();
-  })
+  },[id])
 
   return (
     <div>
@@ -103,9 +108,9 @@ const UpdateGun = ({close, guns, id, show}) => {
                 type="text"
                 className="form-control"
                 placeholder=""
-                name="Name"
-                value={data.name}
-                onChange={(e)=>handleChange(e)
+                name="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)
                 }
                required/>
             </div>
@@ -116,16 +121,16 @@ const UpdateGun = ({close, guns, id, show}) => {
                 className="form-control"
                 placeholder=""
                 name="serialNumber"
-                value={data.serialNumber}
-                onChange={(e)=>handleChange(e)}
+                value={serialNumber}
+                onChange={(e) => setSerialNumber(e.target.value)}
                 required/>
             </div>
             <div className="form-group">
               <label>Assigned</label>
               <select
                 className="form-control select2 select2-hidden-accessible"
-                value={data.isAssigned}
-                onChange={(e)=>handleChange(e)}
+                value={isAssigned}
+                onChange={(e) => setisAssigned(e.target.value)}
               >
                 <option value="true">Yes</option>
                 <option value="false">No</option>
@@ -135,8 +140,8 @@ const UpdateGun = ({close, guns, id, show}) => {
               <label>Gun Status</label>
               <select
                 className="form-control select2 select2-hidden-accessible"
-                value={data.status}
-                onChange={(e)=>handleChange(e)}
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
               >
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
