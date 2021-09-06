@@ -12,7 +12,8 @@ import SweetAlert from "react-bootstrap-sweetalert";
 const ArmoryList = () => {
   const [add, setAdd] = useState();
   const [update, setUpdate] = useState();
-  const [id, setId] = useState();
+  const [uId, setUid] = useState();
+  const [dId, setDid] = useState();
   const [open, setOpen] = useState(false);
   const [guns, setGuns] = useState([]);
 
@@ -36,7 +37,7 @@ const ArmoryList = () => {
 
   const openUpdate = (e, _id) => {
     if (e) {
-      setId(_id);
+      setUid(_id);
       setUpdate(true);
     }
   };
@@ -45,7 +46,10 @@ const ArmoryList = () => {
   const handleOpen = () => setOpen(true);
   const handleNo = () => setOpen(false);
 
-  const handleDelete = () => handleOpen();
+  const handleDelete = (id) => {
+    setDid(id)
+    handleOpen();
+  }
 
   const getGuns = async () => {
     setLoading(true);
@@ -89,7 +93,7 @@ const ArmoryList = () => {
         <AddGun close={closeAdd} guns={getGuns} />
       </Modal>
       <Modal show={update} close={closeUpdate} title="Update Gun Details">
-        <UpdateGun close={closeUpdate} guns={getGuns} id={id} show={update} />
+        <UpdateGun close={closeUpdate} guns={getGuns} id={uId} show={update} />
       </Modal>
       <div className="container-fluid">
         <div className="row">
@@ -99,7 +103,6 @@ const ArmoryList = () => {
             </div>
           </div>
         </div>
-        {loading && <LoadSpinner />}
         {showAlert && success && (
           <SweetAlert
             success
@@ -118,7 +121,6 @@ const ArmoryList = () => {
             timeout={3000}
           />
         )}
-        <AlertDialog open={open} Yes={deleteGun} No={handleNo} />
         <div className="row">
           <div className="col-12">
             <div className="card">
@@ -149,8 +151,10 @@ const ArmoryList = () => {
                     </div>
                   </div>
                 </div>
+                <AlertDialog open={open} Yes={()=>deleteGun(dId)} No={handleNo} />
                 <div className="table-responsive">
                   <table className="table align-middle table-nowrap table-check table-bordered">
+                  {loading && <LoadSpinner />}
                     <thead className="table-primary">
                       <tr className="tr-head">
                         <th style={{ width: "20px" }} className="align-middle">
@@ -217,7 +221,7 @@ const ArmoryList = () => {
                                   className="btn-tab btn-danger-rgba"
                                   style={{ color: "red" }}
                                   title="Delete guard"
-                                  onClick={(e) => handleDelete()}
+                                  onClick={() => handleDelete(gun._id)}
                                 >
                                   <i className="far fa-trash-alt" />
                                 </a>
