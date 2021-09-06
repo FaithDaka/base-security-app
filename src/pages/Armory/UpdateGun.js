@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
-import LoadSpinner from "../../components/Handlers/Loadspinner";
+import LoadHandler from "../../components/Handlers/LoadHandler";
 import API from "../../helpers/api";
+import SweetAlert from "react-bootstrap-sweetalert";
 
 const UpdateGun = ({close, guns, id, show}) => {
   const [name, setName] = useState("");
   const [serialNumber, setSerialNumber] = useState("");
   const [status, setStatus] = useState("Active");
   const [isAssigned, setisAssigned] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [update, setUpdate] = useState({});
   const [data, setData] = useState({})
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const hideAlert = () => setShowAlert(false);
 
   const getGun = async () => {
     setLoading(true);
@@ -45,11 +51,15 @@ const UpdateGun = ({close, guns, id, show}) => {
     setLoading(false);
     console.log('Updated gun', res);
     close();
+    setSuccess(true);
+    setShowAlert(true);
     guns();
     }
     catch(err){
       console.log('Gun update error', err);
-      setLoading(false)
+      setLoading(false);
+      setError(true);
+      setShowAlert(true);
     }
   }
 
@@ -59,6 +69,24 @@ const UpdateGun = ({close, guns, id, show}) => {
 
   return (
     <div>
+      {showAlert && success && (
+        <SweetAlert
+          success
+          onConfirm={() => hideAlert()}
+          onCancel={() => hideAlert()}
+          title="Gun Details Updated"
+          timeout={3000}
+        />
+      )}
+      {showAlert && error && (
+        <SweetAlert
+          danger
+          onConfirm={() => hideAlert()}
+          onCancel={() => hideAlert()}
+          title="There was an error. Please try again!"
+          timeout={3000}
+        />
+      )}
       <div className="card">
         <div className="card-body gun">
           <form onSubmit={handleSubmit}>
@@ -72,7 +100,7 @@ const UpdateGun = ({close, guns, id, show}) => {
                 onChange={(e)=>{
                   setName(e.target.value)
                 }}
-              />
+               required/>
             </div>
             <div className="form-group">
               <label>Serial Number</label>
@@ -85,7 +113,7 @@ const UpdateGun = ({close, guns, id, show}) => {
                 onChange={(e)=>{
                   setSerialNumber(e.target.value)
                 }}
-              />
+                required/>
             </div>
             <div className="form-group">
               <label>Assigned</label>
@@ -110,7 +138,7 @@ const UpdateGun = ({close, guns, id, show}) => {
               </select>
             </div>
             <button type="submit" className="btn btn-primary">
-              {loading ? <LoadSpinner /> : 'Update Gun'}
+              {loading ? <LoadHandler /> : 'Update Gun'}
             </button>
           </form>
         </div>

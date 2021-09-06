@@ -25,7 +25,6 @@ const Content = ({ history }) => {
   }, []);
 
   
-
   return (
     <div>
       <div className="container-fluid">

@@ -1,6 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import logo from '../../../assets/img/logo.png'
+import plain from '../../../assets/img/plainlogo.png'
+import logo from '../../../assets/img/base-dashboard-logo.png'
+import logo_sm from '../../../assets/img/base-dashboard-logo-black.png'
 
 const Header = ({ toggle, margin }) => {
   const history = useHistory();
@@ -16,11 +18,11 @@ const Header = ({ toggle, margin }) => {
             <div className="navbar-brand-box">
               <a className="logo">
                 <span className="logo-sm" >
-                  <img src={logo} style={{height:'40px'}}/>
+                  <img src={logo_sm} style={{height:'30px'}}/>
                 </span>
                 <span className="logo-lg">
                   <img src={logo} 
-                  style={{height:'70px'}}/>
+                  style={{height:'65px'}}/>
                 </span>
               </a>
             </div>
@@ -53,7 +55,7 @@ const Header = ({ toggle, margin }) => {
               >
                 <img
                   className="rounded-circle header-profile-user"
-                  src={logo}
+                  src={plain}
                   alt="avatar"
                 />
                 <span className="d-none d-xl-inline-block ms-1"></span>
@@ -64,19 +66,20 @@ const Header = ({ toggle, margin }) => {
               <button
                 type="button"
                 className="btn header-item noti-icon right-bar-toggle waves-effect"
+                onClick={logout}
               >
-                <i className="fa fa-cog font-size-20"></i>
+                <i className="fas fa-power-off font-size-24 text-danger"></i>
               </button>
             </div>
           </div>
         </div>
       ) : (
-        <div className="navbar-header" style={{ marginLeft:'60px' }}>
+        <div className="navbar-header" style={{ marginLeft:'50px' }}>
           <div className="d-flex">
             <div className="header-logo">
               <a className="logo-link">
                 <span className="logo-sm">
-                  <img src={logo} style={{height:'65px', marginLeft:'-30%'}}/>
+                  <img src={logo_sm} style={{height:'68px', marginLeft:'-10%'}}/>
                 </span>
                 <span className="logo-sm">
                   <img />
@@ -111,7 +114,7 @@ const Header = ({ toggle, margin }) => {
               >
                 <img
                   className="rounded-circle header-profile-user"
-                  src={logo}
+                  src={plain}
                   alt="avatar"
                 />
                 <span className="d-none d-xl-inline-block ms-1"></span>
@@ -125,7 +128,7 @@ const Header = ({ toggle, margin }) => {
                 className="btn header-item noti-icon right-bar-toggle waves-effect"
                 onClick={logout}
               >
-                <i className="fas fa-power"></i>
+                <i className="fas fa-power-off font-size-22 text-danger"></i>
               </button>
             </div>
           </div>
