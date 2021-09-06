@@ -7,6 +7,7 @@ import AlertDialog from "../../utils/Dialog";
 import API from "../../helpers/api";
 import LoadSpinner from "../../components/Handlers/Loadspinner";
 import Pagination from "../../components/Pagination";
+import SweetAlert from "react-bootstrap-sweetalert";
 
 const ArmoryList = () => {
   const [add, setAdd] = useState();
@@ -14,7 +15,12 @@ const ArmoryList = () => {
   const [id, setId] = useState();
   const [open, setOpen] = useState(false);
   const [guns, setGuns] = useState([]);
+
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const hideAlert = () => setShowAlert(false);
 
   const [currentpage, setCurrentPage] = useState(1);
   const [gunsPerPage] = useState(8);
@@ -29,11 +35,11 @@ const ArmoryList = () => {
   const closeAdd = () => setAdd(false);
 
   const openUpdate = (e, _id) => {
-    if(e){
-    setId(_id)
-    setUpdate(true);
+    if (e) {
+      setId(_id);
+      setUpdate(true);
     }
-  }
+  };
   const closeUpdate = () => setUpdate(false);
 
   const handleOpen = () => setOpen(true);
@@ -45,7 +51,7 @@ const ArmoryList = () => {
     setLoading(true);
     try {
       const res = await API.get("/api/gun");
-      console.log("Users Backend ===>", res);
+      console.log("Guns Backend ===>", res);
       setGuns(res.data);
       setLoading(false);
     } catch (error) {
@@ -56,15 +62,19 @@ const ArmoryList = () => {
 
   const deleteGun = async (id) => {
     setLoading(true);
-    try {
-      const res = await API.delete(`/api/gun/${id}`).then(() => {
-        console.log("gun deleted", res);
+    await API.delete(`/api/gun/${id}`)
+      .then(() => {
+        console.log("Gun deleted");
         setLoading(false);
+        setSuccess(true);
+        setShowAlert(true);
+      })
+      .catch((error) => {
+        console.log("Gun delete error", error);
+        setLoading(false);
+        setError(true);
+        setShowAlert(true);
       });
-    } catch (error) {
-      setLoading(false);
-      console.log("Gun delete error", error);
-    }
     setOpen(false);
     getGuns();
   };
@@ -79,7 +89,7 @@ const ArmoryList = () => {
         <AddGun close={closeAdd} guns={getGuns} />
       </Modal>
       <Modal show={update} close={closeUpdate} title="Update Gun Details">
-        <UpdateGun close={closeUpdate} guns={getGuns} id={id} show={update}/>
+        <UpdateGun close={closeUpdate} guns={getGuns} id={id} show={update} />
       </Modal>
       <div className="container-fluid">
         <div className="row">
@@ -89,6 +99,25 @@ const ArmoryList = () => {
             </div>
           </div>
         </div>
+        {loading && <LoadSpinner />}
+        {showAlert && success && (
+          <SweetAlert
+            success
+            onConfirm={() => hideAlert()}
+            onCancel={() => hideAlert()}
+            title="Gun Deleted!"
+            timeout={3000}
+          />
+        )}
+        {showAlert && error && (
+          <SweetAlert
+            danger
+            onConfirm={() => hideAlert()}
+            onCancel={() => hideAlert()}
+            title="There was an error. Please try again!"
+            timeout={3000}
+          />
+        )}
         <AlertDialog open={open} Yes={deleteGun} No={handleNo} />
         <div className="row">
           <div className="col-12">
@@ -122,7 +151,6 @@ const ArmoryList = () => {
                 </div>
                 <div className="table-responsive">
                   <table className="table align-middle table-nowrap table-check table-bordered">
-                    {loading && <LoadSpinner />}
                     <thead className="table-primary">
                       <tr className="tr-head">
                         <th style={{ width: "20px" }} className="align-middle">
@@ -164,10 +192,11 @@ const ArmoryList = () => {
                             </td>
                             <td>{gun.name}</td>
                             <td>{gun.serialNumber}</td>
-                            {
-                            gun.isAssigned === true ? 
-                            <td>Yes</td> : <td>No</td>
-                            }
+                            {gun.isAssigned === true ? (
+                              <td>Yes</td>
+                            ) : (
+                              <td>No</td>
+                            )}
                             <td>{gun.status}</td>
                             <td>
                               <div className="button-list">
@@ -179,7 +208,7 @@ const ArmoryList = () => {
                                     marginRight: "20px",
                                     color: "green",
                                   }}
-                                  onClick={(e)=>openUpdate(e, gun._id)}
+                                  onClick={(e) => openUpdate(e, gun._id)}
                                 >
                                   <i className="far fa-edit" />
                                 </a>

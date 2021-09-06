@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import LoadSpinner from "../../components/Handlers/Loadspinner";
+import LoadHandler from "../../components/Handlers/LoadHandler";
 import API from "../../helpers/api";
 import Guards from "./index";
+import SweetAlert from "react-bootstrap-sweetalert";
 
 const AddGuard = ({history}) => {
   const [fName, setFName] = useState('');
@@ -13,7 +14,12 @@ const AddGuard = ({history}) => {
   const [role, setRole] = useState('guard');
   const [status, setStatus] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const hideAlert = () => setShowAlert(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,17 +39,39 @@ const AddGuard = ({history}) => {
     await API.post('/api/auth/register', data)
       .then((res) => {
         setLoading(false);
+        setSuccess(true);
+        setShowAlert(true);
         history.push("/guards");
         console.log('Guard added successfully', res)
       })
       .catch((res) => {
         setLoading(false);
+        setError(true);
+        setShowAlert(true);
         console.log('Failed to add guard', res)
       });
   };
 
   return (
     <Guards>
+      {showAlert && success && (
+        <SweetAlert
+          success
+          onConfirm={() => hideAlert()}
+          onCancel={() => hideAlert()}
+          title="New Gun Saved"
+          timeout={3000}
+        />
+      )}
+      {showAlert && error && (
+        <SweetAlert
+          danger
+          onConfirm={() => hideAlert()}
+          onCancel={() => hideAlert()}
+          title="There was an error. Please try again!"
+          timeout={3000}
+        />
+      )}
       <div className="container-fluid">
         <div className="row">
           <div className="col-12">
@@ -154,7 +182,7 @@ const AddGuard = ({history}) => {
                       type="submit"
                       className="btn btn-primary waves-effect waves-light"
                     >
-                      {loading ? <LoadSpinner /> : 'Add Guard'}
+                      {loading ? <LoadHandler /> : 'Add Guard'}
                     </button>
                   </div>
                 </form>

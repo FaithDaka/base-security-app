@@ -104,10 +104,9 @@ const AdminList = () => {
                             ></label>
                           </div>
                         </th>
-                        <th className="align-middle"> FirstName</th>
-                        <th className="align-middle"> LastName</th>
+                        <th className="align-middle"> Name</th>
                         <th className="align-middle"> Email</th>
-                        <th className="align-middle"> Location</th>
+                        <th className="align-middle"> Status</th>
                         <th className="align-middle"> Actions</th>
                       </tr>
                     </thead>
@@ -128,12 +127,9 @@ const AdminList = () => {
                                 ></label>
                               </div>
                             </td>
-                            <td>{user.fname}</td>
-                            <td>{user.lname}</td>
+                            <td>{user.fname} {user.lname}</td>
                             <td className="tr_email">{user.email}</td>
-                            <td style={{ textTransform: "uppercase" }}>
-                              {user.location}
-                            </td>
+                            <td>{user.status}</td>
                             <td>
                               <div className="button-list">
                                 <a
