@@ -4,10 +4,13 @@ import API from "../../helpers/api";
 import SweetAlert from "react-bootstrap-sweetalert";
 
 const UpdateGun = ({close, guns, id, show}) => {
-  const [name, setName] = useState("");
-  const [serialNumber, setSerialNumber] = useState("");
-  const [status, setStatus] = useState("Active");
-  const [isAssigned, setisAssigned] = useState(false);
+  const [gun, setGun]=useState({
+    name:'', serialNumber:'', status:'', isAssigned:false
+  })
+  // const [name, setName] = useState("");
+  // const [serialNumber, setSerialNumber] = useState("");
+  // const [status, setStatus] = useState("Active");
+  // const [isAssigned, setisAssigned] = useState(false);
   const [update, setUpdate] = useState({});
   const [data, setData] = useState({})
 
@@ -18,7 +21,6 @@ const UpdateGun = ({close, guns, id, show}) => {
   const hideAlert = () => setShowAlert(false);
 
   const getGun = async () => {
-    setLoading(true);
     if(id !== undefined && show === true){
       try {
         const res = await API.get(`/api/gun/${id}`)
@@ -38,10 +40,15 @@ const UpdateGun = ({close, guns, id, show}) => {
     else setLoading(false);
   };
 
+  const handleChange = event => {
+    const { name, value } = event.target
+    setGun({ ...gun, [name]: value })
+  }
+
   const handleSubmit = async(e)=>{
     e.preventDefault();
     const newData = {
-      name, serialNumber, status, isAssigned
+      gun
     }
     setUpdate(newData);
     setLoading(true);
@@ -96,10 +103,10 @@ const UpdateGun = ({close, guns, id, show}) => {
                 type="text"
                 className="form-control"
                 placeholder=""
+                name="Name"
                 value={data.name}
-                onChange={(e)=>{
-                  setName(e.target.value)
-                }}
+                onChange={(e)=>handleChange(e)
+                }
                required/>
             </div>
             <div className="form-group">
@@ -110,9 +117,7 @@ const UpdateGun = ({close, guns, id, show}) => {
                 placeholder=""
                 name="serialNumber"
                 value={data.serialNumber}
-                onChange={(e)=>{
-                  setSerialNumber(e.target.value)
-                }}
+                onChange={(e)=>handleChange(e)}
                 required/>
             </div>
             <div className="form-group">
@@ -120,7 +125,7 @@ const UpdateGun = ({close, guns, id, show}) => {
               <select
                 className="form-control select2 select2-hidden-accessible"
                 value={data.isAssigned}
-                onChange={(e) => setisAssigned(e.target.value)}
+                onChange={(e)=>handleChange(e)}
               >
                 <option value="true">Yes</option>
                 <option value="false">No</option>
@@ -131,7 +136,7 @@ const UpdateGun = ({close, guns, id, show}) => {
               <select
                 className="form-control select2 select2-hidden-accessible"
                 value={data.status}
-                onChange={(e) => setStatus(e.target.value)}
+                onChange={(e)=>handleChange(e)}
               >
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
