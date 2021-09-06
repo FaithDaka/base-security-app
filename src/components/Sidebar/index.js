@@ -1,9 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/role-supports-aria-props */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Sidebar = ({ width, xPos }) => {
+  const [tab, setTab] = useState(0);
+  const[active, setActive] = useState(false);
+
   return (
     <>
       {width >= 0 ? (
@@ -36,10 +39,14 @@ const Sidebar = ({ width, xPos }) => {
                           >
                             BASE ADMIN
                           </li>
-                          <li>
+                          <li onClick={() => setTab(1)}>
                             <Link
                               to="/dashboard"
-                              className="waves-effect mm-active"
+                              className={
+                                tab === 1
+                                  ? "waves-effect mm-active"
+                                  : "waves-effect"
+                              }
                               id="icon-link"
                             >
                               <i
@@ -57,10 +64,14 @@ const Sidebar = ({ width, xPos }) => {
                               </span>
                             </Link>
                           </li>
-                          <li>
+                          <li onClick={() => setTab(2)}>
                             <Link
                               to="/guards"
-                              className="waves-effect"
+                              className={
+                                tab === 2
+                                  ? "waves-effect mm-active"
+                                  : "waves-effect"
+                              }
                               id="icon-link"
                             >
                               <i
@@ -78,26 +89,79 @@ const Sidebar = ({ width, xPos }) => {
                               </span>
                             </Link>
                           </li>
-                          <li>
-                          <Link to="/armory" className="waves-effect" id="icon-link" >
-                              <i className="fas fa-shield-alt"
-                              style={{fontSize:'18px', marginRight:'8px'}}></i>
-                              <span key="t-dashboards"
-                              style={{fontSize:'16px', textTransform:'uppercase'}}>armory</span>
+                          <li onClick={() => setTab(3)}>
+                            <Link
+                              to="/armory"
+                              className={
+                                tab === 3
+                                  ? "waves-effect mm-active"
+                                  : "waves-effect"
+                              }
+                              id="icon-link"
+                            >
+                              <i
+                                className="fas fa-shield-alt"
+                                style={{ fontSize: "18px", marginRight: "8px" }}
+                              ></i>
+                              <span
+                                key="t-dashboards"
+                                style={{
+                                  fontSize: "16px",
+                                  textTransform: "uppercase",
+                                }}
+                              >
+                                armory
+                              </span>
+                            </Link>
+                            <ul 
+                              className={tab === 3 ? "sub-menu mm-collapse mm-show":"sub-menu mm-collapse"}
+                              aria-expanded="false"
+                            >
+                              <li className="mm-active">
+                                <a href="#" key="t-default" className="active">
+                                  Assigned Guns
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#" key="t-saas">
+                                  Unassigned Guns
+                                </a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li onClick={() => setTab(4)}>
+                            <Link
+                              to="/reports"
+                              className={
+                                tab === 4
+                                  ? "waves-effect mm-active"
+                                  : "waves-effect"
+                              }
+                              id="icon-link"
+                            >
+                              <i
+                                className="fas fa-server"
+                                style={{ fontSize: "18px", marginRight: "8px" }}
+                              ></i>
+                              <span
+                                key="t-dashboards"
+                                style={{
+                                  fontSize: "16px",
+                                  textTransform: "uppercase",
+                                }}
+                              >
+                                reports
+                              </span>
                             </Link>
                           </li>
-                          <li>
-                          <Link to="/reports" className="waves-effect" id="icon-link" >
-                              <i className="fas fa-server"
-                              style={{fontSize:'18px', marginRight:'8px'}}></i>
-                              <span key="t-dashboards"
-                              style={{fontSize:'16px', textTransform:'uppercase'}}>reports</span>
-                            </Link>
-                          </li>
-                          <li>
+                          <li onClick={() => setTab(5)}>
                             <Link
                               to="/admins"
-                              className="waves-effect"
+                              className={
+                                tab === 5
+                                  ? "waves-effect mm-active"
+                                  : "waves-effect"
+                              }
                               id="icon-link"
                             >
                               <i
@@ -154,7 +218,7 @@ const Sidebar = ({ width, xPos }) => {
           </div>
         </div>
       ) : (
-        <div className="vertical-collpsed vertical-menu" >
+        <div className="vertical-collpsed vertical-menu">
           <div className="h-100">
             <div className="simplebar-wrapper">
               <div className="simplebar-height-auto-observer-wrapper">
@@ -214,10 +278,7 @@ const Sidebar = ({ width, xPos }) => {
                             </ul> */}
                           </li>
                           <li>
-                            <a
-                              href="#"
-                              className="has-arrow waves-effect"
-                            >
+                            <a href="#" className="has-arrow waves-effect">
                               <i className="fa fa-receipt"></i>
                               <span key="t-invoices">Invoices</span>
                             </a>

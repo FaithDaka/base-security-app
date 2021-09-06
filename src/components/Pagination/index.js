@@ -9,9 +9,9 @@ const index = ({ productsPerPage, totalProducts, paginate }) => {
     window.scrollTo(0, 0);
   }
   return (
-    <ul className="pagination justify-content-end">
+    <ul className="pagination justify-content-end mt-2">
       <li className="page-item disabled">
-        <a className="page-link" href="#" tabIndex="-1">
+        <a className="page-link font-size-13" href="#" tabIndex="-1">
           Previous
         </a>
       </li>
@@ -20,7 +20,7 @@ const index = ({ productsPerPage, totalProducts, paginate }) => {
         <li className="page-item" key={key}>
           <Link
             onClick={() => paginate(number)}
-            className="page-link"
+            className="page-link font-size-15"
             style={{ cursor: "pointer" }}
           >
             {number}
@@ -28,7 +28,7 @@ const index = ({ productsPerPage, totalProducts, paginate }) => {
         </li>
       ))}
       <li>
-        <a className="page-link" href="#">
+        <a className="page-link font-size-13" href="#">
           Next
         </a>
       </li>

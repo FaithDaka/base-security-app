@@ -103,7 +103,6 @@ const ArmoryList = () => {
             </div>
           </div>
         </div>
-        {loading && <LoadSpinner />}
         {showAlert && success && (
           <SweetAlert
             success
@@ -155,6 +154,7 @@ const ArmoryList = () => {
                 <AlertDialog open={open} Yes={()=>deleteGun(dId)} No={handleNo} />
                 <div className="table-responsive">
                   <table className="table align-middle table-nowrap table-check table-bordered">
+                  {loading && <LoadSpinner />}
                     <thead className="table-primary">
                       <tr className="tr-head">
                         <th style={{ width: "20px" }} className="align-middle">

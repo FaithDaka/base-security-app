@@ -10,6 +10,7 @@ const Header = ({ toggle, margin }) => {
     localStorage.removeItem("user");
     history.push("/")
   };
+
   return (
     <header>
       {margin >= 0 ? (
@@ -46,12 +47,13 @@ const Header = ({ toggle, margin }) => {
               </div>
             </form>
           </div>
-          <div className="d-flex">
+          <div className="d-flex ">
             <div className="dropdown d-inline-block">
               <button
                 type="button"
                 className="btn header-item waves-effect"
                 id="page-header-user-dropdown"
+                style={{display:'none'}}
               >
                 <img
                   className="rounded-circle header-profile-user"
@@ -111,6 +113,7 @@ const Header = ({ toggle, margin }) => {
                 type="button"
                 className="btn header-item waves-effect"
                 id="page-header-user-dropdown"
+                style={{display:'none'}}
               >
                 <img
                   className="rounded-circle header-profile-user"
