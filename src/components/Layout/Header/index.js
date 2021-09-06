@@ -66,8 +66,9 @@ const Header = ({ toggle, margin }) => {
               <button
                 type="button"
                 className="btn header-item noti-icon right-bar-toggle waves-effect"
+                onClick={logout}
               >
-                <i className="fa fa-cog font-size-20"></i>
+                <i className="fas fa-power-off font-size-24 text-danger"></i>
               </button>
             </div>
           </div>
@@ -127,7 +128,7 @@ const Header = ({ toggle, margin }) => {
                 className="btn header-item noti-icon right-bar-toggle waves-effect"
                 onClick={logout}
               >
-                <i className="fas fa-power"></i>
+                <i className="fas fa-power-off font-size-22 text-danger"></i>
               </button>
             </div>
           </div>
