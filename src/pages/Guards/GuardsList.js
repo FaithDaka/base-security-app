@@ -54,11 +54,17 @@ const GuardsList = () => {
   const history = useHistory();
 
   const addGuard = () => {
-    history.push("/guards/add");
+    setLoading(true);
+    setTimeout(() => {
+      history.push('/guards/add');
+    }, 2000);
   };
 
   const updateGuard = (id) => {
-    history.push(`/guards/update/${id}`);
+    setLoading(true);
+    setTimeout(() => {
+      history.push(`/guards/update/${id}`);
+    }, 2000);
   };
 
   const getProfile =(id)=>{
