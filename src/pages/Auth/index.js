@@ -1,13 +1,14 @@
 import React , { useState} from "react";
 import API from '../../helpers/api';
 import img from '../../assets/img/plainlogo.png'
+import LoadSpinner from "../../components/Handlers/Loadspinner";
 
 const Login = ({history}) => {
-
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,7 +20,10 @@ const Login = ({history}) => {
         setSuccess(true);
         if (res.data.accessToken) {
           localStorage.setItem("user", JSON.stringify(res.data));
-          history.push("/dashboard")
+          setLoading(true);
+          setTimeout(()=>{
+            history.push("/dashboard")
+          }, 2000)
         }
       })
       .catch((err) => {
@@ -56,7 +60,7 @@ const Login = ({history}) => {
                 </div>
                 {success && (
                   <div className="alert alert-success" role="alert">
-                    Successfuly Logged on
+                    Successfully Logged in
                   </div>
                 )}
                 {error && (
@@ -79,6 +83,7 @@ const Login = ({history}) => {
                       </div>
                     </a>
                   </div>
+                  {loading && <LoadSpinner/>}
                   <div className="p-2">
                     <form className="form-horizontal" onSubmit={handleSubmit}>
                       <div className="mb-3">
