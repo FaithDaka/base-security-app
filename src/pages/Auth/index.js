@@ -33,11 +33,11 @@ const Login = ({history}) => {
 
   return (
     <div className="bsa-login">
-      <div className="account-pages my-5 pt-sm-5">
+      <div className="account-pages">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-md-8 col-lg-6 col-xl-5">
-              <div className="card overflow-hidden">
+              <div className="card overflow-hidden mt-5">
                 <div className="bg-danger bg-soft">
                   <div className="row">
                     <div className="col-7">
@@ -68,7 +68,7 @@ const Login = ({history}) => {
                   <div className="auth-logo">
                     <a href="#" className="auth-logo-dark">
                       <div className="avatar-md profile-user-wid mb-4">
-                        <span className="avatar-title rounded-circle bg-light">
+                        <span className="avatar-title rounded-circle bg-light bg-soft">
                           <img
                             src={img}
                             alt=""

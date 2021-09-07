@@ -15,7 +15,7 @@ const AddGuard = ({history}) => {
   const [status, setStatus] = useState('');
   const [password, setPassword] = useState('');
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -23,25 +23,26 @@ const AddGuard = ({history}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     const data = {
       fname: fName,
       lname: lName,
       sex: sex,
       email:email,
-      phone: phone,
+      phone: parseInt(phone),
       role,
       maritalStatus: status,
       password: password
     };
 
-    setLoading(true);
     await API.post('/api/auth/register', data)
       .then((res) => {
         setLoading(false);
         setSuccess(true);
         setShowAlert(true);
-        history.push("/guards");
+        setTimeout(()=>{
+          history.push("/guards");
+        }, 2000)
         console.log('Guard added successfully', res)
       })
       .catch((res) => {
@@ -59,7 +60,7 @@ const AddGuard = ({history}) => {
           success
           onConfirm={() => hideAlert()}
           onCancel={() => hideAlert()}
-          title="New Gun Saved"
+          title="Guard Added"
           timeout={3000}
         />
       )}
@@ -136,18 +137,12 @@ const AddGuard = ({history}) => {
                     <div className="mb-3">
                         <label>Phone Number</label>
                         <input
-                          type="number"
+                          type="text"
                           className="form-control"
+                          maxLength="10"
                           value={phone}
                           onChange={(e) => setPhone(e.target.value)}
                         required/>
-                      </div>
-                      <div className="mb-3">
-                        <label >Guard Role</label>
-                        <input
-                        className="form-control"
-                        value={role}
-                        onChange={(e)=> setRole(e.target.value)}/>
                       </div>
                       <div className="mb-3">
                         <label>
@@ -157,6 +152,7 @@ const AddGuard = ({history}) => {
                         className="form-control select2 select2-hidden-accessible"
                         value={sex}
                         onChange={(e) => setSex(e.target.value)}>
+                        <option>Sex</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                         <option value="Other">Other</option>
@@ -170,7 +166,8 @@ const AddGuard = ({history}) => {
                         className="form-control select2 select2-hidden-accessible"
                         value={status}
                         onChange={(e) => setStatus(e.target.value)}>
-                        <option value="Single">Single</option>
+                        <option>Marital Status</option>
+                        <option value="Single" selected>Single</option>
                         <option value="Married">Married</option>
                         <option value="Divorced">Divorced</option>
                         </select>
@@ -180,7 +177,7 @@ const AddGuard = ({history}) => {
                   <div className="d-flex flex-wrap gap-2">
                     <button
                       type="submit"
-                      className="btn btn-primary waves-effect waves-light"
+                      className="btn btn-primary"
                     >
                       {loading ? <LoadHandler /> : 'Add Guard'}
                     </button>
