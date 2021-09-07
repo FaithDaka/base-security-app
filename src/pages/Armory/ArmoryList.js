@@ -109,7 +109,7 @@ const ArmoryList = () => {
             onConfirm={() => hideAlert()}
             onCancel={() => hideAlert()}
             title="Gun Deleted!"
-            timeout={3000}
+            timeout={2000}
           />
         )}
         {showAlert && error && (
@@ -118,7 +118,7 @@ const ArmoryList = () => {
             onConfirm={() => hideAlert()}
             onCancel={() => hideAlert()}
             title="There was an error. Please try again!"
-            timeout={3000}
+            timeout={2000}
           />
         )}
         <div className="row">
