@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import API from "../../helpers/api";
 import Guards from "./index";
 import SweetAlert from "react-bootstrap-sweetalert";
 import LoadHandler from "../../components/Handlers/LoadHandler";
+import LoadSpinner from "../../components/Handlers/Loadspinner";
 
-const UpdateGuard = ({props, history}) => {
+const UpdateGuard = (props) => {
+  const id = props.match.params.id
   const [fName, setFName] = useState('');
   const [lName, setLName] = useState('');
   const [sex, setSex] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState();
-  const [role, setRole] = useState('guard');
   const [status, setStatus] = useState('');
   const [password, setPassword] = useState('');
+  const [isAssigned, setisAssigned] = useState(false);
+  const role = useState('guard');
+  const [guns, setGuns] = useState([])
+  const [gun, setGun] = useState([])
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -26,14 +31,13 @@ const UpdateGuard = ({props, history}) => {
     try {
       const res = await API.get(`/api/guard/${id}`);
       console.log("Guard Backend ===>", res);
-      setFName(res.data.fname)
-      setLName(res.data.lname)
-      setEmail(res.data.email)
-      setPhone(res.data.phone)
-      setSex(res.data.sex)
-      setRole(res.data.role)
-      setStatus(res.data.maritalStatus)
-      setPassword(res.data.password)
+      setFName(res.data.guard.fname)
+      setLName(res.data.guard.lname)
+      setEmail(res.data.guard.email)
+      setPhone(res.data.guard.phone)
+      setSex(res.data.guard.sex)
+      setStatus(res.data.guard.maritalStatus)
+      setPassword(res.data.guard.password)
       setLoading(false);
     } 
     catch (error) {
@@ -42,6 +46,7 @@ const UpdateGuard = ({props, history}) => {
     }
   };
 
+  const history= useHistory();
   const handleSubmit = async(e)=>{
     e.preventDefault();
     const newData = {
@@ -57,7 +62,7 @@ const UpdateGuard = ({props, history}) => {
     setLoading(true);
 
     try{
-    const res = await API.patch(`/api/gun/${props.match.params.id}`, newData)
+    const res = await API.patch(`/api/guard/${props.match.params.id}`, newData)
     setLoading(false);
     setSuccess(true);
     setShowAlert(true);
@@ -74,9 +79,23 @@ const UpdateGuard = ({props, history}) => {
     }
   }
 
+  const getGuns = async () => {
+    setLoading(true);
+    try {
+      const res = await API.get("/api/gun");
+      console.log("Guns Backend ===>", res);
+      setGuns(res.data);
+      setLoading(false);
+    } catch (error) {
+      console.log("error", error);
+      setLoading(false);
+    }
+  };
+
   useEffect(()=>{
-    getGuard(props.match.params.id);
-  })
+    getGuard(id);
+    getGuns()
+  },[id])
 
   return (
     <Guards>
@@ -85,7 +104,7 @@ const UpdateGuard = ({props, history}) => {
           success
           onConfirm={() => hideAlert()}
           onCancel={() => hideAlert()}
-          title="Guard Added"
+          title="Details Updated"
           timeout={3000}
         />
       )}
@@ -150,12 +169,31 @@ const UpdateGuard = ({props, history}) => {
                         required/>
                       </div>
                       <div className="mb-3">
-                        <label >Password</label>
-                        <input
-                        className="form-control"
-                        value={password}
-                        onChange={(e)=> setPassword(e.target.value)}
-                        required/>
+                        <label>
+                          Assigned Gun
+                        </label>
+                        <select
+                        className="form-control select2 select2-hidden-accessible"
+                        value={isAssigned}
+                        onChange={(e) => setisAssigned(e.target.value)}>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                        </select>
+                      </div>
+                      <div className="mb-3">
+                        <label>
+                          Gun Type
+                        </label>
+                        <select
+                        className="form-control select2 select2-hidden-accessible"
+                        value={gun}
+                        onChange={(e) => setGun(e.target.value)}>
+                        {guns.length > 0 ? (
+                          guns.map((gun) => <option key={gun._id} value={gun._id}>{gun.name}</option>)
+                            ) : (
+                          <LoadSpinner />
+                        )}
+                        </select>
                       </div>
                     </div>
                     <div className="col-sm-6">

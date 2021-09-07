@@ -11,9 +11,8 @@ const AddGuard = ({history}) => {
   const [sex, setSex] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState();
-  const [role, setRole] = useState('guard');
+  const role = useState('guard');
   const [status, setStatus] = useState('');
-  const [password, setPassword] = useState('');
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -31,8 +30,7 @@ const AddGuard = ({history}) => {
       email:email,
       phone: parseInt(phone),
       role,
-      maritalStatus: status,
-      password: password
+      maritalStatus: status
     };
 
     await API.post('/api/auth/register', data)
@@ -122,14 +120,6 @@ const AddGuard = ({history}) => {
                           className="form-control"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                        required/>
-                      </div>
-                      <div className="mb-3">
-                        <label >Password</label>
-                        <input
-                        className="form-control"
-                        value={password}
-                        onChange={(e)=> setPassword(e.target.value)}
                         required/>
                       </div>
                     </div>

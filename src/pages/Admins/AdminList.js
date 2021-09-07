@@ -39,11 +39,26 @@ const AdminList = () => {
 
   const history = useHistory();
   const addAdmin = () => {
-    history.push("/admin/add");
+    setLoading(true);
+    setTimeout(() => {
+      history.push('/admin/add');
+    }, 2000);
   };
-  const updateAdmin = () => {
-    history.push("/admin/update");
-  };
+
+  const updateAdmin = (id) => {
+    setLoading(true);
+    setTimeout(() => {
+      history.push(`/admin/update/${id}`);
+    }, 2000);
+  }
+
+  const getProfile =(id)=>{
+    setLoading(true);
+    setTimeout(() => {
+      history.push(`admin/profile/${id}`)
+    }, 2000);  
+  }
+
   const deleteAdmin = () => {
     console.log("guard deleted");
     handleNo();
@@ -113,7 +128,7 @@ const AdminList = () => {
                     <tbody>
                       {currentAdmins.map((user) => {
                         return (
-                          <tr className="tr-body">
+                          <tr className="tr-body" key={user._id}>
                             <td>
                               <div className="form-check font-size-16">
                                 <input
@@ -127,7 +142,8 @@ const AdminList = () => {
                                 ></label>
                               </div>
                             </td>
-                            <td>{user.fname} {user.lname}</td>
+                            <td className="td-hover"
+                            onClick={()=>getProfile(user._id)}>{user.fname} {user.lname}</td>
                             <td className="tr_email">{user.email}</td>
                             <td>{user.status}</td>
                             <td>

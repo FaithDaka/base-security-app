@@ -13,14 +13,13 @@ const GuardsList = () => {
   const [open, setOpen] = useState(false);
   const [dId, setDId] = useState()
   const [guardUsers, setGuardUsers] = useState([]);
-  const guards = guardUsers.filter((a) => a.role === "guard");
 
   const [currentpage, setCurrentPage] = useState(1);
   const [guardsPerPage] = useState(10);
   const lastGuard = currentpage * guardsPerPage;
   const firstGuard = lastGuard - guardsPerPage;
-  const currentGuards = guards.slice(firstGuard, lastGuard);
-  const totalGuards = guards.length;
+  const currentGuards = guardUsers.slice(firstGuard, lastGuard);
+  const totalGuards = guardUsers.length;
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -40,7 +39,7 @@ const GuardsList = () => {
   const getGuards = async () => {
     setLoading(true);
     try {
-      const res = await API.get("/api/user");
+      const res = await API.get("/api/guard");
       console.log("Guard Users Backend ===>", res);
       setGuardUsers(res.data);
       setLoading(false);
@@ -70,7 +69,7 @@ const GuardsList = () => {
   const getProfile =(id)=>{
     setLoading(true);
     setTimeout(() => {
-      history.push(`guards/profile`)
+      history.push(`guards/profile/${id}`)
     }, 2000);  
   }
 
@@ -198,11 +197,13 @@ const GuardsList = () => {
                           </div>
                         </td>
                         <td className="td-hover"
-                        onClick={()=>getProfile(guard._id)}>{guard.fname} {guard.lname}</td>
-                        <td className="tr_email">{guard.email}</td>
-                        <td>0{guard.phone}</td>
-                        <td>{guard.sex}</td>
-                        <td>{guard.status}</td>
+                        onClick={()=>getProfile(guard._id)}>
+                          {guard.guard.fname} {guard.guard.lname}
+                        </td>
+                        <td className="tr_email">{guard.guard.email}</td>
+                        <td>0{guard.guard.phone}</td>
+                        <td>{guard.guard.sex}</td>
+                        <td>{guard.guard.status}</td>
                         <td>
                           <div className="button-list">
                             <a
