@@ -4,16 +4,10 @@ import API from "../../helpers/api";
 import SweetAlert from "react-bootstrap-sweetalert";
 
 const UpdateGun = ({close, guns, id, show}) => {
-  // const [gun, setGun]=useState({
-  //   name:'', serialNumber:'', status:'', isAssigned:false
-  // })
   const [name, setName] = useState("");
   const [serialNumber, setSerialNumber] = useState("");
   const [status, setStatus] = useState("Active");
   const [isAssigned, setisAssigned] = useState(false);
-
-  const [update, setUpdate] = useState({});
-  const [data, setData] = useState({})
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -22,17 +16,12 @@ const UpdateGun = ({close, guns, id, show}) => {
   const hideAlert = () => setShowAlert(false);
 
   const getGun = async () => {
+    setLoading(true);
     if(id !== undefined && show === true){
       try {
         const res = await API.get(`/api/gun/${id}`)
           console.log('Fetched gun', res)
           setLoading(false);
-          // setData({
-          //   name: res.data.name,
-          //   serialNumber: res.data.serialNumber,
-          //   status: res.data.status,
-          //   isAssigned: res.data.isAssigned,
-          // });
           setName(res.data.name)
           setSerialNumber(res.data.serialNumber)
           setStatus(res.data.status)
@@ -45,17 +34,11 @@ const UpdateGun = ({close, guns, id, show}) => {
     else setLoading(false);
   };
 
-  // const handleChange = event => {
-  //   const { name, value } = event.target
-  //   setGun({ ...gun, [name]: value })
-  // }
-
   const handleSubmit = async(e)=>{
     e.preventDefault();
     const newData = {
       name, serialNumber, isAssigned, status
     }
-    setUpdate(newData);
     setLoading(true);
 
     try{

@@ -6,7 +6,7 @@ const Maintenance = () => {
   return (
     <div>
       <div className="home-btn d-none d-sm-block">
-        <a href="index.html" className="text-dark">
+        <a href="#" className="text-dark">
           <i className="fas fa-home h2"></i>
         </a>
       </div>
@@ -16,14 +16,14 @@ const Maintenance = () => {
             <div className="col-12 text-center">
               <div className="home-wrapper">
                 <div className="mb-5">
-                  <a href="#" className="d-block auth-logo">
+                  {/* <a href="#" className="d-block auth-logo">
                     <img
                       src={logo}
                       alt=""
                       height="20"
                       className="auth-logo-dark mx-auto"
                     />
-                  </a>
+                  </a> */}
                 </div>
                 <div className="row justify-content-center">
                   <div className="col-sm-4">

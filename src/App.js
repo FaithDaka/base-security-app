@@ -14,6 +14,7 @@ import ArmoryList from './pages/Armory/ArmoryList';
 import Maintenance from './utils/maintenance';
 import PageNotFound from './utils/PageNotFound';
 import ReportPage from './pages/Reports/content';
+import GuardProfile from './pages/Guards/GuardProfile';
 
 
 const App = () => {
@@ -24,7 +25,8 @@ const App = () => {
       <ProtectedRoute exact path="/dashboard" component={ Dashboard }/>
       <ProtectedRoute exact path="/guards" component={ GuardsList }/>
       <ProtectedRoute exact path="/guards/add" component={ AddGuard }/>
-      <ProtectedRoute exact path="/guards/update" component={ UpdateGuard }/>
+      <ProtectedRoute exact path="/guards/update/:id" component={ UpdateGuard }/>
+      <ProtectedRoute exact path="/guards/profile" component={ GuardProfile }/>
       <ProtectedRoute exact path="/admins" component={ AdminList }/>
       <ProtectedRoute exact path="/admin/add" component={ AddAdmin }/>
       <ProtectedRoute exact path="/armory" component={ ArmoryList }/>

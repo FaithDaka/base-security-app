@@ -7,10 +7,11 @@ import API from "../../helpers/api";
 import AlertDialog from "../../utils/Dialog";
 import Guards from "./index";
 import Pagination from '../../components/Pagination'
+import SweetAlert from "react-bootstrap-sweetalert";
 
 const GuardsList = () => {
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [dId, setDId] = useState()
   const [guardUsers, setGuardUsers] = useState([]);
   const guards = guardUsers.filter((a) => a.role === "guard");
 
@@ -23,11 +24,19 @@ const GuardsList = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const hideAlert = () => setShowAlert(false);
+
   const handleOpen = () => setOpen(true);
   const handleNo = () => setOpen(false);
 
-  const handleDelete = () => handleOpen();
-
+  const handleDelete = (id) => {
+  setDId(id)
+  handleOpen();
+  }
   const getGuards = async () => {
     setLoading(true);
     try {
@@ -43,16 +52,45 @@ const GuardsList = () => {
   };
 
   const history = useHistory();
+
   const addGuard = () => {
-    history.push("/guards/add");
-  };
-  const updateGuard = () => {
-    history.push("/guards/update");
+    setLoading(true);
+    setTimeout(() => {
+      history.push('/guards/add');
+    }, 2000);
   };
 
-  const deleteGuard = () => {
-    console.log("guard deleted");
-    handleNo();
+  const updateGuard = (id) => {
+    setLoading(true);
+    setTimeout(() => {
+      history.push(`/guards/update/${id}`);
+    }, 2000);
+  };
+
+  const getProfile =(id)=>{
+    setLoading(true);
+    setTimeout(() => {
+      history.push(`guards/profile`)
+    }, 2000);  
+  }
+
+  const deleteGuard = async() => {
+    setLoading(true);
+    await API.delete(`/api/guard/${dId}`)
+      .then(() => {
+        console.log("Guard deleted");
+        setLoading(false);
+        setSuccess(true);
+        setShowAlert(true);
+      })
+      .catch((error) => {
+        console.log("Guard delete error", error);
+        setLoading(false);
+        setError(true);
+        setShowAlert(true);
+      });
+    setOpen(false);
+    getGuards();
   };
 
   useEffect(() => {
@@ -69,7 +107,25 @@ const GuardsList = () => {
             </div>
           </div>
         </div>
-        <AlertDialog open={open} Yes={deleteGuard} No={handleNo} />
+        <AlertDialog open={open} Yes={()=>deleteGuard()} No={handleNo} />
+        {showAlert && success && (
+          <SweetAlert
+            success
+            onConfirm={() => hideAlert()}
+            onCancel={() => hideAlert()}
+            title="Guard Deleted!"
+            timeout={3000}
+          />
+        )}
+        {showAlert && error && (
+          <SweetAlert
+            danger
+            onConfirm={() => hideAlert()}
+            onCancel={() => hideAlert()}
+            title="There was an error. Please try again!"
+            timeout={3000}
+          />
+        )}
         <div className="row">
           <div className="col-12">
             <div className="card">
@@ -121,14 +177,13 @@ const GuardsList = () => {
                         <th className="align-middle"> Email</th>
                         <th className="align-middle"> Phone</th>
                         <th className="align-middle"> Sex</th>
-                        <th className="align-middle"> Role</th>
                         <th className="align-middle"> Status</th>
                         <th className="align-middle"> Actions</th>
                       </tr>
                     </thead>
                     <tbody>
                       {currentGuards.map((guard)=>(
-                      <tr key={guard.id} className="tr-body">
+                      <tr key={guard._id} className="tr-body">
                         <td>
                           <div className="form-check font-size-16">
                             <input
@@ -142,11 +197,11 @@ const GuardsList = () => {
                             ></label>
                           </div>
                         </td>
-                        <td>{guard.fname} {guard.lname}</td>
+                        <td className="td-hover"
+                        onClick={()=>getProfile(guard._id)}>{guard.fname} {guard.lname}</td>
                         <td className="tr_email">{guard.email}</td>
-                        <td>{guard.phone}</td>
+                        <td>0{guard.phone}</td>
                         <td>{guard.sex}</td>
-                        <td>{guard.role}</td>
                         <td>{guard.status}</td>
                         <td>
                           <div className="button-list">
@@ -155,7 +210,7 @@ const GuardsList = () => {
                               className="btn-tab btn-sucess-rgba"
                               title="Update details"
                               style={{ marginRight: "20px", color: "green" }}
-                              onClick={() => updateGuard()}
+                              onClick={() => updateGuard(guard._id)}
                             >
                               <i className="far fa-edit" />
                             </a>
@@ -164,7 +219,7 @@ const GuardsList = () => {
                               className="btn-tab btn-danger-rgba"
                               style={{ color: "red" }}
                               title="Delete guard"
-                              onClick={()=>handleDelete()}
+                              onClick={()=>handleDelete(guard._id)}
                             >
                               <i className="far fa-trash-alt" />
                             </a>
