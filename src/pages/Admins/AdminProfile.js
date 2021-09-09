@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import LoadSpinner from "../../components/Handlers/Loadspinner";
 import Layout from "../../components/Layout";
 import API from "../../helpers/api";
-import avatar from "../../assets/img/plainlogo.png";
+import avatar from "../../assets/img/avatar.jpg";
 
 const AdminProfile = (props) => {
   const id = props.match.params.id;
@@ -59,7 +59,7 @@ const AdminProfile = (props) => {
       {loading && <LoadSpinner />}
       <div className="container-fluid profile">
         <div className="row justify-content-center">
-          <div className="col-md-4 col-xl-3">
+          <div className="col-md-4 col-xl-3 mb-3">
             <div className="card">
               <div
                 className="card-header bg-success"
@@ -70,6 +70,7 @@ const AdminProfile = (props) => {
                   <img
                     className="avatar-md profile-user-wid mb-4 rounded-circle img-fluid"
                     alt="profile"
+                    style={{height:'128px', width:'128px'}}
                     src={avatar}
                   ></img>
                   <h2 className="text-wrap">

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import img from "../../assets/img/plainlogo.png";
 import LoadSpinner from "../../components/Handlers/Loadspinner";
 import API from "../../helpers/api";
+import avatar from "../../assets/img/avatar.jpg";
 
 const Content = ({ history }) => {
   const [data, setData] = useState([]);
@@ -65,7 +66,7 @@ const Content = ({ history }) => {
                   <div className="col-sm-4">
                     <div className="avatar-md profile-user-wid mb-4">
                       <img
-                        src={img}
+                        src={avatar}
                         alt=""
                         className="img-thumbnail rounded-circle"
                       />

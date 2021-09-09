@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import plain from "../../../assets/img/plainlogo.png";
+import plain from "../../../assets/img/avatar.jpg";
 import logo from "../../../assets/img/base-dashboard-logo.png";
 import logo_sm from "../../../assets/img/base-dashboard-logo-black.png";
 
@@ -51,7 +51,6 @@ const Header = ({ toggle, margin }) => {
                 type="button"
                 className="btn header-item waves-effect"
                 id="page-header-user-dropdown"
-                style={{ display: "none" }}
               >
                 <img
                   className="rounded-circle header-profile-user"
