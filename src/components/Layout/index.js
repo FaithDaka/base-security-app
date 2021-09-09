@@ -22,7 +22,8 @@ const Layout = ({ children }) => {
   };
 
   useEffect(() => {
-    ToggleMenu();
+    setHeader();
+    setMargin(0);
   }, [width]);
 
   return (
@@ -32,7 +33,7 @@ const Layout = ({ children }) => {
         <div id="page-topbar">
           <Header toggle={ToggleMenu} margin={header}></Header>
         </div>
-        <div style={{ marginLeft: "15px" }} className="main-content">
+        <div style={{ marginLeft:'30px', marginRight:'20px' }} className="main-content">
           <div className="page-content">{children}</div>
         </div>
       </div>
