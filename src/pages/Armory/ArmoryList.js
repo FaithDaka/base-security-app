@@ -173,7 +173,6 @@ const ArmoryList = () => {
                         <th className="align-middle"> Name</th>
                         <th className="align-middle"> Serial Number</th>
                         <th className="align-middle"> Assigned</th>
-                        <th className="align-middle"> Status</th>
                         <th className="align-middle"> Actions</th>
                       </tr>
                     </thead>
@@ -194,38 +193,37 @@ const ArmoryList = () => {
                                 ></label>
                               </div>
                             </td>
-                            <td>{gun.name}</td>
+                            <td>
+                              <span>{gun.name}</span>
+                              {
+                                gun.status === "Active" ?
+                                <span className="badge badge-success badge-pill float-right">Ready</span>:
+                                <span className="badge badge-secondary badge-pill float-right">InActive</span>
+                              }
+                            </td>
                             <td>{gun.serialNumber}</td>
                             {gun.isAssigned === true ? (
                               <td>Yes</td>
                             ) : (
                               <td>No</td>
                             )}
-                            <td>{gun.status}</td>
                             <td>
-                              <div className="button-list">
-                                <a
-                                  href="#"
-                                  className="btn-tab btn-sucess-rgba"
-                                  title="Update details"
-                                  style={{
-                                    marginRight: "20px",
-                                    color: "green",
-                                  }}
-                                  onClick={(e) => openUpdate(e, gun._id)}
-                                >
-                                  <i className="far fa-edit" />
-                                </a>
-                                <a
-                                  href="#"
-                                  className="btn-tab btn-danger-rgba"
-                                  style={{ color: "red" }}
-                                  title="Delete guard"
-                                  onClick={() => handleDelete(gun._id)}
-                                >
-                                  <i className="far fa-trash-alt" />
-                                </a>
-                              </div>
+                              <div className="row ml-2">
+                              <span
+                                title="Update details"
+                                style={{ marginRight: "20px", color: "green" }}
+                                onClick={(e) => openUpdate(e,gun._id)}
+                              >
+                                <i className="fas fa-edit action" />
+                              </span>
+                              <span
+                                style={{ color: "red" }}
+                                title="Delete gun"
+                                onClick={() => handleDelete(gun._id)}
+                              >
+                                <i className="far fa-trash-alt action" />
+                              </span>
+                            </div>
                             </td>
                           </tr>
                         );

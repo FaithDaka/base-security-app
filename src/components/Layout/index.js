@@ -22,10 +22,8 @@ const Layout = ({ children }) => {
   };
 
   useEffect(() => {
-    setX(0);
-    setMargin(width);
-    setHeader(0);
-  }, []);
+    ToggleMenu();
+  }, [width]);
 
   return (
     <div className="layout-wrapper">

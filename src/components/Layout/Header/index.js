@@ -1,29 +1,28 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import plain from '../../../assets/img/plainlogo.png'
-import logo from '../../../assets/img/base-dashboard-logo.png'
-import logo_sm from '../../../assets/img/base-dashboard-logo-black.png'
+import plain from "../../../assets/img/avatar.jpg";
+import logo from "../../../assets/img/base-dashboard-logo.png";
+import logo_sm from "../../../assets/img/base-dashboard-logo-black.png";
 
 const Header = ({ toggle, margin }) => {
   const history = useHistory();
   const logout = () => {
     localStorage.removeItem("user");
-    history.push("/")
+    history.push("/");
   };
 
   return (
     <header>
       {margin >= 0 ? (
-        <div className="navbar-header" style={{ marginLeft: `${margin}px` }}>
+        <div className="navbar-header" style={{ marginLeft: `${margin}px`}}>
           <div className="d-flex">
             <div className="navbar-brand-box">
               <a className="logo">
-                <span className="logo-sm" >
-                  <img src={logo_sm} style={{height:'30px'}}/>
+                <span className="logo-sm">
+                  <img src={logo_sm} style={{ height: "30px" }} />
                 </span>
                 <span className="logo-lg">
-                  <img src={logo} 
-                  style={{height:'65px'}}/>
+                  <img src={logo} style={{ height: "65px" }} />
                 </span>
               </a>
             </div>
@@ -33,17 +32,16 @@ const Header = ({ toggle, margin }) => {
               type="button"
               onClick={toggle}
             >
-              <i className="fa fa-fw fa-bars"
-              style={{fontSize:'20px'}}></i>
+              <i className="fa fa-fw fa-bars" style={{ fontSize: "20px" }}></i>
             </button>
             <form className="app-search d-lg-block">
-              <div>
+              <div class="position-relative">
                 <input
                   type="text"
                   className="form-control"
                   placeholder="Search..."
                 />
-                {/* <span className="fa fa-search"></span> */}
+                <span class="bx bx-search-alt"></span>
               </div>
             </form>
           </div>
@@ -53,7 +51,6 @@ const Header = ({ toggle, margin }) => {
                 type="button"
                 className="btn header-item waves-effect"
                 id="page-header-user-dropdown"
-                style={{display:'none'}}
               >
                 <img
                   className="rounded-circle header-profile-user"
@@ -76,44 +73,44 @@ const Header = ({ toggle, margin }) => {
           </div>
         </div>
       ) : (
-        <div className="navbar-header" style={{ marginLeft:'50px' }}>
+        <div className="navbar-header" style={{backgroundColor:'#2a3042', transition:'all .4s ease-in ', transitionDelay:'.1s'}}>
           <div className="d-flex">
-            <div className="header-logo">
-              <a className="logo-link">
-                <span className="logo-sm">
-                  <img src={logo_sm} style={{height:'68px', marginLeft:'-10%'}}/>
-                </span>
-                <span className="logo-sm">
-                  <img />
-                </span>
-              </a>
-            </div>
             <button
-              className="btn btn-sm px-3 font-size-16 header-item waves-effect"
-              id="vertical-menu-btn"
+              className="btn btn-sm px-3 font-size-20 text-light header-item waves-effect waves-light"
               type="button"
               onClick={toggle}
             >
               <i className="fa fa-fw fa-bars"></i>
             </button>
-            <form className="app-search d-lg-block">
-              <div>
+            <div className="navbar-brand-box">
+              <div className="header-logo">
+                <a className="logo-link">
+                  <span className="logo-sm">
+                    <img
+                      src={logo}
+                      style={{ height: "64px", marginLeft: "-35%" }}
+                    />
+                  </span>
+                </a>
+              </div>
+            </div>
+            <form class="app-search d-none d-lg-block">
+              <div class="position-relative">
                 <input
                   type="text"
-                  className="form-control"
+                  class="form-control"
                   placeholder="Search..."
                 />
-                {/* <span className="bx bx-search-alt"></span> */}
+                <span class="bx bx-search-alt"></span>
               </div>
             </form>
-          </div>
-          <div className="d-flex">
-            <div className="dropdown d-inline-block">
+            </div>
+            <div className="d-flex justify-content-end">
+            <div className="dropdown dropdown-mega d-none d-lg-block ms-2">
               <button
                 type="button"
                 className="btn header-item waves-effect"
                 id="page-header-user-dropdown"
-                style={{display:'none'}}
               >
                 <img
                   className="rounded-circle header-profile-user"
@@ -135,7 +132,7 @@ const Header = ({ toggle, margin }) => {
               </button>
             </div>
           </div>
-        </div>
+          </div>
       )}
     </header>
   );

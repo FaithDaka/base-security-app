@@ -450,26 +450,33 @@ body[data-layout=horizontal] .footer {
 	padding: .625rem 1.5rem;
 	color: #a6b0cf;
 	position: relative;
-	font-size: 13px;
+	font-size: 16px;
 	-webkit-transition: all .4s;
 	transition: all .4s;
 	opacity:0.75;
 	letter-spacing: 0.4px;
+	margin-top:6px;
+	text-transform: uppercase;
 }
 
 #sidebar-menu ul li a i {
 	display: inline-block;
 	min-width: 1.75rem;
 	padding-bottom: .125em;
-	font-size: 1.25rem;
+	font-size: 18px;
 	line-height: 1.40625rem;
 	vertical-align: middle;
 	color: #a6b0cf;
 	-webkit-transition: all .4s;
-	transition: all .4s
+	transition: all .4s;
+}
+
+#sidebar-menu ul li span {
+	margin-left:8px;
 }
 
 #sidebar-menu ul li a:hover {
+	font-size:17.5px;
 	color:#fff
 }
 
@@ -959,7 +966,7 @@ body[data-sidebar=colored].vertical-collpsed .vertical-menu #sidebar-menu ul li 
 	position: fixed;
 	left: 0;
 	right: 0;
-	z-index: 100
+	z-index: 100;
 }
 
 .topnav .topnav-menu {
