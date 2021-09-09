@@ -20,7 +20,7 @@ const AdminProfile = (props) => {
     console.log("The ID", id);
     setLoading(true);
     try {
-      const res = await API.get(`/api/user/${id}`);
+      const res = await API.get(`/api/admin/${id}`);
       console.log("Admin Backend ===>", res);
       setFName(res.data.fname);
       setLName(res.data.lname);

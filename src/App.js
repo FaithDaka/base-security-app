@@ -16,6 +16,7 @@ import PageNotFound from './utils/PageNotFound';
 import ReportPage from './pages/Reports/content';
 import GuardProfile from './pages/Guards/GuardProfile';
 import AdminProfile from './pages/Admins/AdminProfile';
+import AssignGun from './pages/Guards/AssignGun';
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
       <ProtectedRoute exact path="/guards/add" component={ AddGuard }/>
       <ProtectedRoute exact path="/guards/update/:id" component={ UpdateGuard }/>
       <ProtectedRoute exact path="/guards/profile/:id" component={ GuardProfile }/>
+      <ProtectedRoute exact path="/guard/:id/assignGun" component={ AssignGun }/>
       <ProtectedRoute exact path="/admins" component={ AdminList }/>
       <ProtectedRoute exact path="/admin/add" component={ AddAdmin }/>
       <ProtectedRoute exact path="/admin/profile/:id" component={ AdminProfile }/>

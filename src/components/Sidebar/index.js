@@ -6,9 +6,9 @@ import { Link } from "react-router-dom";
 const Sidebar = ({ width, xPos }) => {
   const [tab, setTab] = useState(1);
 
-  useEffect(()=>{
-    setTab(tab)
-  },[tab])
+  useEffect(() => {
+    setTab(tab);
+  }, [tab]);
 
   return (
     <>
@@ -52,19 +52,8 @@ const Sidebar = ({ width, xPos }) => {
                               }
                               id="icon-link"
                             >
-                              <i
-                                className="fas fa-house-user"
-                                style={{ fontSize: "18px", marginRight: "8px" }}
-                              ></i>
-                              <span
-                                key="t-dashboards"
-                                style={{
-                                  fontSize: "16px",
-                                  textTransform: "uppercase",
-                                }}
-                              >
-                                Dashboard
-                              </span>
+                              <i className="fas fa-house-user"></i>
+                              <span key="t-dashboards">Dashboard</span>
                             </Link>
                           </li>
                           <li onClick={() => setTab(2)}>
@@ -77,19 +66,8 @@ const Sidebar = ({ width, xPos }) => {
                               }
                               id="icon-link"
                             >
-                              <i
-                                className="fas fa-user-ninja"
-                                style={{ fontSize: "18px", marginRight: "8px" }}
-                              ></i>
-                              <span
-                                key="t-dashboards"
-                                style={{
-                                  fontSize: "16px",
-                                  textTransform: "uppercase",
-                                }}
-                              >
-                                Guards
-                              </span>
+                              <i className="fas fa-user-ninja"></i>
+                              <span key="t-dashboards">Guards</span>
                             </Link>
                           </li>
                           <li onClick={() => setTab(3)}>
@@ -102,22 +80,15 @@ const Sidebar = ({ width, xPos }) => {
                               }
                               id="icon-link"
                             >
-                              <i
-                                className="fas fa-shield-alt"
-                                style={{ fontSize: "18px", marginRight: "8px" }}
-                              ></i>
-                              <span
-                                key="t-dashboards"
-                                style={{
-                                  fontSize: "16px",
-                                  textTransform: "uppercase",
-                                }}
-                              >
-                                armory
-                              </span>
+                              <i className="fas fa-shield-alt"></i>
+                              <span key="t-dashboards">armory</span>
                             </Link>
-                            <ul 
-                              className={tab === 3 ? "sub-menu mm-collapse mm-show":"sub-menu mm-collapse"}
+                            <ul
+                              className={
+                                tab === 3
+                                  ? "sub-menu mm-collapse mm-show"
+                                  : "sub-menu mm-collapse"
+                              }
                               aria-expanded="false"
                             >
                               <li className="mm-active">
@@ -142,19 +113,8 @@ const Sidebar = ({ width, xPos }) => {
                               }
                               id="icon-link"
                             >
-                              <i
-                                className="fas fa-server"
-                                style={{ fontSize: "18px", marginRight: "8px" }}
-                              ></i>
-                              <span
-                                key="t-dashboards"
-                                style={{
-                                  fontSize: "16px",
-                                  textTransform: "uppercase",
-                                }}
-                              >
-                                reports
-                              </span>
+                              <i className="fas fa-server"></i>
+                              <span key="t-dashboards">reports</span>
                             </Link>
                           </li>
                           <li onClick={() => setTab(5)}>
@@ -167,19 +127,8 @@ const Sidebar = ({ width, xPos }) => {
                               }
                               id="icon-link"
                             >
-                              <i
-                                className="fas fa-users"
-                                style={{ fontSize: "18px", marginRight: "8px" }}
-                              ></i>
-                              <span
-                                key="t-dashboards"
-                                style={{
-                                  fontSize: "16px",
-                                  textTransform: "uppercase",
-                                }}
-                              >
-                                Admins
-                              </span>
+                              <i className="fas fa-users"></i>
+                              <span key="t-dashboards">Admins</span>
                             </Link>
                           </li>
                         </ul>
@@ -221,8 +170,8 @@ const Sidebar = ({ width, xPos }) => {
           </div>
         </div>
       ) : (
-        <div className="vertical-collpsed vertical-menu">
-          <div className="h-100">
+        <div className="vertical-collpsed vertical-menu" style={{display:'none'}}>
+          {/* <div className="h-100">
             <div className="simplebar-wrapper">
               <div className="simplebar-height-auto-observer-wrapper">
                 <div className="simplebar-height-auto-observer"></div>
@@ -239,73 +188,83 @@ const Sidebar = ({ width, xPos }) => {
                           className="metismenu list-unstyled mm-show"
                           id="side-menu"
                         >
-                          <li className="mm-active">
-                            <a
-                              href="javascript: void(0);"
-                              className="waves-effect mm-active"
+                          <li onClick={() => setTab(1)}>
+                            <Link
+                              to="/dashboard"
+                              className={
+                                tab === 1
+                                  ? "mm-active"
+                                  : ""
+                              }
                             >
-                              <i className="bx bx-home-circle"></i>
-                              <span className="badge rounded-pill bg-info float-end">
-                                04
-                              </span>
-                              <span key="t-dashboards">Dashboards</span>
-                            </a>
-                            {/* <ul
-                              className="sub-menu mm-collapse mm-show"
+                              <i className="fas fa-house-user" style={{fontSize:'18px'}}></i>
+                            </Link>
+                          </li>
+                          <li onClick={() => setTab(2)}>
+                            <Link
+                              to="/guards"
+                              className={
+                                tab === 2
+                                  ? " mm-active"
+                                  : ""
+                              }
+                            >
+                              <i className="fas fa-user-ninja" style={{fontSize:'18px'}}></i>
+                            </Link>
+                          </li>
+                          <li onClick={() => setTab(3)}>
+                            <Link
+                              to="/armory"
+                              className={
+                                tab === 3
+                                  ? "waves-effect mm-active"
+                                  : "waves-effect"
+                              }
+                              id="icon-link"
+                            >
+                              <i className="fas fa-shield-alt" style={{fontSize:'18px'}}></i>
+                            </Link>
+                            <ul
+                              className={tab === 3 ? "sub-menu mm-collapse mm-show":"sub-menu mm-collapse"}
                               aria-expanded="false"
                             >
                               <li className="mm-active">
-                                <a
-                                  href="index.html"
-                                  key="t-default"
-                                  className="active"
-                                >
-                                  Default
+                                <a href="#">
+                                  Assigned Guns
                                 </a>
                               </li>
                               <li>
-                                <a href="dashboard-saas.html" key="t-saas">
-                                  Saas
-                                </a>
-                              </li>
-                              <li>
-                                <a href="dashboard-crypto.html" key="t-crypto">
-                                  Crypto
-                                </a>
-                              </li>
-                              <li>
-                                <a href="dashboard-blog.html" key="t-blog">
-                                  Blog
-                                </a>
-                              </li>
-                            </ul> */}
-                          </li>
-                          <li>
-                            <a href="#" className="has-arrow waves-effect">
-                              <i className="fa fa-receipt"></i>
-                              <span key="t-invoices">Invoices</span>
-                            </a>
-                            <ul
-                              className="sub-menu mm-collapse"
-                              aria-expanded="false"
-                            >
-                              <li>
-                                <a
-                                  href="invoices-list.html"
-                                  key="t-invoice-list"
-                                >
-                                  Invoice List
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="invoices-detail.html"
-                                  key="t-invoice-detail"
-                                >
-                                  Invoice Detail
+                                <a href="#">
+                                  Unassigned Guns
                                 </a>
                               </li>
                             </ul>
+                          </li>
+                          <li onClick={() => setTab(4)}>
+                            <Link
+                              to="/reports"
+                              className={
+                                tab === 4
+                                  ? "waves-effect mm-active"
+                                  : "waves-effect"
+                              }
+                              id="icon-link"
+                            >
+                              <i className="fas fa-server" style={{fontSize:'18px'}}></i>
+                            </Link>
+                          </li>
+                          <li onClick={() => setTab(5)}>
+                            <Link
+                              to="/admins"
+                              className={
+                                tab === 5
+                                  ? "waves-effect mm-active"
+                                  : "waves-effect"
+                              }
+                              id="icon-link"
+                            >
+                              <i className="fas fa-users" style={{fontSize:'18px'}}></i>
+                            </Link>
                           </li>
                         </ul>
                       </div>
@@ -314,8 +273,42 @@ const Sidebar = ({ width, xPos }) => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
+        // <div className="topnav">
+        //   <div className="container-fluid">
+        //     <nav className="navbar navbar-light navbar-expand-lg topnav-menu">
+        //       <div
+        //         className="collapse navbar-collapse active"
+        //         id="topnav-menu-content"
+        //         style={{border:'1px solid red'}}
+        //       >
+        //         <ul className="navbar-nav active">
+        //           <li className="nav-item dropdown">
+        //             <Link
+        //               to="/dashboard"
+        //               className="nav-link dropdown-toggle arrow-none"
+        //               id="icon-link"
+        //             >
+        //               <i className="fas fa-house-user"></i>
+        //               <span key="t-dashboards">Dashboard</span>
+        //             </Link>
+        //           </li>
+        //           <li className="nav-item dropdown">
+        //             <Link
+        //               to="/armory"
+        //               className="nav-link dropdown-toggle arrow-none"
+        //               id="icon-link"
+        //             >
+        //               <i className="fas fa-user-ninja"></i>
+        //               <span key="t-dashboards">Armory</span>
+        //             </Link>
+        //           </li>
+        //         </ul>
+        //       </div>
+        //     </nav>
+        //   </div>
+        // </div>
       )}
     </>
   );
