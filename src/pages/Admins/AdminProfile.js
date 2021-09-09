@@ -59,58 +59,52 @@ const AdminProfile = (props) => {
       {loading && <LoadSpinner />}
       <div className="container-fluid profile">
         <div className="row justify-content-center">
-          <div className="col-sm-12 col-xl-12">
+          <div className="col-md-4 col-xl-3">
             <div className="card">
               <div
-                className="card-header bg-info"
-                style={{ height: "50px" }}
-              ></div>
+                className="card-header bg-success"
+                style={{ height: "50px", color:'#fff' }}
+              >Profile</div>
               <div className="card-body profile-body">
-                <div className="d-flex flex-row">
-                  <div className="col">
-                    <div className="">
-                      <div className="mt-5">
-                        <img
-                          className="avatar-md profile-user-wid mb-4 rounded-circle"
-                          alt="profile"
-                          src={avatar}
-                        ></img>
-                        <div className="row mt-3">
-                          <h5> Name: </h5>
-                          <p className="text-wrap">
-                            {fName} {lName}
-                          </p>
-                        </div>
-                        <div className="row mt-3">
-                          <h5> Phone Number: </h5>
-                          <p className="text-wrap">0{phone}</p>
-                        </div>
-                        <div className="row mt-3">
-                          <h5> Email: </h5>
-                          <p className="text-wrap nc">{email}</p>
-                        </div>
-                        <div className="row mt-3 text-justify">
-                          <h5> Password: </h5>
-                          <p className="text-break nc">{password}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col ml-5 mt-3">
-                    <div className="">
-                      <div className="mt-3">
-                        <div className="row mt-3">
-                          <h5> Sex: </h5>
-                          <p className="text-wrap">{sex}</p>
-                        </div>
-                        <div className="row mt-3">
-                          <h5> Marital Status: </h5>
-                          <p className="text-wrap">{status}</p>
-                        </div>
-                        <br />
-                      </div>
-                    </div>
-                  </div>
+                <div className="mt-5 text-center">
+                  <img
+                    className="avatar-md profile-user-wid mb-4 rounded-circle img-fluid"
+                    alt="profile"
+                    src={avatar}
+                  ></img>
+                  <h2 className="text-wrap">
+                    {fName} {lName}
+                  </h2>
+                  <p className="text-wrap text-muted">0{phone}</p>
+                  <p className="text-wrap text-muted nc">{email}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-8 col-xl-9">
+            <div className="card">
+              <div
+                className="card-header bg-info font-size-20"
+                style={{ height: "50px", color:'#fff' }}
+              >DETAILS</div>
+              <div className="card-body profile-body">
+                <div className="col mt-3">
+                  <table className="table table-responsive table-borderless">
+                    <tbody>
+                      <tr>
+                        <td className="td-name">Password</td>
+                        <td className="text-break nc">{password}</td>
+                      </tr>
+                      <tr>
+                        <td className="td-name">Sex</td>
+                        <td className="text-wrap">{sex}</td>
+                      </tr>
+                      <tr>
+                        <td className="td-name">Marital Status</td>
+                        <td className="text-wrap">{status}</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
