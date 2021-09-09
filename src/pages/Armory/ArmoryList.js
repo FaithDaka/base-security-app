@@ -208,29 +208,22 @@ const ArmoryList = () => {
                               <td>No</td>
                             )}
                             <td>
-                              <div className="button-list">
-                                <a
-                                  href="#"
-                                  className="btn-tab btn-sucess-rgba"
-                                  title="Update details"
-                                  style={{
-                                    marginRight: "20px",
-                                    color: "green",
-                                  }}
-                                  onClick={(e) => openUpdate(e, gun._id)}
-                                >
-                                  <i className="far fa-edit" />
-                                </a>
-                                <a
-                                  href="#"
-                                  className="btn-tab btn-danger-rgba"
-                                  style={{ color: "red" }}
-                                  title="Delete guard"
-                                  onClick={() => handleDelete(gun._id)}
-                                >
-                                  <i className="far fa-trash-alt" />
-                                </a>
-                              </div>
+                              <div className="row ml-2">
+                              <span
+                                title="Update details"
+                                style={{ marginRight: "20px", color: "green" }}
+                                onClick={(e) => openUpdate(e,gun._id)}
+                              >
+                                <i className="fas fa-edit action" />
+                              </span>
+                              <span
+                                style={{ color: "red" }}
+                                title="Delete gun"
+                                onClick={() => handleDelete(gun._id)}
+                              >
+                                <i className="far fa-trash-alt action" />
+                              </span>
+                            </div>
                             </td>
                           </tr>
                         );

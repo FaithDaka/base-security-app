@@ -6,13 +6,17 @@ import LoadSpinner from "../../components/Handlers/Loadspinner";
 import API from "../../helpers/api";
 import AlertDialog from "../../utils/Dialog";
 import Guards from "./index";
-import Pagination from '../../components/Pagination'
+import Pagination from "../../components/Pagination";
 import SweetAlert from "react-bootstrap-sweetalert";
+import AssignGun from "./AssignGun";
+import Modal from "../../components/Modal";
 
 const GuardsList = () => {
   const [open, setOpen] = useState(false);
-  const [dId, setDId] = useState()
+  const [dId, setDId] = useState();
+  const [aId, setAId] = useState();
   const [guardUsers, setGuardUsers] = useState([]);
+  const [assign, setAssign] = useState();
 
   const [currentpage, setCurrentPage] = useState(1);
   const [guardsPerPage] = useState(10);
@@ -32,10 +36,16 @@ const GuardsList = () => {
   const handleOpen = () => setOpen(true);
   const handleNo = () => setOpen(false);
 
-  const handleDelete = (id) => {
-  setDId(id)
-  handleOpen();
+  const openAssign = (id) => {
+    setAId(id)
+    setAssign(true)
   }
+  const closeAssign = () => setAssign(false);
+
+  const handleDelete = (id) => {
+    setDId(id);
+    handleOpen();
+  };
   const getGuards = async () => {
     setLoading(true);
     try {
@@ -43,8 +53,7 @@ const GuardsList = () => {
       console.log("Guard Users Backend ===>", res);
       setGuardUsers(res.data);
       setLoading(false);
-    } 
-    catch (error) {
+    } catch (error) {
       setLoading(false);
       console.log("error", error);
     }
@@ -55,7 +64,7 @@ const GuardsList = () => {
   const addGuard = () => {
     setLoading(true);
     setTimeout(() => {
-      history.push('/guards/add');
+      history.push("/guards/add");
     }, 2000);
   };
 
@@ -66,14 +75,14 @@ const GuardsList = () => {
     }, 2000);
   };
 
-  const getProfile =(id)=>{
+  const getProfile = (id) => {
     setLoading(true);
     setTimeout(() => {
-      history.push(`guards/profile/${id}`)
-    }, 2000);  
-  }
+      history.push(`guards/profile/${id}`);
+    }, 2000);
+  };
 
-  const deleteGuard = async() => {
+  const deleteGuard = async () => {
     setLoading(true);
     await API.delete(`/api/guard/${dId}`)
       .then(() => {
@@ -98,6 +107,9 @@ const GuardsList = () => {
 
   return (
     <Guards>
+      <Modal show={assign} close={closeAssign} title="Assign Gun">
+        <AssignGun close={closeAssign} guards={getGuards} id={aId}/>
+      </Modal>
       <div className="container-fluid">
         <div className="row">
           <div className="col-12">
@@ -106,7 +118,7 @@ const GuardsList = () => {
             </div>
           </div>
         </div>
-        <AlertDialog open={open} Yes={()=>deleteGuard()} No={handleNo} />
+        <AlertDialog open={open} Yes={() => deleteGuard()} No={handleNo} />
         {showAlert && success && (
           <SweetAlert
             success
@@ -156,7 +168,7 @@ const GuardsList = () => {
                 </div>
                 <div className="table-responsive">
                   <table className="table align-middle table-nowrap table-check table-bordered">
-                  {loading && <LoadSpinner />}
+                    {loading && <LoadSpinner />}
                     <thead className="table-primary">
                       <tr className="tr-head">
                         <th style={{ width: "20px" }} className="align-middle">
@@ -176,57 +188,65 @@ const GuardsList = () => {
                         <th className="align-middle"> Email</th>
                         <th className="align-middle"> Phone</th>
                         <th className="align-middle"> Sex</th>
-                        <th className="align-middle"> Status</th>
+                        <th className="align-middle"> Weapon</th>
                         <th className="align-middle"> Actions</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {currentGuards.map((guard)=>(
-                      <tr key={guard._id} className="tr-body">
-                        <td>
-                          <div className="form-check font-size-16">
-                            <input
-                              className="form-check-input"
-                              type="checkbox"
-                              id="orderidcheck01"
-                            />
-                            <label
-                              className="form-check-label"
-                              htmlFor="orderidcheck01"
-                            ></label>
-                          </div>
-                        </td>
-                        <td className="td-hover"
-                        onClick={()=>getProfile(guard._id)}>
-                          {guard.guard.fname} {guard.guard.lname}
-                        </td>
-                        <td className="tr_email">{guard.guard.email}</td>
-                        <td>0{guard.guard.phone}</td>
-                        <td>{guard.guard.sex}</td>
-                        <td>{guard.guard.status}</td>
-                        <td>
-                          <div className="button-list">
-                            <a
-                              href="#"
-                              className="btn-tab btn-sucess-rgba"
-                              title="Update details"
-                              style={{ marginRight: "20px", color: "green" }}
-                              onClick={() => updateGuard(guard._id)}
+                      {currentGuards.map((guard) => (
+                        <tr key={guard._id} className="tr-body">
+                          <td>
+                            <div className="form-check font-size-16">
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id="orderidcheck01"
+                              />
+                              <label
+                                className="form-check-label"
+                                htmlFor="orderidcheck01"
+                              ></label>
+                            </div>
+                          </td>
+                          <td>
+                            <span
+                              className="td-hover"
+                              onClick={() => getProfile(guard._id)}
                             >
-                              <i className="far fa-edit" />
-                            </a>
-                            <a
-                              href="#"
-                              className="btn-tab btn-danger-rgba"
-                              style={{ color: "red" }}
-                              title="Delete guard"
-                              onClick={()=>handleDelete(guard._id)}
-                            >
-                              <i className="far fa-trash-alt" />
-                            </a>
-                          </div>
-                        </td>
-                      </tr>
+                              {guard.guard.fname} {guard.guard.lname}
+                            </span>
+                            {guard.isAssignedGun === false ? (
+                              <span onClick={()=>openAssign(guard._id)}>
+                                <i className="float-right fas fa-flag-checkered"></i>
+                              </span>
+                            ) : (
+                              <span></span>
+                            )}
+                          </td>
+                          <td className="tr_email">{guard.guard.email}</td>
+                          <td>0{guard.guard.phone}</td>
+                          <td>{guard.guard.sex}</td>
+                          {guard.gun === null ? <td>Unassigned</td>:
+                            <td>{guard.gun.name}</td>}
+                          <td>
+                            <div className="row ml-2">
+                              <span
+                                title="Update details"
+                                style={{ marginRight: "20px", color: "green" }}
+                                onClick={() => updateGuard(guard._id)}
+                              >
+                                <i className="fas fa-edit action" />
+                              </span>
+                              <span
+                                style={{ color: "red" }}
+                                title="Delete guard"
+                                onClick={() => handleDelete(guard._id)}
+                              >
+                                <i className="far fa-trash-alt action" />
+                              </span>
+                            </div>
+                          </td>
+                        </tr>
                       ))}
                     </tbody>
                   </table>

@@ -24,6 +24,26 @@
     text-transform: capitalize;
     letter-spacing:0.1px;
 }
+.tr-body td span .fa-flag-checkered{
+  font-size:16px;
+  opacity:0.8;
+  color:rgb(211, 4, 4);
+}
+.tr-body td .fa-flag-checkered:hover{
+  font-size:18.5px;
+  opacity:1;
+  color:rgb(211, 4, 4);
+  cursor:pointer;
+}
+.tr-body td .action{
+  font-size:16px;
+  opacity:0.9;
+}
+.tr-body td .action:hover{
+  font-size:18px;
+  opacity: 1;
+  cursor:pointer;
+}
 .td-hover:hover{
  color:#0000ff;
  font-size:16.5px;

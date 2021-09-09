@@ -43,14 +43,14 @@ const AssignGun = ({ close, guards, id }) => {
 
   useEffect(()=>{
       getGuns();
-  })
+  },[id])
   return (
     <>
       <div className="card">
         <div className="card-body gun">
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
-              <label>Gun Type</label>
+              <label>Gun</label>
               <select
                 className="form-control select2 select2-hidden-accessible"
                 value={gun}
