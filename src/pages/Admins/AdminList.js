@@ -4,13 +4,13 @@ import AlertDialog from "../../utils/Dialog";
 import Guards from "./index";
 import API from "../../helpers/api";
 import LoadSpinner from "../../components/Handlers/Loadspinner";
-import Pagination from '../../components/Pagination'
+import Pagination from "../../components/Pagination";
 
 const AdminList = () => {
   const [open, setOpen] = useState(false);
   const [admin, setAdmin] = useState([]);
   const [loading, setLoading] = useState(true);
-  const admins = admin.filter(a => a.role ==='admin');
+  const admins = admin.filter((a) => a.role === "admin");
 
   const [currentpage, setCurrentPage] = useState(1);
   const [adminsPerPage] = useState(10);
@@ -41,7 +41,7 @@ const AdminList = () => {
   const addAdmin = () => {
     setLoading(true);
     setTimeout(() => {
-      history.push('/admin/add');
+      history.push("/admin/add");
     }, 2000);
   };
 
@@ -50,14 +50,14 @@ const AdminList = () => {
     setTimeout(() => {
       history.push(`/admin/update/${id}`);
     }, 2000);
-  }
+  };
 
-  const getProfile =(id)=>{
+  const getProfile = (id) => {
     setLoading(true);
     setTimeout(() => {
-      history.push(`admin/profile/${id}`)
-    }, 2000);  
-  }
+      history.push(`admin/profile/${id}`);
+    }, 2000);
+  };
 
   const deleteAdmin = () => {
     console.log("guard deleted");
@@ -68,7 +68,6 @@ const AdminList = () => {
     getAdminUsers();
   }, []);
 
-  
   return (
     <Guards>
       <div className="container-fluid">
@@ -86,8 +85,7 @@ const AdminList = () => {
               <div className="card-body">
                 <div className="d-flex flex-row mb-2 justify-content-between">
                   <div className="col-sm-4">
-                    <div className="search-box me-2 mb-2 d-inline-block">
-                    </div>
+                    <div className="search-box me-2 mb-2 d-inline-block"></div>
                   </div>
                   <div className="col-3">
                     <div className="text-sm-end" style={{ textAlign: "right" }}>
@@ -103,7 +101,7 @@ const AdminList = () => {
                 </div>
                 <div className="table-responsive">
                   <table className="table align-middle table-nowrap table-check table-bordered">
-                  {loading && <LoadSpinner />}
+                    {loading && <LoadSpinner />}
                     <thead className="table-primary">
                       <tr className="tr-head">
                         <th style={{ width: "20px" }} className="align-middle">
@@ -142,33 +140,33 @@ const AdminList = () => {
                                 ></label>
                               </div>
                             </td>
-                            <td className="td-hover"
-                            onClick={()=>getProfile(user._id)}>{user.fname} {user.lname}</td>
+                            <td
+                              className="td-hover"
+                              onClick={() => getProfile(user._id)}
+                            >
+                              {user.fname} {user.lname}
+                            </td>
                             <td className="tr_email">{user.email}</td>
                             <td>{user.status}</td>
                             <td>
-                              <div className="button-list">
-                                <a
-                                  href="#"
-                                  className="btn-tab btn-sucess-rgba"
+                              <div className="row ml-2">
+                                <span
                                   title="Update details"
                                   style={{
                                     marginRight: "20px",
                                     color: "green",
                                   }}
-                                  onClick={() => updateAdmin()}
+                                  onClick={(e) => updateAdmin()}
                                 >
-                                  <i className="far fa-edit" />
-                                </a>
-                                <a
-                                  href="#"
-                                  className="btn-tab btn-danger-rgba"
+                                  <i className="fas fa-edit action" />
+                                </span>
+                                <span
                                   style={{ color: "red" }}
-                                  title="Delete guard"
+                                  title="Delete user"
                                   onClick={() => handleDelete()}
                                 >
-                                  <i className="far fa-trash-alt" />
-                                </a>
+                                  <i className="far fa-trash-alt action" />
+                                </span>
                               </div>
                             </td>
                           </tr>
