@@ -22,7 +22,7 @@ const Login = ({history}) => {
           localStorage.setItem("user", JSON.stringify(res.data));
           setLoading(true);
           setTimeout(()=>{
-            history.push("/dashboard")
+            history.push(`/admin/${res.data.user._id}/dashboard`)
           }, 2000)
         }
       })

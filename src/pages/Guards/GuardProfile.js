@@ -6,7 +6,7 @@ import API from "../../helpers/api";
 import LoadSpinner from "../../components/Handlers/Loadspinner";
 
 const GuardProfile = (props) => {
-  const id = props.match.params.id;
+  const id = props.match.params.guard_id;
   const [fName, setFName] = useState("");
   const [lName, setLName] = useState("");
   const [sex, setSex] = useState("");
@@ -18,6 +18,8 @@ const GuardProfile = (props) => {
   const [loading, setLoading] = useState(false);
   const [guns, setGuns] = useState([]);
   const [gun, setGun] = useState({});
+
+  const user = JSON.parse(localStorage.getItem("user")).user;
 
   const getGuard = async (id) => {
     console.log("The ID", id);
@@ -67,7 +69,7 @@ const GuardProfile = (props) => {
           <div className="col-12">
             <div className="page-title-box d-sm-flex align-items-center justify-content-between">
               <span className="col-4 row" title="Go back">
-                <Link to="/guards">
+                <Link to={`/admin/${user._id}/guards`}>
                   <i className="fa fa-arrow-left"></i>
                 </Link>
                 <h4 className="ml-3 mb-sm-0 font-size-16">{fName}'s Profile</h4>

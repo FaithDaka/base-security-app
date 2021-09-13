@@ -1,8 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import plain from "../../../assets/img/avatar.jpg";
+import avatar from "../../../assets/img/avatar.jpg";
 import logo from "../../../assets/img/base-dashboard-logo.png";
-import logo_sm from "../../../assets/img/base-dashboard-logo-black.png";
+import plain from "../../../assets/img/plainlogo.png";
 
 const Header = ({ toggle, margin }) => {
   const history = useHistory();
@@ -16,10 +16,10 @@ const Header = ({ toggle, margin }) => {
       {margin >= 0 ? (
         <div className="navbar-header" style={{ marginLeft: `${margin}px`}}>
           <div className="d-flex">
-            <div className="navbar-brand-box">
+            <div className="navbar-brand-box" style={{backgroundColor:'#2a3042'}}>
               <a className="logo">
                 <span className="logo-sm">
-                  <img src={logo_sm} style={{ height: "30px" }} />
+                  <img src={plain} style={{ height: "40px"}} />
                 </span>
                 <span className="logo-lg">
                   <img src={logo} style={{ height: "65px" }} />
@@ -54,7 +54,7 @@ const Header = ({ toggle, margin }) => {
               >
                 <img
                   className="rounded-circle header-profile-user"
-                  src={plain}
+                  src={avatar}
                   alt="avatar"
                 />
                 <span className="d-none d-xl-inline-block ms-1"></span>
@@ -73,7 +73,7 @@ const Header = ({ toggle, margin }) => {
           </div>
         </div>
       ) : (
-        <div className="navbar-header" style={{backgroundColor:'#2a3042', transition:'all .4s ease-in ', transitionDelay:'.1s'}}>
+        <div className="navbar-header" style={{backgroundColor:'#2a3042', transition:'all .2s ease-in ', transitionDelay:'.05s'}}>
           <div className="d-flex">
             <button
               className="btn btn-sm px-3 font-size-20 text-light header-item waves-effect waves-light"
@@ -82,13 +82,13 @@ const Header = ({ toggle, margin }) => {
             >
               <i className="fa fa-fw fa-bars"></i>
             </button>
-            <div className="navbar-brand-box">
+            <div className="navbar-brand-box" style={{backgroundColor:'#2a3042'}}>
               <div className="header-logo">
                 <a className="logo-link">
                   <span className="logo-sm">
                     <img
                       src={logo}
-                      style={{ height: "64px", marginLeft: "-35%" }}
+                      style={{ height: "64px", marginLeft: "-35%"}}
                     />
                   </span>
                 </a>
@@ -114,7 +114,7 @@ const Header = ({ toggle, margin }) => {
               >
                 <img
                   className="rounded-circle header-profile-user"
-                  src={plain}
+                  src={avatar}
                   alt="avatar"
                 />
                 <span className="d-none d-xl-inline-block ms-1"></span>

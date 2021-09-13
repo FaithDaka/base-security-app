@@ -22,6 +22,8 @@ const AddAdmin = ({ history }) => {
   const [showAlert, setShowAlert] = useState(false);
   const hideAlert = () => setShowAlert(false);
 
+  const user = JSON.parse(localStorage.getItem("user")).user;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -77,7 +79,7 @@ const AddAdmin = ({ history }) => {
           <div className="col-12">
             <div className="page-title-box d-sm-flex align-items-center justify-content-between">
               <span className="col-4 row" title="Go back">
-                <Link to="/admins">
+                <Link to={`/admin/${user._id}/admins`}>
                   <i className="fa fa-arrow-left"></i>
                 </Link>
                 <h4 className="ml-3 mb-sm-0 font-size-16">

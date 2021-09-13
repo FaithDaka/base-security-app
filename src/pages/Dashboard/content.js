@@ -3,10 +3,12 @@ import img from "../../assets/img/plainlogo.png";
 import LoadSpinner from "../../components/Handlers/Loadspinner";
 import API from "../../helpers/api";
 import avatar from "../../assets/img/avatar.jpg";
+import { Link } from "react-router-dom";
 
 const Content = ({ history }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user")).user;
 
   const guards = data.filter((a) => a.role === "guard");
   const getGuards = async () => {
@@ -87,13 +89,13 @@ const Content = ({ history }) => {
                         </div>
                       </div>
                       <div className="mt-4">
-                        <a
+                        <Link to={`/admin/${user._id}/profile`}
                           href="#"
                           className="btn btn-primary waves-effect waves-light btn-sm"
                         >
                           View Profile{" "}
                           <i className="fa fa-arrow-right ms-1"></i>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
