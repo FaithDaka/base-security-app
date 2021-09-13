@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 const Sidebar = ({ width, xPos }) => {
   const [tab, setTab] = useState(1);
+  const user = JSON.parse(localStorage.getItem("user")).user;
 
   useEffect(() => {
     setTab(tab);
@@ -44,7 +45,7 @@ const Sidebar = ({ width, xPos }) => {
                           </li>
                           <li onClick={() => setTab(1)}>
                             <Link
-                              to="/dashboard"
+                              to={`/admin/${user._id}/dashboard`}
                               className={
                                 tab === 1
                                   ? "waves-effect mm-active"
@@ -58,7 +59,7 @@ const Sidebar = ({ width, xPos }) => {
                           </li>
                           <li onClick={() => setTab(2)}>
                             <Link
-                              to="/guards"
+                              to={`/admin/${user._id}/guards`}
                               className={
                                 tab === 2
                                   ? "waves-effect mm-active"
@@ -72,7 +73,7 @@ const Sidebar = ({ width, xPos }) => {
                           </li>
                           <li onClick={() => setTab(3)}>
                             <Link
-                              to="/armory"
+                              to={`/admin/${user._id}/armory`}
                               className={
                                 tab === 3
                                   ? "waves-effect mm-active"
@@ -105,7 +106,7 @@ const Sidebar = ({ width, xPos }) => {
                           </li>
                           <li onClick={() => setTab(4)}>
                             <Link
-                              to="/reports"
+                              to={`/admin/${user._id}/reports`}
                               className={
                                 tab === 4
                                   ? "waves-effect mm-active"
@@ -119,7 +120,7 @@ const Sidebar = ({ width, xPos }) => {
                           </li>
                           <li onClick={() => setTab(5)}>
                             <Link
-                              to="/admins"
+                              to={`/admin/${user._id}/admins`}
                               className={
                                 tab === 5
                                   ? "waves-effect mm-active"

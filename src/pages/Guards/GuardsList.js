@@ -17,6 +17,7 @@ const GuardsList = () => {
   const [aId, setAId] = useState();
   const [guardUsers, setGuardUsers] = useState([]);
   const [assign, setAssign] = useState();
+  const user = JSON.parse(localStorage.getItem("user")).user;
 
   const [currentpage, setCurrentPage] = useState(1);
   const [guardsPerPage] = useState(10);
@@ -64,21 +65,21 @@ const GuardsList = () => {
   const addGuard = () => {
     setLoading(true);
     setTimeout(() => {
-      history.push("/guards/add");
+      history.push(`/admin/${user._id}/guards/add_new`);
     }, 2000);
   };
 
   const updateGuard = (id) => {
     setLoading(true);
     setTimeout(() => {
-      history.push(`/guards/update/${id}`);
+      history.push(`/admin/${user._id}/guards/update/${id}`);
     }, 2000);
   };
 
   const getProfile = (id) => {
     setLoading(true);
     setTimeout(() => {
-      history.push(`guards/profile/${id}`);
+      history.push(`/admin/${user._id}/guards/profile/${id}`);
     }, 2000);
   };
 

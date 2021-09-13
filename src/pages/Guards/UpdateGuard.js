@@ -7,7 +7,7 @@ import LoadHandler from "../../components/Handlers/LoadHandler";
 import LoadSpinner from "../../components/Handlers/Loadspinner";
 
 const UpdateGuard = (props) => {
-  const id = props.match.params.id
+  const id = props.match.params.guard_id
   const [fName, setFName] = useState('');
   const [lName, setLName] = useState('');
   const [sex, setSex] = useState('');
@@ -18,7 +18,8 @@ const UpdateGuard = (props) => {
   const [isAssigned, setisAssigned] = useState(false);
   const role = useState('guard');
   const [guns, setGuns] = useState([])
-  const [gun, setGun] = useState([])
+  const [gun, setGun] = useState([]);
+  const user = JSON.parse(localStorage.getItem("user")).user;
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -122,7 +123,7 @@ const UpdateGuard = (props) => {
           <div className="col-12">
             <div className="page-title-box d-sm-flex align-items-center justify-content-between">
               <span className="col-4 row" title="Go back">
-                <Link to="/guards">
+                <Link to={`/admin/${user._id}/guards`}>
                   <i className="fa fa-arrow-left"></i>
                 </Link>
                 <h4 className="ml-3 mb-sm-0 font-size-16">Update Guard Details</h4>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AlertDialog from "../../utils/Dialog";
 import Guards from "./index";
 import API from "../../helpers/api";
@@ -11,6 +11,7 @@ const AdminList = () => {
   const [admin, setAdmin] = useState([]);
   const [loading, setLoading] = useState(true);
   const admins = admin.filter((a) => a.role === "admin");
+  const user = JSON.parse(localStorage.getItem("user")).user;
 
   const [currentpage, setCurrentPage] = useState(1);
   const [adminsPerPage] = useState(10);
@@ -37,30 +38,8 @@ const AdminList = () => {
 
   const handleDelete = () => handleOpen();
 
-  const history = useHistory();
-  const addAdmin = () => {
-    setLoading(true);
-    setTimeout(() => {
-      history.push("/admin/add");
-    }, 2000);
-  };
-
-  const updateAdmin = (id) => {
-    setLoading(true);
-    setTimeout(() => {
-      history.push(`/admin/update/${id}`);
-    }, 2000);
-  };
-
-  const getProfile = (id) => {
-    setLoading(true);
-    setTimeout(() => {
-      history.push(`admin/profile/${id}`);
-    }, 2000);
-  };
-
   const deleteAdmin = () => {
-    console.log("guard deleted");
+    console.log("Admin deleted");
     handleNo();
   };
 
@@ -90,11 +69,10 @@ const AdminList = () => {
                   <div className="col-3">
                     <div className="text-sm-end" style={{ textAlign: "right" }}>
                       <button
-                        onClick={addAdmin}
                         type="button"
                         className="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
                       >
-                        <i className="fa fa-plus-circle me-1"></i> Add New Admin
+                        <Link to={`/admin/${user._id}/add_new`} className="text-light"><i className="fa fa-plus-circle me-1"></i> Add New Admin</Link>
                       </button>
                     </div>
                   </div>
@@ -140,25 +118,25 @@ const AdminList = () => {
                                 ></label>
                               </div>
                             </td>
-                            <td
-                              className="td-hover"
-                              onClick={() => getProfile(user._id)}
-                            >
-                              {user.fname} {user.lname}
+                            <td>
+                              <Link to={`/admin/${user._id}/profile`} className="td-hover">
+                                {user.fname} {user.lname}
+                              </Link>
                             </td>
                             <td className="tr_email">{user.email}</td>
                             <td>{user.status}</td>
                             <td>
                               <div className="row ml-2">
-                                <span
-                                  title="Update details"
-                                  style={{
-                                    marginRight: "20px",
-                                    color: "green",
-                                  }}
-                                  onClick={(e) => updateAdmin()}
-                                >
-                                  <i className="fas fa-edit action" />
+                                <span title="Update details">
+                                  <Link
+                                    to={`/admin/${user._id}/update`}
+                                    style={{
+                                      marginRight: "20px",
+                                      color: "green",
+                                    }}
+                                  >
+                                    <i className="fas fa-edit action" />
+                                  </Link>
                                 </span>
                                 <span
                                   style={{ color: "red" }}

@@ -16,26 +16,24 @@ import PageNotFound from './utils/PageNotFound';
 import ReportPage from './pages/Reports/content';
 import GuardProfile from './pages/Guards/GuardProfile';
 import AdminProfile from './pages/Admins/AdminProfile';
-import AssignGun from './pages/Guards/AssignGun';
 
 const App = () => {
   return (
     <BrowserRouter>
     <Switch>
       <Route exact path="/" component={ Auth }/>
-      <ProtectedRoute exact path="/dashboard" component={ Dashboard }/>
-      <ProtectedRoute exact path="/guards" component={ GuardsList }/>
-      <ProtectedRoute exact path="/guards/add" component={ AddGuard }/>
-      <ProtectedRoute exact path="/guards/update/:id" component={ UpdateGuard }/>
-      <ProtectedRoute exact path="/guards/profile/:id" component={ GuardProfile }/>
-      <ProtectedRoute exact path="/guard/:id/assignGun" component={ AssignGun }/>
-      <ProtectedRoute exact path="/admins" component={ AdminList }/>
-      <ProtectedRoute exact path="/admin/add" component={ AddAdmin }/>
-      <ProtectedRoute exact path="/admin/profile/:id" component={ AdminProfile }/>
-      <ProtectedRoute exact path="/armory" component={ ArmoryList }/>
+      <ProtectedRoute exact path="/admin/:id/dashboard" component={ Dashboard }/>
+      <ProtectedRoute exact path="/admin/:id/guards" component={ GuardsList }/>
+      <ProtectedRoute exact path="/admin/:id/guards/add_new" component={ AddGuard }/>
+      <ProtectedRoute exact path="/admin/:id/guards/update/:guard_id" component={ UpdateGuard }/>
+      <ProtectedRoute exact path="/admin/:id/guards/profile/:guard_id" component={ GuardProfile }/>
+      <ProtectedRoute exact path="/admin/:id/admins" component={ AdminList }/>
+      <ProtectedRoute exact path="/admin/:id/add_new" component={ AddAdmin }/>
+      <ProtectedRoute exact path="/admin/:id/profile" component={ AdminProfile }/>
+      <ProtectedRoute exact path="/admin/:id/armory" component={ ArmoryList }/>
       <ProtectedRoute exact path="/maintenance" component={ Maintenance }/>
       <ProtectedRoute exact path="/pagenotfound" component={ PageNotFound }/>
-      <ProtectedRoute exact path="/reports" component={ ReportPage }/>
+      <ProtectedRoute exact path="/admin/:id/reports" component={ ReportPage }/>
     </Switch>
     </BrowserRouter>
   )

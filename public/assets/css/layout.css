@@ -44,6 +44,10 @@
   opacity: 1;
   cursor:pointer;
 }
+.td-hover{
+  color:#000;
+  font-size:14.5px;
+}
 .td-hover:hover{
  color:#0000ff;
  font-size:16.5px;
