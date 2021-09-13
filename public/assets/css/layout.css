@@ -126,6 +126,7 @@
 
 /* LOGIN*/
 
+
 /* MODAL */
 .modal {
     position: fixed;
@@ -214,6 +215,7 @@
 }
 /* MODAL */
 
+
 /* LOADER */
 .loader{
     position:absolute;
@@ -294,12 +296,12 @@
 
 /* FOOTER */
 .base-footer{
-    bottom: 0;
-    padding: 20px calc(24px / 2);
-    right: 0;
-    color: #74788d;
-    left: 250px;
-    height: auto    ;
-    background-color: #f2f2f5;
+  margin-top:20px;
+  margin-bottom: 15px;
+  padding-top:10px;
+  bottom: 0px;
+  color: #74788d;
+  height: auto;
+  background-color: #f2f2f5;
 }
 /* FOOTER */

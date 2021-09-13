@@ -37,7 +37,7 @@ const Layout = ({ children }) => {
           <div className="page-content">{children}</div>
         </div>
       </div>
-      <Footer margin={header}></Footer>
+      <Footer></Footer>
     </div>
   );
 };

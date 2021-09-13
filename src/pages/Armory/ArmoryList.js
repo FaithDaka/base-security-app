@@ -16,6 +16,7 @@ const ArmoryList = () => {
   const [dId, setDid] = useState();
   const [open, setOpen] = useState(false);
   const [guns, setGuns] = useState([]);
+  const [currentSort, setSort] = useState("up");
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -47,9 +48,9 @@ const ArmoryList = () => {
   const handleNo = () => setOpen(false);
 
   const handleDelete = (id) => {
-    setDid(id)
+    setDid(id);
     handleOpen();
-  }
+  };
 
   const getGuns = async () => {
     setLoading(true);
@@ -81,6 +82,31 @@ const ArmoryList = () => {
       });
     setOpen(false);
     getGuns();
+  };
+
+  const sort = {
+    up: {
+      class: "sort-up",
+      fn: (a, b) => a.id - b.id,
+    },
+    down: {
+      class: "sort-down",
+      fn: (a, b) => b.id - a.id,
+    },
+    default: {
+      class: "sort",
+      fn: (a, b) => a,
+    },
+  };
+
+  const onSortChange = () => {
+    let nextSort;
+
+    if (currentSort === "down") nextSort = "up";
+    else if (currentSort === "up") nextSort = "default";
+    else if (currentSort === "default") nextSort = "down";
+
+    setSort(nextSort);
   };
 
   useEffect(() => {
@@ -151,10 +177,14 @@ const ArmoryList = () => {
                     </div>
                   </div>
                 </div>
-                <AlertDialog open={open} Yes={()=>deleteGun(dId)} No={handleNo} />
+                <AlertDialog
+                  open={open}
+                  Yes={() => deleteGun(dId)}
+                  No={handleNo}
+                />
                 <div className="table-responsive">
                   <table className="table align-middle table-nowrap table-check table-bordered">
-                  {loading && <LoadSpinner />}
+                    {loading && <LoadSpinner />}
                     <thead className="table-primary">
                       <tr className="tr-head">
                         <th style={{ width: "20px" }} className="align-middle">
@@ -170,14 +200,30 @@ const ArmoryList = () => {
                             ></label>
                           </div>
                         </th>
-                        <th className="align-middle"> Name</th>
+                        <th className="align-middle">
+                          {" "}
+                          Name
+                          <button
+                          className="bg-transparent"
+                            onClick={onSortChange}
+                            style={{
+                              border: "none",
+                              outline: "none",
+                              marginLeft: "10px",
+                            }}
+                          >
+                            <i
+                              className={`fas fa-${sort[currentSort].class}`}
+                            />
+                          </button>
+                        </th>
                         <th className="align-middle"> Serial Number</th>
                         <th className="align-middle"> Assigned</th>
                         <th className="align-middle"> Actions</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {currentGuns.map((gun) => {
+                      {currentGuns.sort(sort[currentSort].fn).map((gun) => {
                         return (
                           <tr key={gun._id} className="tr-body">
                             <td>
@@ -195,11 +241,15 @@ const ArmoryList = () => {
                             </td>
                             <td>
                               <span>{gun.name}</span>
-                              {
-                                gun.status === "Active" ?
-                                <span className="badge badge-success badge-pill float-right">Ready</span>:
-                                <span className="badge badge-secondary badge-pill float-right">InActive</span>
-                              }
+                              {gun.status === "Active" ? (
+                                <span className="badge badge-success badge-pill float-right">
+                                  Ready
+                                </span>
+                              ) : (
+                                <span className="badge badge-secondary badge-pill float-right">
+                                  InActive
+                                </span>
+                              )}
                             </td>
                             <td>{gun.serialNumber}</td>
                             {gun.isAssigned === true ? (
@@ -209,21 +259,24 @@ const ArmoryList = () => {
                             )}
                             <td>
                               <div className="row ml-2">
-                              <span
-                                title="Update details"
-                                style={{ marginRight: "20px", color: "green" }}
-                                onClick={(e) => openUpdate(e,gun._id)}
-                              >
-                                <i className="fas fa-edit action" />
-                              </span>
-                              <span
-                                style={{ color: "red" }}
-                                title="Delete gun"
-                                onClick={() => handleDelete(gun._id)}
-                              >
-                                <i className="far fa-trash-alt action" />
-                              </span>
-                            </div>
+                                <span
+                                  title="Update details"
+                                  style={{
+                                    marginRight: "20px",
+                                    color: "green",
+                                  }}
+                                  onClick={(e) => openUpdate(e, gun._id)}
+                                >
+                                  <i className="fas fa-edit action" />
+                                </span>
+                                <span
+                                  style={{ color: "red" }}
+                                  title="Delete gun"
+                                  onClick={() => handleDelete(gun._id)}
+                                >
+                                  <i className="far fa-trash-alt action" />
+                                </span>
+                              </div>
                             </td>
                           </tr>
                         );
