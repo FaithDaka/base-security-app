@@ -15,10 +15,8 @@ const UpdateGuard = (props) => {
   const [phone, setPhone] = useState();
   const [status, setStatus] = useState('');
   const [password, setPassword] = useState('');
-  const [isAssigned, setisAssigned] = useState(false);
   const role = useState('guard');
   const [guns, setGuns] = useState([])
-  const [gun, setGun] = useState([]);
   const user = JSON.parse(localStorage.getItem("user")).user;
 
   const [loading, setLoading] = useState(false);
@@ -63,7 +61,7 @@ const UpdateGuard = (props) => {
     setLoading(true);
 
     try{
-    const res = await API.patch(`/api/guard/${props.match.params.id}`, newData)
+    const res = await API.patch(`/api/guard/${id}`, newData)
     setLoading(false);
     setSuccess(true);
     setShowAlert(true);
@@ -168,33 +166,6 @@ const UpdateGuard = (props) => {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                         required/>
-                      </div>
-                      <div className="mb-3">
-                        <label>
-                          Assigned Gun
-                        </label>
-                        <select
-                        className="form-control select2 select2-hidden-accessible"
-                        value={isAssigned}
-                        onChange={(e) => setisAssigned(e.target.value)}>
-                        <option value="true">Yes</option>
-                        <option value="false">No</option>
-                        </select>
-                      </div>
-                      <div className="mb-3">
-                        <label>
-                          Gun Type
-                        </label>
-                        <select
-                        className="form-control select2 select2-hidden-accessible"
-                        value={gun}
-                        onChange={(e) => setGun(e.target.value)}>
-                        {guns.length > 0 ? (
-                          guns.map((gun) => <option key={gun._id} value={gun._id}>{gun.name}</option>)
-                            ) : (
-                          <LoadSpinner />
-                        )}
-                        </select>
                       </div>
                     </div>
                     <div className="col-sm-6">
