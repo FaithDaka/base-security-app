@@ -22,9 +22,8 @@ const Layout = ({ children }) => {
   };
 
   useEffect(() => {
-    setHeader();
-    setMargin(0);
-  }, [width]);
+    ToggleMenu()
+  }, []);
 
   return (
     <div className="layout-wrapper">
@@ -37,7 +36,7 @@ const Layout = ({ children }) => {
           <div className="page-content">{children}</div>
         </div>
       </div>
-      <Footer margin={header}></Footer>
+      <Footer></Footer>
     </div>
   );
 };
