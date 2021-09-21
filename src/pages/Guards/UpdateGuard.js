@@ -83,7 +83,7 @@ const UpdateGuard = (props) => {
     try {
       const res = await API.get("/api/gun");
       console.log("Guns Backend ===>", res);
-      setGuns(res.data);
+      setGuns(res.data.guns);
       setLoading(false);
     } catch (error) {
       console.log("error", error);

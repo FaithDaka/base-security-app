@@ -20,6 +20,7 @@ import ClientList from './pages/Clients/ClientList';
 import AddClient from './pages/Clients/AddClient';
 import UpdateClient from './pages/Clients/UpdateClient';
 import ClientProfile from './pages/Clients/ClientProfile';
+import StoreList from './pages/Store/StoreList';
 
 const App = () => {
   return (
@@ -42,6 +43,7 @@ const App = () => {
       <ProtectedRoute exact path="/admin/:id/clientele/add_new" component={ AddClient }/>
       <ProtectedRoute exact path="/admin/:id/clientele/update/:client_id" component={ UpdateClient }/>
       <ProtectedRoute exact path="/admin/:id/clientele/profile/:client_id" component={ ClientProfile }/>
+      <ProtectedRoute exact path="/admin/:id/store" component={ StoreList }/>
     </Switch>
     </BrowserRouter>
   )
