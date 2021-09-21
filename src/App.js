@@ -16,6 +16,10 @@ import PageNotFound from './utils/PageNotFound';
 import ReportPage from './pages/Reports/content';
 import GuardProfile from './pages/Guards/GuardProfile';
 import AdminProfile from './pages/Admins/AdminProfile';
+import ClientList from './pages/Clients/ClientList';
+import AddClient from './pages/Clients/AddClient';
+import UpdateClient from './pages/Clients/UpdateClient';
+import ClientProfile from './pages/Clients/ClientProfile';
 
 const App = () => {
   return (
@@ -34,6 +38,10 @@ const App = () => {
       <ProtectedRoute exact path="/maintenance" component={ Maintenance }/>
       <ProtectedRoute exact path="/pagenotfound" component={ PageNotFound }/>
       <ProtectedRoute exact path="/admin/:id/reports" component={ ReportPage }/>
+      <ProtectedRoute exact path="/admin/:id/clientele" component={ ClientList }/>
+      <ProtectedRoute exact path="/admin/:id/clientele/add_new" component={ AddClient }/>
+      <ProtectedRoute exact path="/admin/:id/clientele/update/:client_id" component={ UpdateClient }/>
+      <ProtectedRoute exact path="/admin/:id/clientele/profile/:client_id" component={ ClientProfile }/>
     </Switch>
     </BrowserRouter>
   )

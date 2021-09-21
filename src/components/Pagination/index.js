@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const index = ({ productsPerPage, totalProducts, paginate }) => {
+const Pagination = ({ productsPerPage, totalProducts, paginate }) => {
   const pageNumbers = [];
 
   for (let i = 1; i <= Math.ceil(totalProducts / productsPerPage); i++) {
@@ -36,4 +36,4 @@ const index = ({ productsPerPage, totalProducts, paginate }) => {
   );
 };
 
-export default index;
+export default Pagination;
