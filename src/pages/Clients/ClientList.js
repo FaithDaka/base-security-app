@@ -1,30 +1,23 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable no-undef */
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import LoadSpinner from "../../components/Handlers/Loadspinner";
+import Pagination from "../../components/Pagination";
 import API from "../../helpers/api";
 import AlertDialog from "../../utils/Dialog";
-import Guards from "./index";
-import Pagination from "../../components/Pagination";
-import SweetAlert from "react-bootstrap-sweetalert";
-import AssignGun from "./AssignGun";
-import Modal from "../../components/Modal";
+import Client from "./index";
 
-const GuardsList = () => {
+const ClientList = () => {
+  const [clients, setClients] = useState([]);
   const [open, setOpen] = useState(false);
   const [dId, setDId] = useState();
-  const [aId, setAId] = useState();
-  const [guardUsers, setGuardUsers] = useState([]);
-  const [assign, setAssign] = useState();
   const user = JSON.parse(localStorage.getItem("user")).user;
 
   const [currentpage, setCurrentPage] = useState(1);
-  const [guardsPerPage] = useState(10);
-  const lastGuard = currentpage * guardsPerPage;
-  const firstGuard = lastGuard - guardsPerPage;
-  const currentGuards = guardUsers.slice(firstGuard, lastGuard);
-  const totalGuards = guardUsers.length;
+  const [clientsPerPage] = useState(10);
+  const lastClient = currentpage * clientsPerPage;
+  const firstClient = lastClient - clientsPerPage;
+  const currentClients = clients.slice(firstClient, lastClient);
+  const totalClients = clients.length;
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -36,23 +29,17 @@ const GuardsList = () => {
 
   const handleOpen = () => setOpen(true);
   const handleNo = () => setOpen(false);
-
-  const openAssign = (id) => {
-    setAId(id)
-    setAssign(true)
-  }
-  const closeAssign = () => setAssign(false);
-
   const handleDelete = (id) => {
     setDId(id);
     handleOpen();
   };
-  const getGuards = async () => {
+
+  const getClients = async () => {
     setLoading(true);
     try {
-      const res = await API.get("/api/guard");
-      console.log("Guard Users Backend ===>", res);
-      setGuardUsers(res.data);
+      const res = await API.get("/api/clients");
+      console.log("Clients Backend ===>", res);
+      setClients(res.data);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -62,82 +49,60 @@ const GuardsList = () => {
 
   const history = useHistory();
 
-  const addGuard = () => {
+  const addClient = () => {
     setLoading(true);
     setTimeout(() => {
-      history.push(`/admin/${user._id}/guards/add_new`);
+      history.push(`/admin/${user._id}/clientele/add_new`);
     }, 2000);
   };
 
-  const updateGuard = (id) => {
+  const updateClient = (id) => {
     setLoading(true);
     setTimeout(() => {
-      history.push(`/admin/${user._id}/guards/update/${id}`);
+      history.push(`/admin/${user._id}/clientele/update/${id}`);
     }, 2000);
   };
 
   const getProfile = (id) => {
     setLoading(true);
     setTimeout(() => {
-      history.push(`/admin/${user._id}/guards/profile/${id}`);
+      history.push(`/admin/${user._id}/clientele/profile/${id}`);
     }, 2000);
   };
 
-  const deleteGuard = async () => {
+  const deleteClient = async () => {
     setLoading(true);
-    await API.delete(`/api/guard/${dId}`)
+    await API.delete(`/api/client/${dId}`)
       .then(() => {
-        console.log("Guard deleted");
+        console.log("Client deleted");
         setLoading(false);
         setSuccess(true);
         setShowAlert(true);
       })
       .catch((error) => {
-        console.log("Guard delete error", error);
+        console.log("Client delete error", error);
         setLoading(false);
         setError(true);
         setShowAlert(true);
       });
     setOpen(false);
-    getGuards();
+    getClients();
   };
-
-  useEffect(() => {
-    getGuards();
-  }, []);
+  useEffect(()=>{
+    //   getClients();
+  }, [])
 
   return (
-    <Guards>
-      <Modal show={assign} close={closeAssign} title="Assign Gun">
-        <AssignGun close={closeAssign} guards={getGuards} id={aId}/>
-      </Modal>
+    <Client>
       <div className="container-fluid">
         <div className="row">
           <div className="col-12">
             <div className="page-title-box d-sm-flex align-items-center justify-content-between">
-              <h4 className="mb-sm-0 font-size-18">Guards</h4>
+              <h4 className="mb-sm-0 font-size-18">Available clients</h4>
             </div>
           </div>
         </div>
-        <AlertDialog open={open} Yes={() => deleteGuard()} No={handleNo} />
-        {showAlert && success && (
-          <SweetAlert
-            success
-            onConfirm={() => hideAlert()}
-            onCancel={() => hideAlert()}
-            title="Guard Deleted!"
-            timeout={3000}
-          />
-        )}
-        {showAlert && error && (
-          <SweetAlert
-            danger
-            onConfirm={() => hideAlert()}
-            onCancel={() => hideAlert()}
-            title="There was an error. Please try again!"
-            timeout={3000}
-          />
-        )}
+        <AlertDialog open={open} Yes={() => deleteClient()} No={handleNo} />
         <div className="row">
           <div className="col-12">
             <div className="card">
@@ -158,11 +123,11 @@ const GuardsList = () => {
                   <div className="col-3">
                     <div className="text-sm-end" style={{ textAlign: "right" }}>
                       <button
-                        onClick={addGuard}
+                        onClick={addClient}
                         type="button"
                         className="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
                       >
-                        <i className="fa fa-plus-circle me-1"></i> Add New Guard
+                        <i className="fa fa-plus-circle me-1"></i> Add New Client
                       </button>
                     </div>
                   </div>
@@ -188,14 +153,13 @@ const GuardsList = () => {
                         <th className="align-middle"> Name</th>
                         <th className="align-middle"> Email</th>
                         <th className="align-middle"> Phone</th>
-                        <th className="align-middle"> Sex</th>
-                        <th className="align-middle"> Weapon</th>
+                        <th className="align-middle"> Location</th>
                         <th className="align-middle"> Actions</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {currentGuards.map((guard) => (
-                        <tr key={guard._id} className="tr-body">
+                      {currentClients>0 && currentClients.map((client) => (
+                        <tr key={client._id} className="tr-body">
                           <td>
                             <div className="form-check font-size-16">
                               <input
@@ -212,36 +176,26 @@ const GuardsList = () => {
                           <td>
                             <span
                               className="td-hover"
-                              onClick={() => getProfile(guard._id)}
+                              onClick={() => getProfile(client._id)}
                             >
-                              {guard.guard.fname} {guard.guard.lname}
+                              {client.fname} {client.lname}
                             </span>
-                            {guard.isAssignedGun === false ? (
-                              <span onClick={()=>openAssign(guard._id)}>
-                                <i className="float-right fas fa-flag-checkered"></i>
-                              </span>
-                            ) : (
-                              <span></span>
-                            )}
                           </td>
-                          <td className="tr_email">{guard.guard.email}</td>
-                          <td>0{guard.guard.phone}</td>
-                          <td>{guard.guard.sex}</td>
-                          {guard.gun === null ? <td>Unassigned</td>:
-                            <td>{guard.gun.name}</td>}
+                          <td className="tr_email">{client.email}</td>
+                          <td>0{client.phone}</td>
                           <td>
                             <div className="row ml-2">
                               <span
                                 title="Update details"
                                 style={{ marginRight: "20px", color: "green" }}
-                                onClick={() => updateGuard(guard._id)}
+                                onClick={() => updateClient(client._id)}
                               >
                                 <i className="fas fa-edit action" />
                               </span>
                               <span
                                 style={{ color: "red" }}
-                                title="Delete guard"
-                                onClick={() => handleDelete(guard._id)}
+                                title="Delete Client"
+                                onClick={() => handleDelete(client._id)}
                               >
                                 <i className="far fa-trash-alt action" />
                               </span>
@@ -257,13 +211,13 @@ const GuardsList = () => {
           </div>
         </div>
         <Pagination
-          productsPerPage={guardsPerPage}
-          totalProducts={totalGuards}
+          productsPerPage={clientsPerPage}
+          totalProducts={totalClients}
           paginate={paginate}
         />
       </div>
-    </Guards>
+    </Client>
   );
 };
 
-export default GuardsList;
+export default ClientList;

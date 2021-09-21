@@ -120,9 +120,23 @@ const Sidebar = ({ width, xPos }) => {
                           </li>
                           <li onClick={() => setTab(5)}>
                             <Link
-                              to={`/admin/${user._id}/admins`}
+                              to={`/admin/${user._id}/clientele`}
                               className={
                                 tab === 5
+                                  ? "waves-effect mm-active"
+                                  : "waves-effect"
+                              }
+                              id="icon-link"
+                            >
+                              <i className="fas fa-user-shield"></i>
+                              <span key="t-dashboards">Clientele</span>
+                            </Link>
+                          </li>
+                          <li onClick={() => setTab(6)}>
+                            <Link
+                              to={`/admin/${user._id}/admins`}
+                              className={
+                                tab === 6
                                   ? "waves-effect mm-active"
                                   : "waves-effect"
                               }
