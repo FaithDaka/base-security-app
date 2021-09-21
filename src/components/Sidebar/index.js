@@ -106,23 +106,9 @@ const Sidebar = ({ width, xPos }) => {
                           </li>
                           <li onClick={() => setTab(4)}>
                             <Link
-                              to={`/admin/${user._id}/reports`}
-                              className={
-                                tab === 4
-                                  ? "waves-effect mm-active"
-                                  : "waves-effect"
-                              }
-                              id="icon-link"
-                            >
-                              <i className="fas fa-server"></i>
-                              <span key="t-dashboards">reports</span>
-                            </Link>
-                          </li>
-                          <li onClick={() => setTab(5)}>
-                            <Link
                               to={`/admin/${user._id}/clientele`}
                               className={
-                                tab === 5
+                                tab === 4
                                   ? "waves-effect mm-active"
                                   : "waves-effect"
                               }
@@ -132,11 +118,11 @@ const Sidebar = ({ width, xPos }) => {
                               <span key="t-dashboards">Clientele</span>
                             </Link>
                           </li>
-                          <li onClick={() => setTab(6)}>
+                          <li onClick={() => setTab(5)}>
                             <Link
                               to={`/admin/${user._id}/admins`}
                               className={
-                                tab === 6
+                                tab === 5
                                   ? "waves-effect mm-active"
                                   : "waves-effect"
                               }
@@ -144,6 +130,34 @@ const Sidebar = ({ width, xPos }) => {
                             >
                               <i className="fas fa-users"></i>
                               <span key="t-dashboards">Admins</span>
+                            </Link>
+                          </li>
+                          <li onClick={() => setTab(6)}>
+                            <Link
+                              to={`/admin/${user._id}/reports`}
+                              className={
+                                tab === 6
+                                  ? "waves-effect mm-active"
+                                  : "waves-effect"
+                              }
+                              id="icon-link"
+                            >
+                              <i className="fas fa-server"></i>
+                              <span key="t-dashboards">reports</span>
+                            </Link>
+                          </li>
+                          <li onClick={() => setTab(7)}>
+                            <Link
+                              to={`/admin/${user._id}/store`}
+                              className={
+                                tab === 7
+                                  ? "waves-effect mm-active"
+                                  : "waves-effect"
+                              }
+                              id="icon-link"
+                            >
+                              <i className="fas fa-store-alt"></i>
+                              <span key="t-dashboards">Inventory</span>
                             </Link>
                           </li>
                         </ul>
