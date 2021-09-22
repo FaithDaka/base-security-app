@@ -191,7 +191,7 @@ const StoreList = () => {
           </div>
           <div className="table-responsive mt-5">
             <table className="table align-middle table-nowrap table-check table-bordered">
-              <thead className="table-primary">
+              <thead className="table-secondary">
                 <tr className="tr-head">
                   <th style={{ width: "20px" }} className="align-middle">
                     <div className="form-check font-size-16">
