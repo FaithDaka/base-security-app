@@ -25,7 +25,7 @@ const ArmoryList = () => {
   const hideAlert = () => setShowAlert(false);
 
   const [currentpage, setCurrentPage] = useState(1);
-  const [gunsPerPage] = useState(8);
+  const [gunsPerPage] = useState(6);
   const lastGun = currentpage * gunsPerPage;
   const firstGun = lastGun - gunsPerPage;
   const currentGuns = guns.slice(firstGun, lastGun);
@@ -84,31 +84,6 @@ const ArmoryList = () => {
     getGuns();
   };
 
-  const sort = {
-    up: {
-      class: "sort-up",
-      fn: (a, b) => a.id - b.id,
-    },
-    down: {
-      class: "sort-down",
-      fn: (a, b) => b.id - a.id,
-    },
-    default: {
-      class: "sort",
-      fn: (a, b) => a,
-    },
-  };
-
-  const onSortChange = () => {
-    let nextSort;
-
-    if (currentSort === "down") nextSort = "up";
-    else if (currentSort === "up") nextSort = "default";
-    else if (currentSort === "default") nextSort = "down";
-
-    setSort(nextSort);
-  };
-
   useEffect(() => {
     getGuns();
   }, []);
@@ -147,7 +122,37 @@ const ArmoryList = () => {
             timeout={2000}
           />
         )}
-        <div className="row">
+        <div className="row justify-content-around visual-card">
+          <div className="col-lg-4 col-sm-6 mt-3 mb-3">
+            <div className="card">
+              <div className="card-body">
+                <div className="d-flex flex-column align-items-center justify-content-center">
+                  <span>
+                    <h2 className="text-success font-size-70">80</h2>
+                    <span className="text-muted font-size-14 text-uppercase">
+                      Assigned guns
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-lg-4 col-sm-6 mt-3 mb-3">
+            <div className="card">
+              <div className="card-body">
+                <div className="d-flex flex-column align-items-center justify-content-center">
+                  <span>
+                    <h2 className="text-secondary font-size-70">53</h2>
+                    <span className="text-muted font-size-14 text-uppercase">
+                      Unassigned guns
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="row mt-3">
           <div className="col-12">
             <div className="card">
               <div className="card-body">
@@ -183,9 +188,9 @@ const ArmoryList = () => {
                   No={handleNo}
                 />
                 <div className="table-responsive">
-                  <table className="table align-middle table-nowrap table-check table-bordered">
+                  <table className="table align-middle table-nowrap table-check table-bordered table-striped">
                     {loading && <LoadSpinner />}
-                    <thead className="table-primary">
+                    <thead className="table-dark">
                       <tr className="tr-head">
                         <th style={{ width: "20px" }} className="align-middle">
                           <div className="form-check font-size-16">
@@ -200,30 +205,14 @@ const ArmoryList = () => {
                             ></label>
                           </div>
                         </th>
-                        <th className="align-middle">
-                          {" "}
-                          Name
-                          <button
-                          className="bg-transparent"
-                            onClick={onSortChange}
-                            style={{
-                              border: "none",
-                              outline: "none",
-                              marginLeft: "10px",
-                            }}
-                          >
-                            <i
-                              className={`fas fa-${sort[currentSort].class}`}
-                            />
-                          </button>
-                        </th>
+                        <th className="align-middle"> Name</th>
                         <th className="align-middle"> Serial Number</th>
                         <th className="align-middle"> Assigned</th>
                         <th className="align-middle"> Actions</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {currentGuns.sort(sort[currentSort].fn).map((gun) => {
+                      {currentGuns.map((gun) => {
                         return (
                           <tr key={gun._id} className="tr-body">
                             <td>
