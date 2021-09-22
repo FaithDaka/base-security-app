@@ -21,6 +21,7 @@ import AddClient from './pages/Clients/AddClient';
 import UpdateClient from './pages/Clients/UpdateClient';
 import ClientProfile from './pages/Clients/ClientProfile';
 import StoreList from './pages/Store/StoreList';
+import LiveTracking from './pages/Tracking/LiveTracking';
 
 const App = () => {
   return (
@@ -44,6 +45,7 @@ const App = () => {
       <ProtectedRoute exact path="/admin/:id/clientele/update/:client_id" component={ UpdateClient }/>
       <ProtectedRoute exact path="/admin/:id/clientele/profile/:client_id" component={ ClientProfile }/>
       <ProtectedRoute exact path="/admin/:id/store" component={ StoreList }/>
+      <ProtectedRoute exact path="/admin/:id/livetracking" component={ LiveTracking }/>
     </Switch>
     </BrowserRouter>
   )

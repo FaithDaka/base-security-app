@@ -160,6 +160,20 @@ const Sidebar = ({ width, xPos }) => {
                               <span key="t-dashboards">Inventory</span>
                             </Link>
                           </li>
+                          <li onClick={() => setTab(8)}>
+                            <Link
+                              to={`/admin/${user._id}/livetracking`}
+                              className={
+                                tab === 8
+                                  ? "waves-effect mm-active"
+                                  : "waves-effect"
+                              }
+                              id="icon-link"
+                            >
+                              <i className="fas fa-map-marked-alt"></i>
+                              <span key="t-dashboards">Live tracking</span>
+                            </Link>
+                          </li>
                         </ul>
                       </div>
                     </div>
