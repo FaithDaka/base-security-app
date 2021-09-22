@@ -137,36 +137,8 @@ const Login = ({history}) => {
                           Log In
                         </button>
                       </div>
-                      <div className="mt-4 text-center">
-                        <h5 className="font-size-14 mb-3">Sign in with</h5>
-                        <ul className="list-inline">
-                          <li className="list-inline-item">
-                            <a
-                              href="javascript::void()"
-                              className="social-list-item bg-primary text-white border-primary"
-                            >
-                              <i className="fab fa-facebook"></i>
-                            </a>
-                          </li>
-                          <li className="list-inline-item">
-                            <a
-                              href="#"
-                              className="social-list-item bg-info text-white border-info"
-                            >
-                              <i className="fab fa-twitter"></i>
-                            </a>
-                          </li>
-                          <li className="list-inline-item">
-                            <a
-                              href="#"
-                              className="social-list-item bg-danger text-white border-danger"
-                            >
-                              <i className="fab fa-google"></i>
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                      <div className="mt-4 text-center">
+                      <div className="mt-4"> </div>
+                      <div className="mt-5 text-center">
                         <a href="#" className="text-muted">
                           <i className="fa fa-lock me-1"></i> Forgot your
                           password?
