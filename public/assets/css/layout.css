@@ -328,7 +328,7 @@
 }
 /* LOADER */
 
-/* STORE TABLE */
+/* STORE CARD TABLE */
 .store-table{
   border-spacing:0px;
 }
@@ -344,7 +344,13 @@
 .store-table td:nth-child(2){
   font-weight:500;
 }
-/* STORE TABLE */
+/* STORE CARD TABLE */
+
+/* VISUAL CARDS */
+.visual-card .card{
+  box-shadow:3px 2px 6px 0.5px #ddd;
+}
+/* VISUAL CARDS */
 
 /* MAP */
 .map .card{

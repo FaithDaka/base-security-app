@@ -23,7 +23,7 @@ const StoreList = () => {
               </div>
             </div>
           </div>
-          <div className="row justify-content-between">
+          <div className="row justify-content-between visual-card">
             <div className="col-lg-3 col-sm-6 mt-3">
               <div className="card">
                 <div className="card-body">
@@ -190,8 +190,8 @@ const StoreList = () => {
             </div>
           </div>
           <div className="table-responsive mt-5">
-            <table className="table align-middle table-nowrap table-check table-bordered">
-              <thead className="table-secondary">
+            <table className="table align-middle table-nowrap table-check table-bordered table-striped">
+              <thead className="table-dark">
                 <tr className="tr-head">
                   <th style={{ width: "20px" }} className="align-middle">
                     <div className="form-check font-size-16">

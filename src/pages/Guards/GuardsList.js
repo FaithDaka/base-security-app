@@ -138,7 +138,51 @@ const GuardsList = () => {
             timeout={3000}
           />
         )}
-        <div className="row">
+        <div className="row justify-content-around visual-card">
+          <div className="col-lg-4 col-sm-6 mt-3 mb-3">
+            <div className="card">
+              <div className="card-body">
+                <div className="d-flex flex-column align-items-center justify-content-center">
+                  <span>
+                    <h2 className="text-info font-size-70">20</h2>
+                    <span className="text-muted font-size-14 text-uppercase">
+                      On-prem guards
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-lg-4 col-sm-6 mt-3 mb-3">
+            <div className="card">
+              <div className="card-body">
+                <div className="d-flex flex-column align-items-center justify-content-center">
+                  <span>
+                    <h2 className="text-secondary font-size-70">130</h2>
+                    <span className="text-muted font-size-14 text-uppercase">
+                      Off-prem guards
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-lg-4 col-sm-6 mt-3 mb-3">
+            <div className="card">
+              <div className="card-body">
+                <div className="d-flex flex-column align-items-center justify-content-center">
+                  <span>
+                    <h2 className="text-danger font-size-70">30</h2>
+                    <span className="text-muted font-size-14 text-uppercase">
+                      Armed guards
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="row mt-3">
           <div className="col-12">
             <div className="card">
               <div className="card-body">
@@ -168,9 +212,9 @@ const GuardsList = () => {
                   </div>
                 </div>
                 <div className="table-responsive">
-                  <table className="table align-middle table-nowrap table-check table-bordered">
+                  <table className="table align-middle table-nowrap table-check table-bordered table-striped">
                     {loading && <LoadSpinner />}
-                    <thead className="table-primary">
+                    <thead className="table-dark">
                       <tr className="tr-head">
                         <th style={{ width: "20px" }} className="align-middle">
                           <div className="form-check font-size-16">
