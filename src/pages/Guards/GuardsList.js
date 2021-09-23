@@ -230,7 +230,7 @@ const GuardsList = () => {
                           </div>
                         </th>
                         <th className="align-middle"> Name</th>
-                        <th className="align-middle"> Email</th>
+                        <th className="align-middle"> Village</th>
                         <th className="align-middle"> Phone</th>
                         <th className="align-middle"> Sex</th>
                         <th className="align-middle"> Weapon</th>
@@ -258,7 +258,7 @@ const GuardsList = () => {
                               className="td-hover"
                               onClick={() => getProfile(guard._id)}
                             >
-                              {guard.guard.fname} {guard.guard.lname}
+                              {guard.fname} {guard.lname}
                             </span>
                             {guard.isAssignedGun === false ? (
                               <span onClick={()=>openAssign(guard._id)}>
@@ -268,11 +268,11 @@ const GuardsList = () => {
                               <span></span>
                             )}
                           </td>
-                          <td className="tr_email">{guard.guard.email}</td>
-                          <td>0{guard.guard.phone}</td>
-                          <td>{guard.guard.sex}</td>
+                          <td className="tr_email">{guard.village}</td>
+                          <td>0{guard.phone}</td>
+                          <td>{guard.sex}</td>
                           {guard.gun === null ? <td>Unassigned</td>:
-                            <td>{guard.gun.name}</td>}
+                            <td>{guard.gunId}</td>}
                           <td>
                             <div className="row ml-2">
                               <span

@@ -5,7 +5,7 @@ import LoadHandler from "../../components/Handlers/LoadHandler";
 const AddGun = ({ close, guns }) => {
   const [name, setName] = useState("");
   const [serialNumber, setSerialNumber] = useState("");
-  const [status, setStatus] = useState("Available");
+  const [status, setStatus] = useState("InArmory");
   const [isAssigned, setisAssigned] = useState(false);
 
   const [loading, setLoading] = useState(false);

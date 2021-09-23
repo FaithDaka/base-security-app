@@ -5,7 +5,7 @@ import API from "../../helpers/api";
 const UpdateGun = ({close, guns, id, show}) => {
   const [name, setName] = useState("");
   const [serialNumber, setSerialNumber] = useState("");
-  const [status, setStatus] = useState("Active");
+  const [status, setStatus] = useState("");
   const [isAssigned, setisAssigned] = useState(false);
 
   const [loading, setLoading] = useState(true);
@@ -99,8 +99,8 @@ const UpdateGun = ({close, guns, id, show}) => {
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
               >
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
+                <option value="Active">InArmory</option>
+                <option value="Inactive">InUse</option>
               </select>
             </div>
             <button type="submit" className="btn btn-primary">

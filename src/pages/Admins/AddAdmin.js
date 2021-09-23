@@ -12,7 +12,7 @@ const AddAdmin = ({ history }) => {
   const [location, setLocation] = useState("");
   const [sex, setSex] = useState("");
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState("admin");
+  const [role] = useState("admin");
   const [password, setPassword] = useState("");
   const [maritualStatus, setMaritualStatus] = useState("");
 
