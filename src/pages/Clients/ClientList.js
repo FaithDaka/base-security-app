@@ -89,9 +89,9 @@ const ClientList = () => {
     getClients();
   };
 
-  useEffect(()=>{
-      getClients();
-  }, [])
+  useEffect(() => {
+    getClients();
+  }, []);
 
   return (
     <Client>
@@ -128,7 +128,8 @@ const ClientList = () => {
                         type="button"
                         className="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
                       >
-                        <i className="fa fa-plus-circle me-1"></i> Add New Client
+                        <i className="fa fa-plus-circle me-1"></i> Add New
+                        Client
                       </button>
                     </div>
                   </div>
@@ -159,52 +160,64 @@ const ClientList = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {clients.map((client) => (
-                        <tr key={client._id} className="tr-body">
-                          <td>
-                            <div className="form-check font-size-16">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="orderidcheck01"
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="orderidcheck01"
-                              ></label>
-                            </div>
-                          </td>
-                          <td>
-                            <span
-                              className="td-hover"
-                              onClick={() => getProfile(client._id)}
-                            >
-                              {client.fname} {client.lname}
-                            </span>
-                          </td>
-                          <td className="tr_email">{client.userId.email}</td>
-                          <td>{client.phone}</td>
-                          <td>{client.address}</td>
-                          <td>
-                            <div className="row ml-2">
+                      {currentClients > 0 ? (
+                        currentClients.map((client) => (
+                          <tr key={client._id} className="tr-body">
+                            <td>
+                              <div className="form-check font-size-16">
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  id="orderidcheck01"
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="orderidcheck01"
+                                ></label>
+                              </div>
+                            </td>
+                            <td>
                               <span
-                                title="Update details"
-                                style={{ marginRight: "20px", color: "green" }}
-                                onClick={() => updateClient(client._id)}
+                                className="td-hover"
+                                onClick={() => getProfile(client._id)}
                               >
-                                <i className="fas fa-edit action" />
+                                {client.fname} {client.lname}
                               </span>
-                              <span
-                                style={{ color: "red" }}
-                                title="Delete Client"
-                                onClick={() => handleDelete(client._id)}
-                              >
-                                <i className="far fa-trash-alt action" />
-                              </span>
-                            </div>
-                          </td>
+                            </td>
+                            <td className="tr_email">{client.userId.email}</td>
+                            <td>{client.phone}</td>
+                            <td>{client.address}</td>
+                            <td>
+                              <div className="row ml-2">
+                                <span
+                                  title="Update details"
+                                  style={{
+                                    marginRight: "20px",
+                                    color: "green",
+                                  }}
+                                  onClick={() => updateClient(client._id)}
+                                >
+                                  <i className="fas fa-edit action" />
+                                </span>
+                                <span
+                                  style={{ color: "red" }}
+                                  title="Delete Client"
+                                  onClick={() => handleDelete(client._id)}
+                                >
+                                  <i className="far fa-trash-alt action" />
+                                </span>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td></td>
+                          <span className="text-muted font-size-15 text-align-center text-capitalize">
+                            No clients registered yet!
+                          </span>
                         </tr>
-                      ))}
+                      )}
                     </tbody>
                   </table>
                 </div>

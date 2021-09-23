@@ -72,7 +72,13 @@ const AdminList = () => {
                         type="button"
                         className="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
                       >
-                        <Link to={`/admin/${user._id}/add_new`} className="text-light"><i className="fa fa-plus-circle me-1"></i> Add New Admin</Link>
+                        <Link
+                          to={`/admin/${user._id}/add_new`}
+                          className="text-light"
+                        >
+                          <i className="fa fa-plus-circle me-1"></i> Add New
+                          Admin
+                        </Link>
                       </button>
                     </div>
                   </div>
@@ -102,8 +108,8 @@ const AdminList = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {currentAdmins.map((user) => {
-                        return (
+                      {currentAdmins > 0 ? (
+                        currentAdmins.map((user) => (
                           <tr className="tr-body" key={user._id}>
                             <td>
                               <div className="form-check font-size-16">
@@ -119,7 +125,10 @@ const AdminList = () => {
                               </div>
                             </td>
                             <td>
-                              <Link to={`/admin/${user._id}/profile`} className="td-hover">
+                              <Link
+                                to={`/admin/${user._id}/profile`}
+                                className="td-hover"
+                              >
                                 {user.fname} {user.lname}
                               </Link>
                             </td>
@@ -148,8 +157,15 @@ const AdminList = () => {
                               </div>
                             </td>
                           </tr>
-                        );
-                      })}
+                        ))
+                      ) : (
+                        <tr>
+                          <td></td>
+                          <span className="text-muted font-size-15 text-align-center text-capitalize">
+                            No Administrator signed up yet!
+                          </span>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </div>

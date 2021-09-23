@@ -38,9 +38,9 @@ const GuardsList = () => {
   const handleNo = () => setOpen(false);
 
   const openAssign = (id) => {
-    setAId(id)
-    setAssign(true)
-  }
+    setAId(id);
+    setAssign(true);
+  };
   const closeAssign = () => setAssign(false);
 
   const handleDelete = (id) => {
@@ -109,7 +109,7 @@ const GuardsList = () => {
   return (
     <Guards>
       <Modal show={assign} close={closeAssign} title="Assign Gun">
-        <AssignGun close={closeAssign} guards={getGuards} id={aId}/>
+        <AssignGun close={closeAssign} guards={getGuards} id={aId} />
       </Modal>
       <div className="container-fluid">
         <div className="row">
@@ -238,61 +238,76 @@ const GuardsList = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {currentGuards.map((guard) => (
-                        <tr key={guard._id} className="tr-body">
-                          <td>
-                            <div className="form-check font-size-16">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="orderidcheck01"
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="orderidcheck01"
-                              ></label>
-                            </div>
-                          </td>
-                          <td>
-                            <span
-                              className="td-hover"
-                              onClick={() => getProfile(guard._id)}
-                            >
-                              {guard.fname} {guard.lname}
-                            </span>
-                            {guard.isAssignedGun === false ? (
-                              <span onClick={()=>openAssign(guard._id)}>
-                                <i className="float-right fas fa-flag-checkered"></i>
+                      {currentGuards > 0 ? (
+                        currentGuards.map((guard) => (
+                          <tr key={guard._id} className="tr-body">
+                            <td>
+                              <div className="form-check font-size-16">
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  id="orderidcheck01"
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="orderidcheck01"
+                                ></label>
+                              </div>
+                            </td>
+                            <td>
+                              <span
+                                className="td-hover"
+                                onClick={() => getProfile(guard._id)}
+                              >
+                                {guard.fname} {guard.lname}
                               </span>
+                              {guard.isAssignedGun === false ? (
+                                <span onClick={() => openAssign(guard._id)}>
+                                  <i className="float-right fas fa-flag-checkered"></i>
+                                </span>
+                              ) : (
+                                <span></span>
+                              )}
+                            </td>
+                            <td className="tr_email">{guard.village}</td>
+                            <td>0{guard.phone}</td>
+                            <td>{guard.sex}</td>
+                            {guard.gun === null ? (
+                              <td>Unassigned</td>
                             ) : (
-                              <span></span>
+                              <td>{guard.gunId}</td>
                             )}
-                          </td>
-                          <td className="tr_email">{guard.village}</td>
-                          <td>0{guard.phone}</td>
-                          <td>{guard.sex}</td>
-                          {guard.gun === null ? <td>Unassigned</td>:
-                            <td>{guard.gunId}</td>}
-                          <td>
-                            <div className="row ml-2">
-                              <span
-                                title="Update details"
-                                style={{ marginRight: "20px", color: "green" }}
-                                onClick={() => updateGuard(guard._id)}
-                              >
-                                <i className="fas fa-edit action" />
-                              </span>
-                              <span
-                                style={{ color: "red" }}
-                                title="Delete guard"
-                                onClick={() => handleDelete(guard._id)}
-                              >
-                                <i className="far fa-trash-alt action" />
-                              </span>
-                            </div>
-                          </td>
+                            <td>
+                              <div className="row ml-2">
+                                <span
+                                  title="Update details"
+                                  style={{
+                                    marginRight: "20px",
+                                    color: "green",
+                                  }}
+                                  onClick={() => updateGuard(guard._id)}
+                                >
+                                  <i className="fas fa-edit action" />
+                                </span>
+                                <span
+                                  style={{ color: "red" }}
+                                  title="Delete guard"
+                                  onClick={() => handleDelete(guard._id)}
+                                >
+                                  <i className="far fa-trash-alt action" />
+                                </span>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td></td>
+                          <span className="text-muted font-size-15 text-align-center text-capitalize">
+                            No guards registered yet!
+                          </span>
                         </tr>
-                      ))}
+                      )}
                     </tbody>
                   </table>
                 </div>

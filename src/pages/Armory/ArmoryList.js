@@ -212,8 +212,8 @@ const ArmoryList = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {currentGuns.map((gun) => {
-                        return (
+                      {currentGuns > 0 ? (
+                        currentGuns.map((gun) => (
                           <tr key={gun._id} className="tr-body">
                             <td>
                               <div className="form-check font-size-16">
@@ -268,8 +268,15 @@ const ArmoryList = () => {
                               </div>
                             </td>
                           </tr>
-                        );
-                      })}
+                        ))
+                      ) : (
+                        <tr>
+                          <td></td>
+                          <span className="text-muted font-size-15 text-align-center text-capitalize">
+                            No guns registered yet!
+                          </span>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </div>
