@@ -41,11 +41,11 @@ const Content = ({ history }) => {
         <div className="row">
           <div className="col-xl-12 mb-3">
             <div className="card overflow-hidden">
-              <div className="bg-soft bg-success">
+              <div className="bg-soft bg-light">
                 <div className="row">
                   <div className="col-8">
                     <div className="p-3">
-                      <h5 className="text-warning">Welcome Back !</h5>
+                      <h5 className="text-info">Welcome Back !</h5>
                       <p>Your Dashboard</p>
                     </div>
                   </div>

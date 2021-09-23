@@ -54,33 +54,77 @@ const AdminList = () => {
           <div className="col-12">
             <div className="page-title-box d-sm-flex align-items-center justify-content-between">
               <h4 className="mb-sm-0 font-size-18">Administrators</h4>
+              <div className="col-3">
+                <div className="text-sm-end" style={{ textAlign: "right" }}>
+                  <button
+                    type="button"
+                    className="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
+                  >
+                    <Link
+                      to={`/admin/${user._id}/add_new`}
+                      className="text-light"
+                    >
+                      <i className="fa fa-plus-circle me-1"></i> Add New Admin
+                    </Link>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
         <AlertDialog open={open} Yes={deleteAdmin} No={handleNo} />
+        <div className="row justify-content-around visual-card">
+          <div className="col-lg-4 col-sm-6 mt-3 mb-3">
+            <div className="card">
+              <div className="card-body">
+                <div className="d-flex flex-column align-items-center justify-content-center">
+                  <span>
+                    <h2 className="text-warning font-size-70">3</h2>
+                    <span className="text-muted font-size-14 text-uppercase">
+                      Online
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-lg-4 col-sm-6 mt-3 mb-3">
+            <div className="card">
+              <div className="card-body">
+                <div className="d-flex flex-column align-items-center justify-content-center">
+                  <span>
+                    <h2 className="text-secondary font-size-70">14</h2>
+                    <span className="text-muted font-size-14 text-uppercase">
+                      offline users
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="row">
           <div className="col-12">
             <div className="card">
               <div className="card-body">
-                <div className="d-flex flex-row mb-2 justify-content-between">
+                <div className="d-flex flex-row mb-2 justify-content-end">
                   <div className="col-sm-4">
-                    <div className="search-box me-2 mb-2 d-inline-block"></div>
-                  </div>
-                  <div className="col-3">
-                    <div className="text-sm-end" style={{ textAlign: "right" }}>
-                      <button
-                        type="button"
-                        className="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
-                      >
-                        <Link to={`/admin/${user._id}/add_new`} className="text-light"><i className="fa fa-plus-circle me-1"></i> Add New Admin</Link>
-                      </button>
+                    <div className="search-box me-2 mb-2 d-inline-block">
+                      <div className="position-relative">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Search..."
+                        />
+                        <i className="fa fa-search search-icon mt-3 font-size-14 text-muted"></i>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div className="table-responsive">
-                  <table className="table align-middle table-nowrap table-check table-bordered">
+                <div className="table-responsive mt-3">
+                  <table className="table align-middle table-nowrap table-check table-bordered table-striped">
                     {loading && <LoadSpinner />}
-                    <thead className="table-primary">
+                    <thead className="table-dark">
                       <tr className="tr-head">
                         <th style={{ width: "20px" }} className="align-middle">
                           <div className="form-check font-size-16">
@@ -102,8 +146,8 @@ const AdminList = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {currentAdmins.map((user) => {
-                        return (
+                      {currentAdmins > 0 ? (
+                        currentAdmins.map((user) => (
                           <tr className="tr-body" key={user._id}>
                             <td>
                               <div className="form-check font-size-16">
@@ -119,7 +163,10 @@ const AdminList = () => {
                               </div>
                             </td>
                             <td>
-                              <Link to={`/admin/${user._id}/profile`} className="td-hover">
+                              <Link
+                                to={`/admin/${user._id}/profile`}
+                                className="td-hover"
+                              >
                                 {user.fname} {user.lname}
                               </Link>
                             </td>
@@ -148,8 +195,15 @@ const AdminList = () => {
                               </div>
                             </td>
                           </tr>
-                        );
-                      })}
+                        ))
+                      ) : (
+                        <tr>
+                          <td></td>
+                          <span className="text-muted font-size-15 text-align-center text-capitalize">
+                            No Administrator signed up yet!
+                          </span>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </div>

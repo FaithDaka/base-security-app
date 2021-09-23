@@ -43,19 +43,14 @@
     font-weight:600;
     letter-spacing: 0.5px;
 }
-.th{
-    font-size:16px;
-    font-weight:500;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
 .tr-head{
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size:15.5px;
-    letter-spacing:0.3px;
-    text-transform: uppercase;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:16px;
+    letter-spacing:0.1px;
+    text-transform: capitalize;
 }
 .tr-body{
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family:Arial, Helvetica, sans-serif;
     font-size:15px;
     text-transform: capitalize;
     letter-spacing:0.1px;

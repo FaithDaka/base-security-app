@@ -38,9 +38,9 @@ const GuardsList = () => {
   const handleNo = () => setOpen(false);
 
   const openAssign = (id) => {
-    setAId(id)
-    setAssign(true)
-  }
+    setAId(id);
+    setAssign(true);
+  };
   const closeAssign = () => setAssign(false);
 
   const handleDelete = (id) => {
@@ -109,13 +109,24 @@ const GuardsList = () => {
   return (
     <Guards>
       <Modal show={assign} close={closeAssign} title="Assign Gun">
-        <AssignGun close={closeAssign} guards={getGuards} id={aId}/>
+        <AssignGun close={closeAssign} guards={getGuards} id={aId} />
       </Modal>
       <div className="container-fluid">
         <div className="row">
           <div className="col-12">
             <div className="page-title-box d-sm-flex align-items-center justify-content-between">
               <h4 className="mb-sm-0 font-size-18">Guards</h4>
+              <div className="col-3">
+                <div className="text-sm-end" style={{ textAlign: "right" }}>
+                  <button
+                    onClick={addGuard}
+                    type="button"
+                    className="btn btn-success btn-rounded waves-effect waves-light me-2"
+                  >
+                    <i className="fa fa-plus-circle me-1"></i> Add New Guard
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -186,7 +197,7 @@ const GuardsList = () => {
           <div className="col-12">
             <div className="card">
               <div className="card-body">
-                <div className="d-flex flex-row mb-2 justify-content-between">
+                <div className="d-flex flex-row mb-2 justify-content-end">
                   <div className="col-sm-4">
                     <div className="search-box me-2 mb-2 d-inline-block">
                       <div className="position-relative">
@@ -197,17 +208,6 @@ const GuardsList = () => {
                         />
                         <i className="fa fa-search search-icon mt-3 font-size-13"></i>
                       </div>
-                    </div>
-                  </div>
-                  <div className="col-3">
-                    <div className="text-sm-end" style={{ textAlign: "right" }}>
-                      <button
-                        onClick={addGuard}
-                        type="button"
-                        className="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
-                      >
-                        <i className="fa fa-plus-circle me-1"></i> Add New Guard
-                      </button>
                     </div>
                   </div>
                 </div>
@@ -238,61 +238,76 @@ const GuardsList = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {currentGuards.map((guard) => (
-                        <tr key={guard._id} className="tr-body">
-                          <td>
-                            <div className="form-check font-size-16">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="orderidcheck01"
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="orderidcheck01"
-                              ></label>
-                            </div>
-                          </td>
-                          <td>
-                            <span
-                              className="td-hover"
-                              onClick={() => getProfile(guard._id)}
-                            >
-                              {guard.fname} {guard.lname}
-                            </span>
-                            {guard.isAssignedGun === false ? (
-                              <span onClick={()=>openAssign(guard._id)}>
-                                <i className="float-right fas fa-flag-checkered"></i>
+                      {currentGuards > 0 ? (
+                        currentGuards.map((guard) => (
+                          <tr key={guard.userId} className="tr-body">
+                            <td>
+                              <div className="form-check font-size-16">
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  id="orderidcheck01"
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="orderidcheck01"
+                                ></label>
+                              </div>
+                            </td>
+                            <td>
+                              <span
+                                className="td-hover"
+                                onClick={() => getProfile(guard.userId)}
+                              >
+                                {guard.fname} {guard.lname}
                               </span>
+                              {guard.isAssignedGun === false ? (
+                                <span onClick={() => openAssign(guard.userId)}>
+                                  <i className="float-right fas fa-flag-checkered"></i>
+                                </span>
+                              ) : (
+                                <span></span>
+                              )}
+                            </td>
+                            <td className="text-capitalize">{guard.village}, {guard.district}</td>
+                            <td>0{guard.phone}</td>
+                            <td>{guard.sex}</td>
+                            {guard.gunId === null ? (
+                              <td>Unassigned</td>
                             ) : (
-                              <span></span>
+                              <td>Assigned</td>
                             )}
-                          </td>
-                          <td className="tr_email">{guard.village}</td>
-                          <td>0{guard.phone}</td>
-                          <td>{guard.sex}</td>
-                          {guard.gun === null ? <td>Unassigned</td>:
-                            <td>{guard.gunId}</td>}
-                          <td>
-                            <div className="row ml-2">
-                              <span
-                                title="Update details"
-                                style={{ marginRight: "20px", color: "green" }}
-                                onClick={() => updateGuard(guard._id)}
-                              >
-                                <i className="fas fa-edit action" />
-                              </span>
-                              <span
-                                style={{ color: "red" }}
-                                title="Delete guard"
-                                onClick={() => handleDelete(guard._id)}
-                              >
-                                <i className="far fa-trash-alt action" />
-                              </span>
-                            </div>
-                          </td>
+                            <td>
+                              <div className="row ml-2">
+                                <span
+                                  title="Update details"
+                                  style={{
+                                    marginRight: "20px",
+                                    color: "green",
+                                  }}
+                                  onClick={() => updateGuard(guard.userId)}
+                                >
+                                  <i className="fas fa-edit action" />
+                                </span>
+                                <span
+                                  style={{ color: "red" }}
+                                  title="Delete guard"
+                                  onClick={() => handleDelete(guard.userId)}
+                                >
+                                  <i className="far fa-trash-alt action" />
+                                </span>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td></td>
+                          <span className="text-muted font-size-15 text-align-center text-capitalize">
+                            No guards registered yet!
+                          </span>
                         </tr>
-                      ))}
+                      )}
                     </tbody>
                   </table>
                 </div>

@@ -99,8 +99,19 @@ const ArmoryList = () => {
       <div className="container-fluid">
         <div className="row">
           <div className="col-12">
-            <div className="page-title-box d-sm-flex align-items-center justify-content-between">
+          <div className="page-title-box d-sm-flex align-items-center justify-content-between">
               <h4 className="mb-sm-0 font-size-18">Armory</h4>
+              <div className="col-3">
+                <div className="text-sm-end" style={{ textAlign: "right" }}>
+                  <button
+                    onClick={openAdd}
+                    type="button"
+                    className="btn btn-success btn-rounded waves-effect waves-light me-2"
+                  >
+                    <i className="fa fa-plus-circle me-1"></i> Add Gun to Armory
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -156,7 +167,7 @@ const ArmoryList = () => {
           <div className="col-12">
             <div className="card">
               <div className="card-body">
-                <div className="d-flex flex-row mb-2 justify-content-between">
+                <div className="d-flex flex-row mb-2 justify-content-end">
                   <div className="col-sm-4">
                     <div className="search-box me-2 mb-2 d-inline-block">
                       <div className="position-relative">
@@ -165,20 +176,8 @@ const ArmoryList = () => {
                           className="form-control"
                           placeholder="Search..."
                         />
-                        <i className="fa fa-search search-icon mt-3 font-size-13"></i>
+                        <i className="fa fa-search search-icon mt-3 font-size-14 text-muted"></i>
                       </div>
-                    </div>
-                  </div>
-                  <div className="col-3">
-                    <div className="text-sm-end" style={{ textAlign: "right" }}>
-                      <button
-                        onClick={openAdd}
-                        type="button"
-                        className="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
-                      >
-                        <i className="fa fa-plus-circle me-1"></i> Add Gun to
-                        Armory
-                      </button>
                     </div>
                   </div>
                 </div>
@@ -212,8 +211,8 @@ const ArmoryList = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {currentGuns.map((gun) => {
-                        return (
+                      {currentGuns > 0 ? (
+                        currentGuns.map((gun) => (
                           <tr key={gun._id} className="tr-body">
                             <td>
                               <div className="form-check font-size-16">
@@ -268,8 +267,15 @@ const ArmoryList = () => {
                               </div>
                             </td>
                           </tr>
-                        );
-                      })}
+                        ))
+                      ) : (
+                        <tr>
+                          <td></td>
+                          <span className="text-muted font-size-15 text-align-center text-capitalize">
+                            No guns registered yet!
+                          </span>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </div>
