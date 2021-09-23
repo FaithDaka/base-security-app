@@ -4,22 +4,22 @@ import LoadSpinner from "../../components/Handlers/Loadspinner";
 import Pagination from "../../components/Pagination";
 import API from "../../helpers/api";
 import AlertDialog from "../../utils/Dialog";
-import Client from "./index";
+import Deployment from "./index";
 
-const ClientList = () => {
-  const [clients, setClients] = useState([]);
+const DeploymentList = () => {
+  const [deploys, setDeploys] = useState([]);
   const [open, setOpen] = useState(false);
   const [dId, setDId] = useState();
   const user = JSON.parse(localStorage.getItem("user")).user;
 
-  const [currentpage, setCurrentPage] = useState(1);
-  const [clientsPerPage] = useState(10);
-  const lastClient = currentpage * clientsPerPage;
-  const firstClient = lastClient - clientsPerPage;
-  const currentClients = clients.slice(firstClient, lastClient);
-  const totalClients = clients.length;
+//   const [currentpage, setCurrentPage] = useState(1);
+//   const [clientsPerPage] = useState(10);
+//   const lastClient = currentpage * clientsPerPage;
+//   const firstClient = lastClient - clientsPerPage;
+//   const currentClients = deploys.slice(firstClient, lastClient);
+//   const totalClients = deploys.length;
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+//   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -34,12 +34,12 @@ const ClientList = () => {
     handleOpen();
   };
 
-  const getClients = async () => {
+  const getDeployments = async () => {
     setLoading(true);
     try {
-      const res = await API.get("/api/client");
-      console.log("Clients Backend ===>", res);
-      setClients(res.data);
+      const res = await API.get("/api/deployment");
+      console.log("Deployments Backend ===>", res);
+      setDeploys(res.data.deployments);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -49,11 +49,11 @@ const ClientList = () => {
 
   const history = useHistory();
 
-  const addClient = () => {
+  const addDeployment = () => {
     setLoading(true);
     setTimeout(() => {
-      history.push(`/admin/${user._id}/clientele/add_new`);
-    }, 2000);
+      history.push('/admin/deployment/new');
+    }, 1000);
   };
 
   const updateClient = (id) => {
@@ -72,7 +72,7 @@ const ClientList = () => {
 
   const deleteClient = async () => {
     setLoading(true);
-    await API.delete(`/api/client/${dId}`)
+    await API.delete(`/api/deploy/${dId}`)
       .then(() => {
         console.log("Client deleted");
         setLoading(false);
@@ -86,20 +86,20 @@ const ClientList = () => {
         setShowAlert(true);
       });
     setOpen(false);
-    getClients();
+    getDeployments();
   };
 
   useEffect(()=>{
-      getClients();
+      getDeployments();
   }, [])
 
   return (
-    <Client>
+    <Deployment>
       <div className="container-fluid">
         <div className="row">
           <div className="col-12">
             <div className="page-title-box d-sm-flex align-items-center justify-content-between">
-              <h4 className="mb-sm-0 font-size-18">Available clients</h4>
+              <h4 className="mb-sm-0 font-size-18">Guard Deployments</h4>
             </div>
           </div>
         </div>
@@ -124,11 +124,11 @@ const ClientList = () => {
                   <div className="col-3">
                     <div className="text-sm-end" style={{ textAlign: "right" }}>
                       <button
-                        onClick={addClient}
+                        onClick={addDeployment}
                         type="button"
                         className="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
                       >
-                        <i className="fa fa-plus-circle me-1"></i> Add New Client
+                        <i className="fa fa-plus-circle me-1"></i> Deploy Guard
                       </button>
                     </div>
                   </div>
@@ -151,16 +151,16 @@ const ClientList = () => {
                             ></label>
                           </div>
                         </th>
-                        <th className="align-middle"> Name</th>
-                        <th className="align-middle"> Email</th>
-                        <th className="align-middle"> Phone</th>
+                        <th className="align-middle"> Client</th>
+                        <th className="align-middle"> Site</th>
                         <th className="align-middle"> Location</th>
+                        <th className="align-middle"> Address</th>
                         <th className="align-middle"> Actions</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {clients.map((client) => (
-                        <tr key={client._id} className="tr-body">
+                      {deploys.map((deploy) => (
+                        <tr key={deploy._id} className="tr-body">
                           <td>
                             <div className="form-check font-size-16">
                               <input
@@ -177,27 +177,27 @@ const ClientList = () => {
                           <td>
                             <span
                               className="td-hover"
-                              onClick={() => getProfile(client._id)}
+                              onClick={() => getProfile(deploy._id)}
                             >
-                              {client.fname} {client.lname}
+                              {deploy.client.fname} {deploy.client.lname}
                             </span>
                           </td>
-                          <td className="tr_email">{client.userId.email}</td>
-                          <td>{client.phone}</td>
-                          <td>{client.address}</td>
+                          <td className="tr_email">{deploy.site}</td>
+                          <td>{deploy.location}</td>
+                          <td>{deploy.address}</td>
                           <td>
                             <div className="row ml-2">
                               <span
                                 title="Update details"
                                 style={{ marginRight: "20px", color: "green" }}
-                                onClick={() => updateClient(client._id)}
+                                onClick={() => updateClient(deploy._id)}
                               >
                                 <i className="fas fa-edit action" />
                               </span>
                               <span
                                 style={{ color: "red" }}
                                 title="Delete Client"
-                                onClick={() => handleDelete(client._id)}
+                                onClick={() => handleDelete(deploy._id)}
                               >
                                 <i className="far fa-trash-alt action" />
                               </span>
@@ -212,14 +212,14 @@ const ClientList = () => {
             </div>
           </div>
         </div>
-        <Pagination
+        {/* <Pagination
           productsPerPage={clientsPerPage}
           totalProducts={totalClients}
           paginate={paginate}
-        />
+        /> */}
       </div>
-    </Client>
+    </Deployment>
   );
 };
 
-export default ClientList;
+export default DeploymentList;

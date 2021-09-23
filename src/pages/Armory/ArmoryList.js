@@ -236,7 +236,7 @@ const ArmoryList = () => {
                                 </span>
                               ) : (
                                 <span className="badge badge-secondary badge-pill float-right">
-                                  InActive
+                                  In-Armory
                                 </span>
                               )}
                             </td>
