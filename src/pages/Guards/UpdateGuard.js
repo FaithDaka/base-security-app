@@ -7,16 +7,19 @@ import LoadHandler from "../../components/Handlers/LoadHandler";
 import LoadSpinner from "../../components/Handlers/Loadspinner";
 
 const UpdateGuard = (props) => {
-  const id = props.match.params.guard_id
-  const [fName, setFName] = useState('');
-  const [lName, setLName] = useState('');
-  const [sex, setSex] = useState('');
-  const [email, setEmail] = useState('');
+  const id = props.match.params.guard_id;
+  const [fName, setFName] = useState("");
+  const [lName, setLName] = useState("");
+  const [sex, setSex] = useState("");
+  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState();
-  const [status, setStatus] = useState('');
-  const [password, setPassword] = useState('');
-  const role = useState('guard');
-  const [guns, setGuns] = useState([])
+  const [status, setStatus] = useState("");
+  const [password, setPassword] = useState("");
+  const role = useState("guard");
+
+  const [guns, setGuns] = useState([]);
+  const [assignedGun, setAssignedGun] = useState();
+
   const user = JSON.parse(localStorage.getItem("user")).user;
 
   const [loading, setLoading] = useState(false);
@@ -30,23 +33,23 @@ const UpdateGuard = (props) => {
     try {
       const res = await API.get(`/api/guard/${id}`);
       console.log("Guard Backend ===>", res);
-      setFName(res.data.guard.fname)
-      setLName(res.data.guard.lname)
-      setEmail(res.data.guard.email)
-      setPhone(res.data.guard.phone)
-      setSex(res.data.guard.sex)
-      setStatus(res.data.guard.maritalStatus)
-      setPassword(res.data.guard.password)
+      setFName(res.data.guard.fname);
+      setLName(res.data.guard.lname);
+      setEmail(res.data.guard.email);
+      setPhone(res.data.guard.phone);
+      setSex(res.data.guard.sex);
+      setStatus(res.data.guard.maritalStatus);
+      setPassword(res.data.guard.password);
       setLoading(false);
-    } 
-    catch (error) {
+    } catch (error) {
       setLoading(false);
       console.log("Error fetching guard", error);
     }
   };
 
-  const history= useHistory();
-  const handleSubmit = async(e)=>{
+  const history = useHistory();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newData = {
       fname: fName,
@@ -56,27 +59,26 @@ const UpdateGuard = (props) => {
       phone: parseInt(phone),
       role,
       maritalStatus: status,
-      password
-    }
+      password,
+    };
     setLoading(true);
 
-    try{
-    const res = await API.patch(`/api/guard/${id}`, newData)
-    setLoading(false);
-    setSuccess(true);
-    setShowAlert(true);
-    setTimeout(()=>{
-      history.push("/guards");
-    }, 2000)
-    console.log('Guard updated successfully', res)
-    }
-    catch(err){
+    try {
+      const res = await API.patch(`/api/guard/${id}`, newData);
       setLoading(false);
-        setError(true);
-        setShowAlert(true);
-        console.log('Failed to update guard details', err)
+      setSuccess(true);
+      setShowAlert(true);
+      setTimeout(() => {
+        history.push("/guards");
+      }, 2000);
+      console.log("Guard updated successfully", res);
+    } catch (err) {
+      setLoading(false);
+      setError(true);
+      setShowAlert(true);
+      console.log("Failed to update guard details", err);
     }
-  }
+  };
 
   const getGuns = async () => {
     setLoading(true);
@@ -91,10 +93,26 @@ const UpdateGuard = (props) => {
     }
   };
 
-  useEffect(()=>{
+  const handleAssignGun = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await API.patch(`/api/guard/assign/${id}`, {assignedGun});
+      console.log("Posted Data ===>", response);
+      setLoading(false);
+    } catch (error) {
+      console.log("error", error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     getGuard(id);
-    getGuns()
-  },[id])
+    getGuns();
+  }, [id]);
+
+  const unAssigned = guns.filter(gun => gun.isAssigned === false);
 
   return (
     <Guards>
@@ -124,7 +142,9 @@ const UpdateGuard = (props) => {
                 <Link to={`/admin/${user._id}/guards`}>
                   <i className="fa fa-arrow-left"></i>
                 </Link>
-                <h4 className="ml-3 mb-sm-0 font-size-16">Update Guard Details</h4>
+                <h4 className="ml-3 mb-sm-0 font-size-16">
+                  Update Guard Details
+                </h4>
               </span>
             </div>
           </div>
@@ -136,7 +156,7 @@ const UpdateGuard = (props) => {
                 <h4 className="card-title">Basic Information</h4>
                 <p className="card-title-desc">Fill all information below</p>
                 <form onSubmit={handleSubmit}>
-                <div className="row guard">
+                  <div className="row guard">
                     <div className="col-sm-6">
                       <div className="mb-3">
                         <label>First Name</label>
@@ -145,18 +165,18 @@ const UpdateGuard = (props) => {
                           className="form-control"
                           value={fName}
                           onChange={(e) => setFName(e.target.value)}
-                        required/>
+                          required
+                        />
                       </div>
                       <div className="mb-3">
-                        <label>
-                          Last Name
-                        </label>
+                        <label>Last Name</label>
                         <input
                           type="text"
                           className="form-control"
                           value={lName}
                           onChange={(e) => setLName(e.target.value)}
-                        required/>
+                          required
+                        />
                       </div>
                       <div className="mb-3">
                         <label>Email</label>
@@ -165,11 +185,12 @@ const UpdateGuard = (props) => {
                           className="form-control"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                        required/>
+                          required
+                        />
                       </div>
                     </div>
                     <div className="col-sm-6">
-                    <div className="mb-3">
+                      <div className="mb-3">
                         <label>Phone Number</label>
                         <input
                           type="text"
@@ -177,44 +198,42 @@ const UpdateGuard = (props) => {
                           maxLength="10"
                           value={phone}
                           onChange={(e) => setPhone(e.target.value)}
-                        required/>
+                          required
+                        />
                       </div>
                       <div className="mb-3">
-                        <label>
-                          Sex
-                        </label>
+                        <label>Sex</label>
                         <select
-                        className="form-control select2 select2-hidden-accessible"
-                        value={sex}
-                        onChange={(e) => setSex(e.target.value)}>
-                        <option>Sex</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
+                          className="form-control select2 select2-hidden-accessible"
+                          value={sex}
+                          onChange={(e) => setSex(e.target.value)}
+                        >
+                          <option>Sex</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                          <option value="Other">Other</option>
                         </select>
                       </div>
                       <div className="mb-3">
-                        <label>
-                          Marital Status
-                        </label>
+                        <label>Marital Status</label>
                         <select
-                        className="form-control select2 select2-hidden-accessible"
-                        value={status}
-                        onChange={(e) => setStatus(e.target.value)}>
-                        <option>Marital Status</option>
-                        <option value="Single" selected>Single</option>
-                        <option value="Married">Married</option>
-                        <option value="Divorced">Divorced</option>
+                          className="form-control select2 select2-hidden-accessible"
+                          value={status}
+                          onChange={(e) => setStatus(e.target.value)}
+                        >
+                          <option>Marital Status</option>
+                          <option value="Single" selected>
+                            Single
+                          </option>
+                          <option value="Married">Married</option>
+                          <option value="Divorced">Divorced</option>
                         </select>
                       </div>
                     </div>
                   </div>
                   <div className="d-flex flex-wrap gap-2">
-                    <button
-                      type="submit"
-                      className="btn btn-primary"
-                    >
-                      {loading ? <LoadHandler /> : 'Update'}
+                    <button type="submit" className="btn btn-primary">
+                      {loading ? <LoadHandler /> : "Update"}
                     </button>
                   </div>
                 </form>
@@ -223,20 +242,32 @@ const UpdateGuard = (props) => {
             <div style={{ height: "50px" }}></div>
             <div className="card">
               <div className="card-body">
-                <h4 className="card-title mb-3">Guard Profile Image</h4>
-                <form
-                  action="/"
-                  method="post"
-                  className="dropzone dz-clickable"
-                >
-                  <div
-                    className="dz-message needsclick mt-3"
-                    style={{ textAlign: "center" }}
-                  >
-                    <div className="mb-3 ">
-                      <i className="display-4 text-muted font-size-25 fas fa-upload"></i>
+                <h4 className="card-title mb-3">Assign Gun to Guard</h4>
+                <form onSubmit={handleAssignGun} className="">
+                  <div className="col-6">
+                    <div className="mb-3">
+                      <select
+                        className="form-control select2 select2-hidden-accessible"
+                        value={assignedGun}
+                        onChange={(e) => setAssignedGun(e.target.value)}
+                      >
+                        <option>Assign Gun to Guard</option>
+                        {unAssigned.length > 0 ? (
+                          unAssigned.map((gun) => (
+                            <option key={gun._id} value={gun._id}>
+                              {gun.name}
+                            </option>
+                          ))
+                        ) : (
+                          <LoadSpinner />
+                        )}
+                      </select>
+                      <div className="d-flex flex-wrap gap-2 mt-3">
+                        <button type="submit" className="btn btn-primary">
+                          {loading ? <LoadHandler /> : "Assign Gun"}
+                        </button>
+                      </div>
                     </div>
-                    <h4>Drop files here or click to upload.</h4>
                   </div>
                 </form>
               </div>
