@@ -14,10 +14,9 @@ const GuardProfile = (props) => {
   const [phone, setPhone] = useState();
   const [status, setStatus] = useState("");
   const [password, setPassword] = useState("");
-  const [isAssigned, setisAssigned] = useState("");
+  const [gunId, setGunId] = useState("");
   const [loading, setLoading] = useState(false);
   const [guns, setGuns] = useState([]);
-  const [gun, setGun] = useState({});
 
   const user = JSON.parse(localStorage.getItem("user")).user;
 
@@ -27,17 +26,13 @@ const GuardProfile = (props) => {
     try {
       const res = await API.get(`/api/guard/${id}`);
       console.log("Guard Backend ===>", res);
-      setFName(res.data.guard.fname);
-      setLName(res.data.guard.lname);
-      setEmail(res.data.guard.email);
-      setPhone(res.data.guard.phone);
-      setSex(res.data.guard.sex);
-      setStatus(res.data.guard.maritalStatus);
-      setPassword(res.data.guard.password);
-      setisAssigned(res.data.isAssignedGun);
-      setGun(res.data.gun);
+      setFName(res.data.fname);
+      setLName(res.data.lname);
+      setPhone(res.data.phone);
+      setSex(res.data.sex);
+      setPassword(res.data.password);
+      setGunId(res.gunId);
       setLoading(false);
-      console.log("Guard Gun", gun);
     } catch (error) {
       console.log("Error fetching guard", error);
       setLoading(false);
@@ -143,7 +138,7 @@ const GuardProfile = (props) => {
                     </tr>
                     <tr>
                       <td className="td-name">Gun Assigned</td>
-                      {isAssigned === true ? (
+                      {gunId !== null ? (
                         <td className="text-wrap">Yes</td>
                       ) : (
                         <td className="text-wrap">No</td>
@@ -151,11 +146,11 @@ const GuardProfile = (props) => {
                     </tr>
                     <tr>
                       <td className="td-name">Gun Details</td>
-                      {gun !== null ? (
+                      {gunId !== null ? (
                         guns.map((guardgun) =>
-                          guardgun._id === gun._id ? (
+                          guardgun._id === gunId ? (
                             <td className="text-wrap">
-                              {gun.name} {gun.serialNumber}
+                              {guardgun.name} {guardgun.serialNumber}
                             </td>
                           ) : (
                             <td className="text-wrap nc">Not Assigned</td>

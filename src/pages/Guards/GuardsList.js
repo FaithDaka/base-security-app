@@ -116,6 +116,17 @@ const GuardsList = () => {
           <div className="col-12">
             <div className="page-title-box d-sm-flex align-items-center justify-content-between">
               <h4 className="mb-sm-0 font-size-18">Guards</h4>
+              <div className="col-3">
+                <div className="text-sm-end" style={{ textAlign: "right" }}>
+                  <button
+                    onClick={addGuard}
+                    type="button"
+                    className="btn btn-success btn-rounded waves-effect waves-light me-2"
+                  >
+                    <i className="fa fa-plus-circle me-1"></i> Add New Guard
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -186,7 +197,7 @@ const GuardsList = () => {
           <div className="col-12">
             <div className="card">
               <div className="card-body">
-                <div className="d-flex flex-row mb-2 justify-content-between">
+                <div className="d-flex flex-row mb-2 justify-content-end">
                   <div className="col-sm-4">
                     <div className="search-box me-2 mb-2 d-inline-block">
                       <div className="position-relative">
@@ -197,17 +208,6 @@ const GuardsList = () => {
                         />
                         <i className="fa fa-search search-icon mt-3 font-size-13"></i>
                       </div>
-                    </div>
-                  </div>
-                  <div className="col-3">
-                    <div className="text-sm-end" style={{ textAlign: "right" }}>
-                      <button
-                        onClick={addGuard}
-                        type="button"
-                        className="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"
-                      >
-                        <i className="fa fa-plus-circle me-1"></i> Add New Guard
-                      </button>
                     </div>
                   </div>
                 </div>
@@ -240,7 +240,7 @@ const GuardsList = () => {
                     <tbody>
                       {currentGuards > 0 ? (
                         currentGuards.map((guard) => (
-                          <tr key={guard._id} className="tr-body">
+                          <tr key={guard.userId} className="tr-body">
                             <td>
                               <div className="form-check font-size-16">
                                 <input
@@ -257,25 +257,25 @@ const GuardsList = () => {
                             <td>
                               <span
                                 className="td-hover"
-                                onClick={() => getProfile(guard._id)}
+                                onClick={() => getProfile(guard.userId)}
                               >
                                 {guard.fname} {guard.lname}
                               </span>
                               {guard.isAssignedGun === false ? (
-                                <span onClick={() => openAssign(guard._id)}>
+                                <span onClick={() => openAssign(guard.userId)}>
                                   <i className="float-right fas fa-flag-checkered"></i>
                                 </span>
                               ) : (
                                 <span></span>
                               )}
                             </td>
-                            <td className="tr_email">{guard.village}</td>
+                            <td className="text-capitalize">{guard.village}, {guard.district}</td>
                             <td>0{guard.phone}</td>
                             <td>{guard.sex}</td>
-                            {guard.gun === null ? (
+                            {guard.gunId === null ? (
                               <td>Unassigned</td>
                             ) : (
-                              <td>{guard.gunId}</td>
+                              <td>Assigned</td>
                             )}
                             <td>
                               <div className="row ml-2">
@@ -285,14 +285,14 @@ const GuardsList = () => {
                                     marginRight: "20px",
                                     color: "green",
                                   }}
-                                  onClick={() => updateGuard(guard._id)}
+                                  onClick={() => updateGuard(guard.userId)}
                                 >
                                   <i className="fas fa-edit action" />
                                 </span>
                                 <span
                                   style={{ color: "red" }}
                                   title="Delete guard"
-                                  onClick={() => handleDelete(guard._id)}
+                                  onClick={() => handleDelete(guard.userId)}
                                 >
                                   <i className="far fa-trash-alt action" />
                                 </span>
