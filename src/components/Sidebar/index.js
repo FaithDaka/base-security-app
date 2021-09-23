@@ -170,15 +170,15 @@ const Sidebar = ({ width, xPos }) => {
                               }
                               id="icon-link"
                             >
-                              <i className="fas fa-map-marked-alt"></i>
+                              <i className="fas fa-broadcast-tower"></i>
                               <span key="t-dashboards">Live tracking</span>
                             </Link>
                           </li>
-                          <li onClick={() => setTab(8)}>
+                          <li onClick={() => setTab(9)}>
                             <Link
-                              to={`/admin/deployment`}
+                              to={`/admin/${user._id}/deployment`}
                               className={
-                                tab === 8
+                                tab === 9
                                   ? "waves-effect mm-active"
                                   : "waves-effect"
                               }
