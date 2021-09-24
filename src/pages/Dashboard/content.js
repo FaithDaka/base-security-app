@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 
 const Content = ({ history }) => {
   const [guards, setGuards] = useState([]);
+  const [deployments, setDeployments] = useState([]);
+  const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(false);
   const user = JSON.parse(localStorage.getItem("user")).user;
 
@@ -21,9 +23,34 @@ const Content = ({ history }) => {
       console.log("error", error);
     }
   };
+  const Deployments = async () => {
+    setLoading(true)
+    try {
+      const res = await API.get("/api/deployment");
+      console.log("Deployments ===>", res);
+      setDeployments(res.data.deployments);
+      setLoading(false);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+  const getClients = async () => {
+    setLoading(true)
+    try {
+      const res = await API.get("/api/client");
+      console.log("Clients ===>", res);
+      setClients(res.data);
+      setLoading(false);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+  
 
   useEffect(() => {
     getGuards();
+    Deployments();
+    getClients();
   }, []);
 
   
@@ -104,7 +131,7 @@ const Content = ({ history }) => {
           </div>
           <div className="col-xl-12">
             <div className="row">
-              <div className="col-lg-3 col-md-6 mt-3 mb-3">
+              <div className="col-lg-4 col-md-6 mt-3 mb-3">
                 <div className="card mini-stats-wid">
                   <div className="card-body">
                     <div className="d-flex">
@@ -131,7 +158,7 @@ const Content = ({ history }) => {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-3 col-md-6 mt-3 mb-3">
+              <div className="col-lg-4 col-md-6 mt-3 mb-3">
                 <div className="card mini-stats-wid">
                   <div className="card-body">
                     <div className="d-flex">
@@ -143,9 +170,9 @@ const Content = ({ history }) => {
                             width: "90%",
                           }}
                         >
-                          Reports
+                          Clients
                         </p>
-                        <h4 className="mb-0 font-size-20">17</h4>
+                        <h4 className="mb-0 font-size-20">{clients.length}</h4>
                       </div>
                       <div className="flex-shrink-0 align-self-center">
                         <div className="avatar-sm rounded-circle bg-primary mini-stat-icon">
@@ -158,7 +185,7 @@ const Content = ({ history }) => {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-3 col-md-6 mt-3 mb-3">
+              <div className="col-lg-4 col-md-6 mt-3 mb-3">
                 <div className="card mini-stats-wid">
                   <div className="card-body">
                     <div className="d-flex">
@@ -170,41 +197,14 @@ const Content = ({ history }) => {
                             width: "90%",
                           }}
                         >
-                          Alerts
+                          Deployments
                         </p>
-                        <h4 className="mb-0 font-size-20">5</h4>
+                        <h4 className="mb-0 font-size-20">{deployments.length}</h4>
                       </div>
                       <div className="flex-shrink-0 align-self-center">
                         <div className="avatar-sm rounded-circle bg-primary mini-stat-icon">
                           <span className="avatar-title rounded-circle bg-danger">
                             <i className="fas fa-exclamation-triangle font-size-24"></i>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-3 col-md-6 mt-3 mb-3">
-                <div className="card mini-stats-wid">
-                  <div className="card-body">
-                    <div className="d-flex">
-                      <div className="flex-grow-1">
-                        <p
-                          className="text-muted fw-medium"
-                          style={{
-                            borderBottom: "0.2px solid #ddd",
-                            width: "90%",
-                          }}
-                        >
-                          Tasks
-                        </p>
-                        <h4 className="mb-0 font-size-20">500</h4>
-                      </div>
-                      <div className="flex-shrink-0 align-self-center ">
-                        <div className="avatar-sm rounded-circle bg-primary mini-stat-icon">
-                          <span className="avatar-title rounded-circle bg-primary">
-                            <i className="fas fa-tasks font-size-24"></i>
                           </span>
                         </div>
                       </div>
