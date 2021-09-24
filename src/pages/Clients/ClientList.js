@@ -63,21 +63,21 @@ const ClientList = () => {
     setLoading(true);
     setTimeout(() => {
       history.push(`/admin/${user._id}/clientele/add_new`);
-    }, 2000);
+    }, 1000);
   };
 
   const updateClient = (id) => {
     setLoading(true);
     setTimeout(() => {
       history.push(`/admin/${user._id}/clientele/update/${id}`);
-    }, 2000);
+    }, 1000);
   };
 
   const getProfile = (id) => {
     setLoading(true);
     setTimeout(() => {
       history.push(`/admin/${user._id}/clientele/profile/${id}`);
-    }, 2000);
+    }, 1000);
   };
 
   const deleteClient = async () => {
@@ -225,7 +225,7 @@ const ClientList = () => {
                                 <i className="float-right fas fa-user-lock font-size-16 text-info"></i>
                               </span>
                             </td>
-                            <td className="tr_email">{client.userId.email}</td>
+                            <td className="tr_email">{client.email}</td>
                             <td>{client.phone}</td>
                             <td>{client.address}</td>
                             <td>

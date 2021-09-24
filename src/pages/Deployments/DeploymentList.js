@@ -12,14 +12,14 @@ const DeploymentList = () => {
   const [dId, setDId] = useState();
   const user = JSON.parse(localStorage.getItem("user")).user;
 
-  //   const [currentpage, setCurrentPage] = useState(1);
-  //   const [clientsPerPage] = useState(10);
-  //   const lastClient = currentpage * clientsPerPage;
-  //   const firstClient = lastClient - clientsPerPage;
-  //   const currentClients = deploys.slice(firstClient, lastClient);
-  //   const totalClients = deploys.length;
+    const [currentpage, setCurrentPage] = useState(1);
+    const [deploysPerPage] = useState(8);
+    const lastDeploy = currentpage * deploysPerPage;
+    const firstDeploy = lastDeploy - deploysPerPage;
+    const currentDeploys = deploys.slice(firstDeploy, lastDeploy);
+    const totalDeploys = deploys.length;
 
-  //   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -82,8 +82,66 @@ const DeploymentList = () => {
             </div>
           </div>
         </div>
+        <div className="row justify-content-around visual-card">
+          <div className="col-lg-3 col-sm-6 mt-3 mb-3">
+            <div className="card">
+              <div className="card-body">
+                <div className="d-flex flex-column align-items-center justify-content-center">
+                  <span>
+                    <h2 className="text-info font-size-70">130</h2>
+                    <span className="text-muted font-size-14 text-uppercase">
+                      Central region
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-lg-3 col-sm-6 mt-3 mb-3">
+            <div className="card">
+              <div className="card-body">
+                <div className="d-flex flex-column align-items-center justify-content-center">
+                  <span>
+                    <h2 className="text-success font-size-70">89</h2>
+                    <span className="text-muted font-size-14 text-uppercase">
+                      Northern region
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-lg-3 col-sm-6 mt-3 mb-3">
+            <div className="card">
+              <div className="card-body">
+                <div className="d-flex flex-column align-items-center justify-content-center">
+                  <span>
+                    <h2 className="text-info font-size-70">34</h2>
+                    <span className="text-muted font-size-14 text-uppercase">
+                      Western Region
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-lg-3 col-sm-6 mt-3 mb-3">
+            <div className="card">
+              <div className="card-body">
+                <div className="d-flex flex-column align-items-center justify-content-center">
+                  <span>
+                    <h2 className="text-success font-size-70">70</h2>
+                    <span className="text-muted font-size-14 text-uppercase">
+                      Eastern region
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <AlertDialog open={open} Yes={() => deleteDeployment()} No={handleNo} />
-        <div className="row">
+        <div className="row mt-3">
           <div className="col-12">
             <div className="card">
               <div className="card-body">
@@ -102,9 +160,9 @@ const DeploymentList = () => {
                   </div>
                 </div>
                 <div className="table-responsive">
-                  <table className="table align-middle table-nowrap table-check table-bordered">
+                  <table className="table align-middle table-nowrap table-check table-bordered table-striped">
                     {loading && <LoadSpinner />}
-                    <thead className="table-primary">
+                    <thead className="table-dark">
                       <tr className="tr-head">
                         <th style={{ width: "20px" }} className="align-middle">
                           <div className="form-check font-size-16">
@@ -127,8 +185,8 @@ const DeploymentList = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {deploys.length > 0 ? (
-                        deploys.map((deploy) => (
+                      {currentDeploys.length > 0 ? (
+                        currentDeploys.map((deploy) => (
                           <tr key={deploy._id} className="tr-body">
                             <td>
                               <div className="form-check font-size-16">
@@ -144,9 +202,7 @@ const DeploymentList = () => {
                               </div>
                             </td>
                             <td>
-                              <span
-                                className="td-hover"
-                              >
+                              <span>
                                 {deploy.client.fname} {deploy.client.lname}
                               </span>
                             </td>
@@ -190,11 +246,11 @@ const DeploymentList = () => {
             </div>
           </div>
         </div>
-        {/* <Pagination
-          productsPerPage={clientsPerPage}
-          totalProducts={totalClients}
+        <Pagination
+          productsPerPage={deploysPerPage}
+          totalProducts={totalDeploys}
           paginate={paginate}
-        /> */}
+        />
       </div>
     </Deployment>
   );

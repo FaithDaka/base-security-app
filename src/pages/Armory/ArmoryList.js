@@ -231,9 +231,9 @@ const ArmoryList = () => {
                             </td>
                             <td>
                               <span>{gun.name}</span>
-                              {gun.status === "Active" ? (
+                              {gun.isAssigned === true ? (
                                 <span className="badge badge-success badge-pill float-right">
-                                  In-field
+                                  In-Use
                                 </span>
                               ) : (
                                 <span className="badge badge-secondary badge-pill float-right">
