@@ -31,7 +31,6 @@ const GuardProfile = (props) => {
   const user = JSON.parse(localStorage.getItem("user")).user;
 
   const getGuard = async (id) => {
-    console.log("The ID", id);
     setLoading(true);
     try {
       const res = await API.get(`/api/guard/${id}`);
@@ -40,7 +39,6 @@ const GuardProfile = (props) => {
       setLName(res.data.lname);
       setPhone(res.data.phone);
       setSex(res.data.sex);
-      setEmail(res.data.email);
       setStatus(res.data.status);
       setAddress(res.data.address);
       setDistrict(res.data.district);
@@ -61,12 +59,24 @@ const GuardProfile = (props) => {
     }
   };
 
+  const getEmail = async (id) => {
+    setLoading(true);
+    try {
+      const res = await API.get(`api/user/${id}`);
+      console.log("Users backend =>", res);
+      setEmail(res.data.email);
+    } catch (error) {
+      console.log("Error fetching user", error);
+      setLoading(false);
+    }
+  };
+
   const getGuns = async () => {
     setLoading(true);
     try {
       const res = await API.get("/api/gun");
       console.log("Guns Backend ===>", res);
-      setGuns(res.data);
+      setGuns(res.data.guns);
       setLoading(false);
     } catch (error) {
       console.log("error", error);
@@ -76,6 +86,7 @@ const GuardProfile = (props) => {
 
   useEffect(() => {
     getGuard(id);
+    getEmail(id);
     getGuns();
   }, [id]);
 
@@ -111,14 +122,18 @@ const GuardProfile = (props) => {
                   <img
                     className="avatar-md profile-user-wid mb-4 rounded-circle img-fluid"
                     alt="profile"
-                    style={{height:'128px', width:'128px'}}
+                    style={{ height: "128px", width: "128px" }}
                     src={avatar}
                   ></img>
                   <h2 className="text-wrap">
                     {fName} {lName}
                   </h2>
                   <p className="text-wrap text-muted">0{phone}</p>
-                  <p className="text-wrap text-muted text-uppercase">{payGrade}{":  "}{guardNo}</p>
+                  <p className="text-wrap text-muted text-uppercase">
+                    {payGrade}
+                    {":  "}
+                    {guardNo}
+                  </p>
                 </div>
               </div>
             </div>
@@ -134,11 +149,11 @@ const GuardProfile = (props) => {
               <div className="card-body profile-body">
                 <table className="table table-responsive table-borderless">
                   <tbody>
-                  <tr>
+                    <tr>
                       <td className="td-name">Date Joined</td>
                       <td className="text-wrap">{dateJoined}</td>
                     </tr>
-                  <tr>
+                    <tr>
                       <td className="td-name">Email Address</td>
                       <td className="text-wrap">{email}</td>
                     </tr>
@@ -156,7 +171,11 @@ const GuardProfile = (props) => {
                     </tr>
                     <tr>
                       <td className="td-name">Area of Origin</td>
-                      <td className="text-wrap">{village}{", "}{district}</td>
+                      <td className="text-wrap">
+                        {village}
+                        {", "}
+                        {district}
+                      </td>
                     </tr>
                     <tr>
                       <td className="td-name">Marital Status</td>
@@ -166,7 +185,7 @@ const GuardProfile = (props) => {
                       <td className="td-name">Next of Kin</td>
                       <td className="text-wrap">{nextOfKin}</td>
                     </tr>
-                    
+
                     <tr>
                       <td className="td-name">Emergency Contact</td>
                       <td className="text-wrap">{emergencyNo}</td>
@@ -187,22 +206,24 @@ const GuardProfile = (props) => {
                         <td className="text-wrap">No</td>
                       )}
                     </tr>
-                    {/* <tr>
+                    <tr>
                       <td className="td-name">Gun Details</td>
-                      {gunId !== null ? (
-                        guns.map((guardgun) =>
-                          guardgun._id === gunId ? (
+                      {assignedGun !== null ? (
+                        guns
+                          .filter((gun) => gun._id === assignedGun)
+                          .map((guardgun) => (
                             <td className="text-wrap">
-                              {guardgun.name} {guardgun.serialNumber}
+                              {guardgun.name}
+                              <span>
+                              {" || serial number: "}
+                              {guardgun.serialNumber}
+                              </span>
                             </td>
-                          ) : (
-                            <td className="text-wrap nc">Not Assigned</td>
-                          )
-                        )
+                          ))
                       ) : (
                         <td className="text-wrap">Not Assigned</td>
                       )}
-                    </tr> */}
+                    </tr>
                   </tbody>
                 </table>
               </div>

@@ -10,7 +10,6 @@ const AddGuard = ({ history }) => {
   const [fName, setFName] = useState("");
   const [lName, setLName] = useState("");
   const [sex, setSex] = useState("");
-  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState();
   const [status, setStatus] = useState("");
   const [password, setPassword] = useState("");
@@ -41,7 +40,6 @@ const AddGuard = ({ history }) => {
       fname: fName,
       lname: lName,
       sex,
-      email,
       phone: parseInt(phone),
       role,
       maritalStatus: status,
@@ -162,16 +160,6 @@ const AddGuard = ({ history }) => {
                         />
                       </div>
                       <div className="mb-3">
-                        <label>Email Address</label>
-                        <input
-                          type="email"
-                          className="form-control"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div className="mb-3">
                         <label>Area of Residence</label>
                         <input
                           type="text"
@@ -226,7 +214,6 @@ const AddGuard = ({ history }) => {
                           className="form-control"
                           value={district}
                           onChange={(e) => setDistrict(e.target.value)}
-                          required
                         />
                       </div>
                       <div className="mb-3">
@@ -236,7 +223,6 @@ const AddGuard = ({ history }) => {
                           className="form-control"
                           value={village}
                           onChange={(e) => setVillage(e.target.value)}
-                          required
                         />
                       </div>
                       <div className="mb-3">
@@ -244,6 +230,7 @@ const AddGuard = ({ history }) => {
                         <input
                           type="text"
                           className="form-control"
+                          maxLength="14"
                           value={nationalId}
                           onChange={(e) => setNationalId(e.target.value)}
                           required
@@ -280,7 +267,6 @@ const AddGuard = ({ history }) => {
                           className="form-control"
                           value={dateJoined}
                           onChange={(e) => setDateJoined(e.target.value)}
-                          required
                         />
                       </div>
                       <div className="mb-3">
@@ -290,7 +276,6 @@ const AddGuard = ({ history }) => {
                           className="form-control"
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
-                          required
                         />
                       </div>
                       <div className="mb-3">

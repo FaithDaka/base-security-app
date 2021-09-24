@@ -4,7 +4,6 @@ import API from "../../helpers/api";
 import Guards from "./index";
 import SweetAlert from "react-bootstrap-sweetalert";
 import LoadHandler from "../../components/Handlers/LoadHandler";
-import LoadSpinner from "../../components/Handlers/Loadspinner";
 
 const UpdateGuard = (props) => {
   const id = props.match.params.guard_id;
@@ -28,8 +27,6 @@ const UpdateGuard = (props) => {
   const [dateJoined, setDateJoined] = useState("");
   const [emergencyNo, setEmergencyNo] = useState();
 
-  const [guns, setGuns] = useState([]);
-  const [assignedGun, setAssignedGun] = useState();
 
   const user = JSON.parse(localStorage.getItem("user")).user;
 
@@ -61,7 +58,6 @@ const UpdateGuard = (props) => {
       setNextOfKin(res.data.nextOfKin);
       setShirtSize(res.data.size);
       setShoeSize(res.data.shoeSize);
-      setAssignedGun(res.data.assignedGun);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -113,41 +109,11 @@ const UpdateGuard = (props) => {
     }
   };
 
-  const getGuns = async () => {
-    setLoading(true);
-    try {
-      const res = await API.get("/api/gun");
-      console.log("Guns Backend ===>", res);
-      setGuns(res.data.guns);
-      setLoading(false);
-    } catch (error) {
-      console.log("error", error);
-      setLoading(false);
-    }
-  };
-
-  const handleAssignGun = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      const response = await API.patch(`/api/guard/assign/${id}`, {
-        assignedGun,
-      });
-      console.log("Posted Data ===>", response);
-      setLoading(false);
-    } catch (error) {
-      console.log("error", error);
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
     getGuard(id);
-    getGuns();
   }, [id]);
 
-  const unAssigned = guns.filter((gun) => gun.isAssigned === false);
+  
 
   return (
     <Guards>
@@ -178,7 +144,7 @@ const UpdateGuard = (props) => {
                   <i className="fa fa-arrow-left"></i>
                 </Link>
                 <h4 className="ml-3 mb-sm-0 font-size-16">
-                  Update Guard Details
+                  Update {fName} {lName}'s Form
                 </h4>
               </span>
             </div>
@@ -199,7 +165,6 @@ const UpdateGuard = (props) => {
                           className="form-control"
                           value={fName}
                           onChange={(e) => setFName(e.target.value)}
-                          required
                         />
                       </div>
                       <div className="mb-3">
@@ -209,7 +174,6 @@ const UpdateGuard = (props) => {
                           className="form-control"
                           value={lName}
                           onChange={(e) => setLName(e.target.value)}
-                          required
                         />
                       </div>
                       <div className="mb-3">
@@ -232,7 +196,6 @@ const UpdateGuard = (props) => {
                           maxLength="10"
                           value={phone}
                           onChange={(e) => setPhone(e.target.value)}
-                          required
                         />
                       </div>
                       <div className="mb-3">
@@ -242,7 +205,6 @@ const UpdateGuard = (props) => {
                           className="form-control"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          required
                         />
                       </div>
                       <div className="mb-3">
@@ -252,7 +214,6 @@ const UpdateGuard = (props) => {
                           className="form-control"
                           value={address}
                           onChange={(e) => setAddress(e.target.value)}
-                          required
                         />
                       </div>
                     </div>
@@ -279,7 +240,6 @@ const UpdateGuard = (props) => {
                           className="form-control"
                           value={nextOfKin}
                           onChange={(e) => setNextOfKin(e.target.value)}
-                          required
                         />
                       </div>
                       <div className="mb-3">
@@ -290,7 +250,6 @@ const UpdateGuard = (props) => {
                           maxLength="10"
                           value={emergencyNo}
                           onChange={(e) => setEmergencyNo(e.target.value)}
-                          required
                         />
                       </div>
                       <div className="mb-3">
@@ -300,7 +259,6 @@ const UpdateGuard = (props) => {
                           className="form-control"
                           value={district}
                           onChange={(e) => setDistrict(e.target.value)}
-                          required
                         />
                       </div>
                       <div className="mb-3">
@@ -310,7 +268,6 @@ const UpdateGuard = (props) => {
                           className="form-control"
                           value={village}
                           onChange={(e) => setVillage(e.target.value)}
-                          required
                         />
                       </div>
                       <div className="mb-3">
@@ -320,7 +277,6 @@ const UpdateGuard = (props) => {
                           className="form-control"
                           value={nationalId}
                           onChange={(e) => setNationalId(e.target.value)}
-                          required
                         />
                       </div>
                     </div>
@@ -344,17 +300,15 @@ const UpdateGuard = (props) => {
                           className="form-control"
                           value={guardNo}
                           onChange={(e) => setGuardNo(e.target.value)}
-                          required
                         />
                       </div>
                       <div className="mb-3">
                         <label>Date Joined</label>
                         <input
-                          type="text"
+                          type="date"
                           className="form-control"
                           value={dateJoined}
                           onChange={(e) => setDateJoined(e.target.value)}
-                          required
                         />
                       </div>
                       <div className="mb-3">
@@ -364,7 +318,6 @@ const UpdateGuard = (props) => {
                           className="form-control"
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
-                          required
                         />
                       </div>
                       <div className="mb-3">
@@ -374,7 +327,6 @@ const UpdateGuard = (props) => {
                           className="form-control"
                           value={shirtsize}
                           onChange={(e) => setShirtSize(e.target.value)}
-                          required
                         />
                       </div>
                       <div className="mb-3">
@@ -384,48 +336,14 @@ const UpdateGuard = (props) => {
                           className="form-control"
                           value={shoeSize}
                           onChange={(e) => setShoeSize(e.target.value)}
-                          required
                         />
                       </div>
                     </div>
                   </div>
                   <div className="d-flex flex-wrap gap-2 mt-3">
                     <button type="submit" className="btn btn-primary">
-                      {loading ? <LoadHandler /> : "Add Guard"}
+                      {loading ? <LoadHandler /> : "Update"}
                     </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-            <div style={{ height: "50px" }}></div>
-            <div className="card">
-              <div className="card-body">
-                <h4 className="card-title mb-3">Assign Gun to Guard</h4>
-                <form onSubmit={handleAssignGun} className="">
-                  <div className="col-6">
-                    <div className="mb-3">
-                      <select
-                        className="form-control select2 select2-hidden-accessible"
-                        value={assignedGun}
-                        onChange={(e) => setAssignedGun(e.target.value)}
-                      >
-                        <option>Assign Gun to Guard</option>
-                        {unAssigned.length > 0 ? (
-                          unAssigned.map((gun) => (
-                            <option key={gun._id} value={gun._id}>
-                              {gun.name}
-                            </option>
-                          ))
-                        ) : (
-                          <LoadSpinner />
-                        )}
-                      </select>
-                      <div className="d-flex flex-wrap gap-2 mt-3">
-                        <button type="submit" className="btn btn-primary">
-                          {loading ? <LoadHandler /> : "Assign Gun"}
-                        </button>
-                      </div>
-                    </div>
                   </div>
                 </form>
               </div>
