@@ -68,22 +68,21 @@ const GuardsList = () => {
     setLoading(true);
     setTimeout(() => {
       history.push(`/admin/${user._id}/guards/add_new`);
-    }, 2000);
+    }, 1000);
   };
 
   const updateGuard = (id) => {
     setLoading(true);
-    history.push(`/admin/${user._id}/guards/update/${id}`);
-    // setTimeout(() => {
-    //   history.push(`/admin/${user._id}/guards/update/${id}`);
-    // }, 2000);
+    setTimeout(() => {
+      history.push(`/admin/${user._id}/guards/update/${id}`);
+    }, 1000);
   };
 
   const getProfile = (id) => {
     setLoading(true);
     setTimeout(() => {
       history.push(`/admin/${user._id}/guards/profile/${id}`);
-    }, 2000);
+    }, 1000);
   };
 
   const deleteGuard = async () => {
