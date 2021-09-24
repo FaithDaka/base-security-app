@@ -138,7 +138,7 @@ const Login = ({history}) => {
                         </button>
                       </div>
                       <div className="mt-4"> </div>
-                      <div className="mt-5 text-center">
+                      <div className="mt-3 text-center">
                         <a href="#" className="text-muted">
                           <i className="fa fa-lock me-1"></i> Forgot your
                           password?

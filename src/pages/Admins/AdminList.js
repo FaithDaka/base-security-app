@@ -146,7 +146,7 @@ const AdminList = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {currentAdmins > 0 ? (
+                      {currentAdmins.length > 0 ? (
                         currentAdmins.map((user) => (
                           <tr className="tr-body" key={user._id}>
                             <td>

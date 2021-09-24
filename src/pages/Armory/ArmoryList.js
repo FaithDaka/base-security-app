@@ -211,7 +211,7 @@ const ArmoryList = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {currentGuns > 0 ? (
+                      {currentGuns.length > 0 ? (
                         currentGuns.map((gun) => (
                           <tr key={gun._id} className="tr-body">
                             <td>

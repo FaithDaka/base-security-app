@@ -6,17 +6,16 @@ import avatar from "../../assets/img/avatar.jpg";
 import { Link } from "react-router-dom";
 
 const Content = ({ history }) => {
-  const [data, setData] = useState([]);
+  const [guards, setGuards] = useState([]);
   const [loading, setLoading] = useState(false);
   const user = JSON.parse(localStorage.getItem("user")).user;
 
-  const guards = data.filter((a) => a.role === "guard");
   const getGuards = async () => {
     setLoading(true)
     try {
-      const res = await API.get("/api/user");
+      const res = await API.get("/api/guard");
       console.log("Guard Users Backend ===>", res);
-      setData(res.data);
+      setGuards(res.data);
       setLoading(false);
     } catch (error) {
       console.log("error", error);

@@ -238,9 +238,9 @@ const GuardsList = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {currentGuards > 0 ? (
+                      {currentGuards.length > 0 ? (
                         currentGuards.map((guard) => (
-                          <tr key={guard.userId} className="tr-body">
+                          <tr key={guard._id} className="tr-body">
                             <td>
                               <div className="form-check font-size-16">
                                 <input
@@ -257,12 +257,12 @@ const GuardsList = () => {
                             <td>
                               <span
                                 className="td-hover"
-                                onClick={() => getProfile(guard.userId)}
+                                onClick={() => getProfile(guard._id)}
                               >
                                 {guard.fname} {guard.lname}
                               </span>
                               {guard.isAssignedGun === false ? (
-                                <span onClick={() => openAssign(guard.userId)}>
+                                <span onClick={() => openAssign(guard._id)}>
                                   <i className="float-right fas fa-flag-checkered"></i>
                                 </span>
                               ) : (
@@ -272,7 +272,7 @@ const GuardsList = () => {
                             <td className="text-capitalize">{guard.village}, {guard.district}</td>
                             <td>0{guard.phone}</td>
                             <td>{guard.sex}</td>
-                            {guard.gunId === null ? (
+                            {guard.assignedGun === null ? (
                               <td>Unassigned</td>
                             ) : (
                               <td>Assigned</td>
@@ -285,14 +285,14 @@ const GuardsList = () => {
                                     marginRight: "20px",
                                     color: "green",
                                   }}
-                                  onClick={() => updateGuard(guard.userId)}
+                                  onClick={() => updateGuard(guard._id)}
                                 >
                                   <i className="fas fa-edit action" />
                                 </span>
                                 <span
                                   style={{ color: "red" }}
                                   title="Delete guard"
-                                  onClick={() => handleDelete(guard.userId)}
+                                  onClick={() => handleDelete(guard._id)}
                                 >
                                   <i className="far fa-trash-alt action" />
                                 </span>

@@ -12,14 +12,14 @@ const DeploymentList = () => {
   const [dId, setDId] = useState();
   const user = JSON.parse(localStorage.getItem("user")).user;
 
-//   const [currentpage, setCurrentPage] = useState(1);
-//   const [clientsPerPage] = useState(10);
-//   const lastClient = currentpage * clientsPerPage;
-//   const firstClient = lastClient - clientsPerPage;
-//   const currentClients = deploys.slice(firstClient, lastClient);
-//   const totalClients = deploys.length;
+  //   const [currentpage, setCurrentPage] = useState(1);
+  //   const [clientsPerPage] = useState(10);
+  //   const lastClient = currentpage * clientsPerPage;
+  //   const firstClient = lastClient - clientsPerPage;
+  //   const currentClients = deploys.slice(firstClient, lastClient);
+  //   const totalClients = deploys.length;
 
-//   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  //   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -89,16 +89,16 @@ const DeploymentList = () => {
     getDeployments();
   };
 
-  useEffect(()=>{
-      getDeployments();
-  }, [])
+  useEffect(() => {
+    getDeployments();
+  }, []);
 
   return (
     <Deployment>
       <div className="container-fluid">
         <div className="row">
           <div className="col-12">
-          <div className="page-title-box d-sm-flex align-items-center justify-content-between">
+            <div className="page-title-box d-sm-flex align-items-center justify-content-between">
               <h4 className="mb-sm-0 font-size-18">Guard Deployments</h4>
               <div className="col-3">
                 <div className="text-sm-end" style={{ textAlign: "right" }}>
@@ -159,52 +159,64 @@ const DeploymentList = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {deploys.map((deploy) => (
-                        <tr key={deploy._id} className="tr-body">
-                          <td>
-                            <div className="form-check font-size-16">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="orderidcheck01"
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="orderidcheck01"
-                              ></label>
-                            </div>
-                          </td>
-                          <td>
-                            <span
-                              className="td-hover"
-                              onClick={() => getProfile(deploy._id)}
-                            >
-                              {deploy.client.fname} {deploy.client.lname}
-                            </span>
-                          </td>
-                          <td className="tr_email">{deploy.site}</td>
-                          <td>{deploy.location}</td>
-                          <td>{deploy.address}</td>
-                          <td>
-                            <div className="row ml-2">
+                      {deploys.length > 0 ? (
+                        deploys.map((deploy) => (
+                          <tr key={deploy._id} className="tr-body">
+                            <td>
+                              <div className="form-check font-size-16">
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  id="orderidcheck01"
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="orderidcheck01"
+                                ></label>
+                              </div>
+                            </td>
+                            <td>
                               <span
-                                title="Update details"
-                                style={{ marginRight: "20px", color: "green" }}
-                                onClick={() => updateClient(deploy._id)}
+                                className="td-hover"
+                                onClick={() => getProfile(deploy._id)}
                               >
-                                <i className="fas fa-edit action" />
+                                {deploy.client.fname} {deploy.client.lname}
                               </span>
-                              <span
-                                style={{ color: "red" }}
-                                title="Delete Client"
-                                onClick={() => handleDelete(deploy._id)}
-                              >
-                                <i className="far fa-trash-alt action" />
-                              </span>
-                            </div>
-                          </td>
+                            </td>
+                            <td className="tr_email">{deploy.site}</td>
+                            <td>{deploy.location}</td>
+                            <td>{deploy.address}</td>
+                            <td>
+                              <div className="row ml-2">
+                                <span
+                                  title="Update details"
+                                  style={{
+                                    marginRight: "20px",
+                                    color: "green",
+                                  }}
+                                  onClick={() => updateClient(deploy._id)}
+                                >
+                                  <i className="fas fa-edit action" />
+                                </span>
+                                <span
+                                  style={{ color: "red" }}
+                                  title="Delete Client"
+                                  onClick={() => handleDelete(deploy._id)}
+                                >
+                                  <i className="far fa-trash-alt action" />
+                                </span>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td></td>
+                          <span className="text-muted font-size-15 text-align-center text-capitalize">
+                            No deployments yet!
+                          </span>
                         </tr>
-                      ))}
+                      )}
                     </tbody>
                   </table>
                 </div>
