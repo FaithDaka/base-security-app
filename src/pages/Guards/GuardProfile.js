@@ -7,6 +7,7 @@ import LoadSpinner from "../../components/Handlers/Loadspinner";
 
 const GuardProfile = (props) => {
   const id = props.match.params.guard_id;
+  const [userId, setUserId] = useState()
   const [fName, setFName] = useState("");
   const [lName, setLName] = useState("");
   const [sex, setSex] = useState("");
@@ -23,6 +24,7 @@ const GuardProfile = (props) => {
   const [guardNo, setGuardNo] = useState();
   const [payGrade, setPayGrade] = useState("");
   const [dateJoined, setDateJoined] = useState("");
+  const [dob, setDOB] = useState("");
   const [emergencyNo, setEmergencyNo] = useState();
   const [assignedGun, setAssignedGun] = useState("");
   const [loading, setLoading] = useState(false);
@@ -35,6 +37,7 @@ const GuardProfile = (props) => {
     try {
       const res = await API.get(`/api/guard/${id}`);
       console.log("Guard Backend ===>", res);
+      setUserId(res.data.userId);
       setFName(res.data.fname);
       setLName(res.data.lname);
       setPhone(res.data.phone);
@@ -49,6 +52,7 @@ const GuardProfile = (props) => {
       setEmergencyNo(res.data.emergencyNo);
       setNationalId(res.data.nationalId);
       setNOK(res.data.nextOfKin);
+      setDOB(res.data.dateOfBirth);
       setShirtSize(res.data.size);
       setShoeSize(res.data.shoeSize);
       setAssignedGun(res.data.assignedGun);
@@ -59,11 +63,11 @@ const GuardProfile = (props) => {
     }
   };
 
-  const getEmail = async (id) => {
+  const getEmail = async () => {
     setLoading(true);
     try {
-      const res = await API.get(`api/user/${id}`);
-      console.log("Users backend =>", res);
+      const res = await API.get(`api/user/${userId}`);
+      console.log("User backend =>", res);
       setEmail(res.data.email);
     } catch (error) {
       console.log("Error fetching user", error);
@@ -86,7 +90,7 @@ const GuardProfile = (props) => {
 
   useEffect(() => {
     getGuard(id);
-    getEmail(id);
+    getEmail();
     getGuns();
   }, [id]);
 
@@ -134,6 +138,7 @@ const GuardProfile = (props) => {
                     {":  "}
                     {guardNo}
                   </p>
+                  <p className="text-wrap text-muted nc">{email}</p>
                 </div>
               </div>
             </div>
@@ -154,12 +159,38 @@ const GuardProfile = (props) => {
                       <td className="text-wrap">{dateJoined}</td>
                     </tr>
                     <tr>
-                      <td className="td-name">Email Address</td>
-                      <td className="text-wrap">{email}</td>
+                      <td className="td-name">Gun Assigned</td>
+                      {assignedGun !== null ? (
+                        <td className="text-wrap">Yes</td>
+                      ) : (
+                        <td className="text-wrap">No</td>
+                      )}
+                    </tr>
+                    <tr>
+                      <td className="td-name">Gun Details</td>
+                      {assignedGun !== null ? (
+                        guns
+                          .filter((gun) => gun._id === assignedGun)
+                          .map((guardgun) => (
+                            <td className="text-wrap">
+                              {guardgun.name}
+                              <span>
+                              {" || serial number: "}
+                              {guardgun.serialNumber}
+                              </span>
+                            </td>
+                          ))
+                      ) : (
+                        <td className="text-wrap">Not Assigned</td>
+                      )}
                     </tr>
                     <tr>
                       <td className="td-name">NIN</td>
                       <td className="text-wrap">{nationalId}</td>
+                    </tr>
+                    <tr>
+                      <td className="td-name">D.O.B</td>
+                      <td className="text-wrap">{dob}</td>
                     </tr>
                     <tr>
                       <td className="td-name">Sex</td>
@@ -197,32 +228,6 @@ const GuardProfile = (props) => {
                     <tr>
                       <td className="td-name">Shoe Size</td>
                       <td className="text-wrap">{shoeSize}</td>
-                    </tr>
-                    <tr>
-                      <td className="td-name">Gun Assigned</td>
-                      {assignedGun !== null ? (
-                        <td className="text-wrap">Yes</td>
-                      ) : (
-                        <td className="text-wrap">No</td>
-                      )}
-                    </tr>
-                    <tr>
-                      <td className="td-name">Gun Details</td>
-                      {assignedGun !== null ? (
-                        guns
-                          .filter((gun) => gun._id === assignedGun)
-                          .map((guardgun) => (
-                            <td className="text-wrap">
-                              {guardgun.name}
-                              <span>
-                              {" || serial number: "}
-                              {guardgun.serialNumber}
-                              </span>
-                            </td>
-                          ))
-                      ) : (
-                        <td className="text-wrap">Not Assigned</td>
-                      )}
                     </tr>
                   </tbody>
                 </table>

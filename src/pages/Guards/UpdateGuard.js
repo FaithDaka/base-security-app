@@ -14,10 +14,10 @@ const UpdateGuard = (props) => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState();
   const [status, setStatus] = useState("");
-  const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
   const [nationalId, setNationalId] = useState("");
   const [nextOfKin, setNextOfKin] = useState("");
+  const [dateOfBirth, setDOB] = useState("");
   const [shirtsize, setShirtSize] = useState();
   const [shoeSize, setShoeSize] = useState();
   const [district, setDistrict] = useState("");
@@ -58,6 +58,7 @@ const UpdateGuard = (props) => {
       setNextOfKin(res.data.nextOfKin);
       setShirtSize(res.data.size);
       setShoeSize(res.data.shoeSize);
+      setDOB(res.data.dateOfBirth);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -79,7 +80,6 @@ const UpdateGuard = (props) => {
         phone: parseInt(phone),
         role,
         maritalStatus: status,
-        password,
         address,
         nationalId,
         nextOfKin,
@@ -205,6 +205,16 @@ const UpdateGuard = (props) => {
                         />
                       </div>
                       <div className="mb-3">
+                        <label>Date of Birth</label>
+                        <input
+                          type="date"
+                          className="form-control"
+                          value={dateOfBirth}
+                          onChange={(e) => setDOB(e.target.value)}
+                          required
+                        />
+                      </div>
+                      <div className="mb-3">
                         <label>Area of Residence</label>
                         <input
                           type="text"
@@ -306,15 +316,6 @@ const UpdateGuard = (props) => {
                           className="form-control"
                           value={dateJoined}
                           onChange={(e) => setDateJoined(e.target.value)}
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label>Password</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
                         />
                       </div>
                       <div className="mb-3">

@@ -265,11 +265,13 @@ const GuardsList = () => {
                                 {guard.fname} {guard.lname}
                               </span>
                               {guard.assignedGun === null ? (
-                                <span onClick={() => openAssign(guard._id)} className="ml-3">
-                                  <i className="float-right fas fas fa-key"></i>
+                                <span onClick={() => openAssign(guard._id)} className="assign-icon ml-3">
+                                  <i className="float-right fas fa-user-ninja"></i>
                                 </span>
                               ) : (
-                                <span></span>
+                                <span>
+                                  <i className="float-right fas fa-user-check font-size-17"></i>
+                                </span>
                               )}
                             </td>
                             <td className="text-capitalize">{guard.village}, {guard.district}</td>
