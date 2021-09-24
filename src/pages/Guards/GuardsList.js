@@ -73,9 +73,10 @@ const GuardsList = () => {
 
   const updateGuard = (id) => {
     setLoading(true);
-    setTimeout(() => {
-      history.push(`/admin/${user._id}/guards/update/${id}`);
-    }, 2000);
+    history.push(`/admin/${user._id}/guards/update/${id}`);
+    // setTimeout(() => {
+    //   history.push(`/admin/${user._id}/guards/update/${id}`);
+    // }, 2000);
   };
 
   const getProfile = (id) => {

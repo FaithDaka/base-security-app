@@ -179,7 +179,7 @@ const ClientList = () => {
                                 {client.fname} {client.lname}
                               </span>
                             </td>
-                            <td className="tr_email">{client.userId.email}</td>
+                            {/* <td className="tr_email">{client.user.email}</td> */}
                             <td>{client.phone}</td>
                             <td>{client.address}</td>
                             <td>
