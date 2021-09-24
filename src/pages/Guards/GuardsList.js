@@ -269,7 +269,7 @@ const GuardsList = () => {
                                 </span>
                               ) : (
                                 <span>
-                                  <i className="float-right fas fa-user-ninja font-size-16"></i>
+                                  <i className="float-right fas fa-user-check font-size-17"></i>
                                 </span>
                               )}
                             </td>

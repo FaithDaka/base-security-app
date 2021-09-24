@@ -56,13 +56,13 @@
     letter-spacing:0.1px;
 }
 .tr-body td .assign-icon{
-  font-size:18px;
+  font-size:20px;
   opacity:0.8;
   color:rgb(211, 4, 4);
   animation: pulse 1.2s infinite;
 }
 .tr-body td .assign-icon:hover{
-  font-size:18.5px;
+  font-size:21px;
   opacity:1;
   color:rgb(211, 4, 4);
   cursor:pointer;
@@ -70,7 +70,7 @@
 }
 @keyframes pulse {
   0% {
-    opacity:0.4;
+    opacity:0.45;
   }
   30%{
     opacity:0.5;
@@ -82,7 +82,7 @@
       opacity:0.7;
   }
   100% {
-      opacity:0.8;
+      opacity:0.85;
   }
 }
 

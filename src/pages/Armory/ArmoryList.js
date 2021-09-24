@@ -233,7 +233,7 @@ const ArmoryList = () => {
                               <span>{gun.name}</span>
                               {gun.status === "Active" ? (
                                 <span className="badge badge-success badge-pill float-right">
-                                  Ready
+                                  In-field
                                 </span>
                               ) : (
                                 <span className="badge badge-secondary badge-pill float-right">

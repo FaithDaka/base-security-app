@@ -12,7 +12,6 @@ const AddGuard = ({ history }) => {
   const [sex, setSex] = useState("");
   const [phone, setPhone] = useState();
   const [status, setStatus] = useState("");
-  const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
   const [nationalId, setNationalId] = useState("");
   const [nextOfKin, setNextOfKin] = useState("");
@@ -44,7 +43,6 @@ const AddGuard = ({ history }) => {
       phone: parseInt(phone),
       role,
       maritalStatus: status,
-      password,
       address,
       nationalId,
       nextOfKin,
@@ -280,15 +278,6 @@ const AddGuard = ({ history }) => {
                           className="form-control"
                           value={dateJoined}
                           onChange={(e) => setDateJoined(e.target.value)}
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label>Password</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
                         />
                       </div>
                       <div className="mb-3">

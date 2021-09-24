@@ -24,7 +24,6 @@ import StoreList from './pages/Store/StoreList';
 import LiveTracking from './pages/Tracking/LiveTracking';
 
 import DeploymentList from './pages/Deployments/DeploymentList';
-import AddDeployment from './pages/Deployments/AddDeployment';
 
 const App = () => {
   return (
@@ -50,7 +49,6 @@ const App = () => {
       <ProtectedRoute exact path="/admin/:id/store" component={ StoreList }/>
       <ProtectedRoute exact path="/admin/:id/livetracking" component={ LiveTracking }/>
       <ProtectedRoute exact path="/admin/:id/deployment" component={ DeploymentList }/>
-      <ProtectedRoute exact path="/admin/:id/deployment/new" component={ AddDeployment }/>
     </Switch>
     </BrowserRouter>
   )

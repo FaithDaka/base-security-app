@@ -7,6 +7,7 @@ import LoadSpinner from "../../components/Handlers/Loadspinner";
 
 const GuardProfile = (props) => {
   const id = props.match.params.guard_id;
+  const [userId, setUserId] = useState()
   const [fName, setFName] = useState("");
   const [lName, setLName] = useState("");
   const [sex, setSex] = useState("");
@@ -36,6 +37,7 @@ const GuardProfile = (props) => {
     try {
       const res = await API.get(`/api/guard/${id}`);
       console.log("Guard Backend ===>", res);
+      setUserId(res.data.userId);
       setFName(res.data.fname);
       setLName(res.data.lname);
       setPhone(res.data.phone);
@@ -61,11 +63,11 @@ const GuardProfile = (props) => {
     }
   };
 
-  const getEmail = async (id) => {
+  const getEmail = async () => {
     setLoading(true);
     try {
-      const res = await API.get(`api/user/${id}`);
-      console.log("Users backend =>", res);
+      const res = await API.get(`api/user/${userId}`);
+      console.log("User backend =>", res);
       setEmail(res.data.email);
     } catch (error) {
       console.log("Error fetching user", error);
@@ -88,7 +90,7 @@ const GuardProfile = (props) => {
 
   useEffect(() => {
     getGuard(id);
-    getEmail(id);
+    getEmail();
     getGuns();
   }, [id]);
 
