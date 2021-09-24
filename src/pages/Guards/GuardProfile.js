@@ -23,6 +23,7 @@ const GuardProfile = (props) => {
   const [guardNo, setGuardNo] = useState();
   const [payGrade, setPayGrade] = useState("");
   const [dateJoined, setDateJoined] = useState("");
+  const [dob, setDOB] = useState("");
   const [emergencyNo, setEmergencyNo] = useState();
   const [assignedGun, setAssignedGun] = useState("");
   const [loading, setLoading] = useState(false);
@@ -49,6 +50,7 @@ const GuardProfile = (props) => {
       setEmergencyNo(res.data.emergencyNo);
       setNationalId(res.data.nationalId);
       setNOK(res.data.nextOfKin);
+      setDOB(res.data.dateOfBirth);
       setShirtSize(res.data.size);
       setShoeSize(res.data.shoeSize);
       setAssignedGun(res.data.assignedGun);
@@ -134,6 +136,7 @@ const GuardProfile = (props) => {
                     {":  "}
                     {guardNo}
                   </p>
+                  <p className="text-wrap text-muted nc">{email}</p>
                 </div>
               </div>
             </div>
@@ -154,12 +157,38 @@ const GuardProfile = (props) => {
                       <td className="text-wrap">{dateJoined}</td>
                     </tr>
                     <tr>
-                      <td className="td-name">Email Address</td>
-                      <td className="text-wrap">{email}</td>
+                      <td className="td-name">Gun Assigned</td>
+                      {assignedGun !== null ? (
+                        <td className="text-wrap">Yes</td>
+                      ) : (
+                        <td className="text-wrap">No</td>
+                      )}
+                    </tr>
+                    <tr>
+                      <td className="td-name">Gun Details</td>
+                      {assignedGun !== null ? (
+                        guns
+                          .filter((gun) => gun._id === assignedGun)
+                          .map((guardgun) => (
+                            <td className="text-wrap">
+                              {guardgun.name}
+                              <span>
+                              {" || serial number: "}
+                              {guardgun.serialNumber}
+                              </span>
+                            </td>
+                          ))
+                      ) : (
+                        <td className="text-wrap">Not Assigned</td>
+                      )}
                     </tr>
                     <tr>
                       <td className="td-name">NIN</td>
                       <td className="text-wrap">{nationalId}</td>
+                    </tr>
+                    <tr>
+                      <td className="td-name">D.O.B</td>
+                      <td className="text-wrap">{dob}</td>
                     </tr>
                     <tr>
                       <td className="td-name">Sex</td>
@@ -197,32 +226,6 @@ const GuardProfile = (props) => {
                     <tr>
                       <td className="td-name">Shoe Size</td>
                       <td className="text-wrap">{shoeSize}</td>
-                    </tr>
-                    <tr>
-                      <td className="td-name">Gun Assigned</td>
-                      {assignedGun !== null ? (
-                        <td className="text-wrap">Yes</td>
-                      ) : (
-                        <td className="text-wrap">No</td>
-                      )}
-                    </tr>
-                    <tr>
-                      <td className="td-name">Gun Details</td>
-                      {assignedGun !== null ? (
-                        guns
-                          .filter((gun) => gun._id === assignedGun)
-                          .map((guardgun) => (
-                            <td className="text-wrap">
-                              {guardgun.name}
-                              <span>
-                              {" || serial number: "}
-                              {guardgun.serialNumber}
-                              </span>
-                            </td>
-                          ))
-                      ) : (
-                        <td className="text-wrap">Not Assigned</td>
-                      )}
                     </tr>
                   </tbody>
                 </table>

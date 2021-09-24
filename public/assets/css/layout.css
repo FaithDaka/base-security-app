@@ -55,17 +55,37 @@
     text-transform: capitalize;
     letter-spacing:0.1px;
 }
-.tr-body td span .fa-key{
-  font-size:16px;
+.tr-body td .assign-icon{
+  font-size:18px;
   opacity:0.8;
   color:rgb(211, 4, 4);
+  animation: pulse 1.2s infinite;
 }
-.tr-body td .fa-key:hover{
-  font-size:18px;
+.tr-body td .assign-icon:hover{
+  font-size:18.5px;
   opacity:1;
   color:rgb(211, 4, 4);
   cursor:pointer;
+  animation: none;
 }
+@keyframes pulse {
+  0% {
+    opacity:0.4;
+  }
+  30%{
+    opacity:0.5;
+  }
+  50%{
+    opacity:0.6;
+  }
+  70% {
+      opacity:0.7;
+  }
+  100% {
+      opacity:0.8;
+  }
+}
+
 .tr-body td .action{
   font-size:16px;
   opacity:0.9;
@@ -105,9 +125,9 @@
 }
 .profile .profile-body table .td-name:hover{
   color:#ff0000;
-  font-size: 17.5px;
+  font-size: 17px;
   text-decoration-line: underline;
-  opacity:0.8;
+  opacity:0.75;
 }
 .profile .profile-body .text-wrap{
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
