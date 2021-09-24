@@ -55,13 +55,13 @@
     text-transform: capitalize;
     letter-spacing:0.1px;
 }
-.tr-body td span .fa-flag-checkered{
+.tr-body td span .fa-key{
   font-size:16px;
   opacity:0.8;
   color:rgb(211, 4, 4);
 }
-.tr-body td .fa-flag-checkered:hover{
-  font-size:18.5px;
+.tr-body td .fa-key:hover{
+  font-size:18px;
   opacity:1;
   color:rgb(211, 4, 4);
   cursor:pointer;
@@ -107,6 +107,7 @@
   color:#ff0000;
   font-size: 17.5px;
   text-decoration-line: underline;
+  opacity:0.8;
 }
 .profile .profile-body .text-wrap{
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -143,6 +144,8 @@
 .report-card .report-tab span .fa-angle-right:hover{
   font-size: 28px;
 }
+
+
 /* LOGIN */
 .bsa-login{
   background-color: #2a3042;
@@ -323,6 +326,7 @@
 }
 /* LOADER */
 
+
 /* STORE CARD TABLE */
 .store-table{
   border-spacing:0px;
@@ -341,11 +345,13 @@
 }
 /* STORE CARD TABLE */
 
+
 /* VISUAL CARDS */
 .visual-card .card{
   box-shadow:3px 2px 6px 0.5px #ddd;
 }
 /* VISUAL CARDS */
+
 
 /* MAP */
 .map .card{

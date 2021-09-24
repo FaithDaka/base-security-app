@@ -155,7 +155,7 @@ const ClientList = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {currentClients > 0 ? (
+                      {currentClients.length > 0 ? (
                         currentClients.map((client) => (
                           <tr key={client._id} className="tr-body">
                             <td>

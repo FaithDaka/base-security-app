@@ -47,6 +47,7 @@ const GuardsList = () => {
     setDId(id);
     handleOpen();
   };
+
   const getGuards = async () => {
     setLoading(true);
     try {
@@ -59,6 +60,7 @@ const GuardsList = () => {
       console.log("error", error);
     }
   };
+  const assigned = guardUsers.filter((guard) => guard.assignedGun !== null);
 
   const history = useHistory();
 
@@ -109,7 +111,7 @@ const GuardsList = () => {
   return (
     <Guards>
       <Modal show={assign} close={closeAssign} title="Assign Gun">
-        <AssignGun close={closeAssign} guards={getGuards} id={aId} />
+        <AssignGun close={closeAssign} guards={()=>getGuards()} id={aId} />
       </Modal>
       <div className="container-fluid">
         <div className="row">
@@ -183,7 +185,7 @@ const GuardsList = () => {
               <div className="card-body">
                 <div className="d-flex flex-column align-items-center justify-content-center">
                   <span>
-                    <h2 className="text-danger font-size-70">30</h2>
+                    <h2 className="text-danger font-size-70">{assigned.length}</h2>
                     <span className="text-muted font-size-14 text-uppercase">
                       Armed guards
                     </span>
@@ -238,9 +240,9 @@ const GuardsList = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {currentGuards > 0 ? (
+                      {currentGuards.length > 0 ? (
                         currentGuards.map((guard) => (
-                          <tr key={guard.userId} className="tr-body">
+                          <tr key={guard._id} className="tr-body">
                             <td>
                               <div className="form-check font-size-16">
                                 <input
@@ -257,13 +259,13 @@ const GuardsList = () => {
                             <td>
                               <span
                                 className="td-hover"
-                                onClick={() => getProfile(guard.userId)}
+                                onClick={() => getProfile(guard._id)}
                               >
                                 {guard.fname} {guard.lname}
                               </span>
-                              {guard.isAssignedGun === false ? (
-                                <span onClick={() => openAssign(guard.userId)}>
-                                  <i className="float-right fas fa-flag-checkered"></i>
+                              {guard.assignedGun === null ? (
+                                <span onClick={() => openAssign(guard._id)} className="ml-3">
+                                  <i className="float-right fas fas fa-key"></i>
                                 </span>
                               ) : (
                                 <span></span>
@@ -272,7 +274,7 @@ const GuardsList = () => {
                             <td className="text-capitalize">{guard.village}, {guard.district}</td>
                             <td>0{guard.phone}</td>
                             <td>{guard.sex}</td>
-                            {guard.gunId === null ? (
+                            {guard.assignedGun === null ? (
                               <td>Unassigned</td>
                             ) : (
                               <td>Assigned</td>
@@ -285,14 +287,14 @@ const GuardsList = () => {
                                     marginRight: "20px",
                                     color: "green",
                                   }}
-                                  onClick={() => updateGuard(guard.userId)}
+                                  onClick={() => updateGuard(guard._id)}
                                 >
                                   <i className="fas fa-edit action" />
                                 </span>
                                 <span
                                   style={{ color: "red" }}
                                   title="Delete guard"
-                                  onClick={() => handleDelete(guard.userId)}
+                                  onClick={() => handleDelete(guard._id)}
                                 >
                                   <i className="far fa-trash-alt action" />
                                 </span>

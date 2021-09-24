@@ -6,25 +6,24 @@ import Guards from "./index";
 import SweetAlert from "react-bootstrap-sweetalert";
 
 const AddGuard = ({ history }) => {
-  const [role ] = useState("guard");
+  const [role] = useState("guard");
   const [fName, setFName] = useState("");
   const [lName, setLName] = useState("");
   const [sex, setSex] = useState("");
-  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState();
   const [status, setStatus] = useState("");
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
   const [nationalId, setNationalId] = useState("");
   const [nextOfKin, setNextOfKin] = useState("");
-  const [size, setSize] = useState();
-  const [shoeSize, setShoeSize] = useState("");
+  const [shirtsize, setShirtSize] = useState();
+  const [shoeSize, setShoeSize] = useState();
   const [district, setDistrict] = useState("");
   const [village, setVillage] = useState();
-  const [guardNo, setGuardNo] = useState("");
+  const [guardNo, setGuardNo] = useState();
   const [payGrade, setPayGrade] = useState("");
   const [dateJoined, setDateJoined] = useState("");
-  const [emergencyNo, setEmergencyNo] = useState("");
+  const [emergencyNo, setEmergencyNo] = useState();
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -40,15 +39,22 @@ const AddGuard = ({ history }) => {
     const data = {
       fname: fName,
       lname: lName,
-      sex: sex,
-      email: email,
+      sex,
       phone: parseInt(phone),
       role,
       maritalStatus: status,
       password,
       address,
       nationalId,
-      nextOfKin,size,shoeSize,district,village,guardNo,payGrade,dateJoined,emergencyNo
+      nextOfKin,
+      size:shirtsize,
+      shoeSize,
+      district,
+      village,
+      guardNo:parseInt(guardNo),
+      payGrade,
+      dateJoined,
+      emergencyNo: parseInt(emergencyNo),
     };
 
     await API.post("/api/auth/register", data)
@@ -57,7 +63,7 @@ const AddGuard = ({ history }) => {
         setSuccess(true);
         setShowAlert(true);
         setTimeout(() => {
-          history.push("/guards");
+          history.push(`/admin/${user.id}/guards`);
         }, 2000);
         console.log("Guard added successfully", res);
       })
@@ -106,7 +112,7 @@ const AddGuard = ({ history }) => {
           <div className="col-12">
             <div className="card">
               <div className="card-body">
-                <h4 className="card-title">Guard Bio Data Information</h4>
+                <h4 className="card-title mb-5">Guard Bio Data Form</h4>
                 <form onSubmit={handleSubmit}>
                   <div className="row guard">
                     <div className="col-md-4">
@@ -131,17 +137,17 @@ const AddGuard = ({ history }) => {
                         />
                       </div>
                       <div className="mb-3">
-                        <label>Email</label>
-                        <input
-                          type="email"
-                          className="form-control"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          required
-                        />
+                        <label>Sex</label>
+                        <select
+                          className="form-control select2 select2-hidden-accessible"
+                          value={sex}
+                          onChange={(e) => setSex(e.target.value)}
+                        >
+                          <option>Sex</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                        </select>
                       </div>
-                    </div>
-                    <div className="col-md-4">
                       <div className="mb-3">
                         <label>Phone Number</label>
                         <input
@@ -154,17 +160,17 @@ const AddGuard = ({ history }) => {
                         />
                       </div>
                       <div className="mb-3">
-                        <label>Sex</label>
-                        <select
-                          className="form-control select2 select2-hidden-accessible"
-                          value={sex}
-                          onChange={(e) => setSex(e.target.value)}
-                        >
-                          <option>Sex</option>
-                          <option value="Male">Male</option>
-                          <option value="Female">Female</option>
-                        </select>
+                        <label>Area of Residence</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={address}
+                          onChange={(e) => setAddress(e.target.value)}
+                          required
+                        />
                       </div>
+                    </div>
+                    <div className="col-md-4">
                       <div className="mb-3">
                         <label>Marital Status</label>
                         <select
@@ -180,97 +186,13 @@ const AddGuard = ({ history }) => {
                           <option value="Divorced">Divorced</option>
                         </select>
                       </div>
-                    </div>
-                    <div className="col-md-4">
                       <div className="mb-3">
-                        <label>Password</label>
+                        <label>Next Of Kin [Name]</label>
                         <input
                           type="text"
                           className="form-control"
-                          maxLength="10"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label>Address</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          maxLength="10"
-                          value={address}
-                          onChange={(e) => setAddress(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label>Next Of Kin</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          maxLength="10"
                           value={nextOfKin}
                           onChange={(e) => setNextOfKin(e.target.value)}
-                          required
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="row guard">
-                    <div className="col-md-4">
-                      <div className="mb-3">
-                        <label>Size</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={size}
-                          onChange={(e) => setSize(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label>Shoe Size</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={shoeSize}
-                          onChange={(e) => setShoeSize(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label>District</label>
-                        <input
-                          type="email"
-                          className="form-control"
-                          value={district}
-                          onChange={(e) => setDistrict(e.target.value)}
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-4">
-                      <div className="mb-3">
-                        <label>Village</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          maxLength="10"
-                          value={village}
-                          onChange={(e) => setVillage(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label>Guard Number</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          maxLength="10"
-                          value={guardNo}
-                          onChange={(e) => setGuardNo(e.target.value)}
                           required
                         />
                       </div>
@@ -285,19 +207,37 @@ const AddGuard = ({ history }) => {
                           required
                         />
                       </div>
-                    </div>
-                    <div className="col-md-4">
                       <div className="mb-3">
-                        <label>National ID</label>
+                        <label>District of Origin</label>
                         <input
                           type="text"
                           className="form-control"
-                          maxLength="10"
+                          value={district}
+                          onChange={(e) => setDistrict(e.target.value)}
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label>Village</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={village}
+                          onChange={(e) => setVillage(e.target.value)}
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label>NIN Number</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          maxLength="14"
                           value={nationalId}
                           onChange={(e) => setNationalId(e.target.value)}
                           required
                         />
                       </div>
+                    </div>
+                    <div className="col-md-4">
                       <div className="mb-3">
                         <label>Pay Grade</label>
                         <select
@@ -305,26 +245,62 @@ const AddGuard = ({ history }) => {
                           value={payGrade}
                           onChange={(e) => setPayGrade(e.target.value)}
                         >
-                          <option value="Male">Supervisor</option>
-                          <option value="Female">Guard</option>
-                          <option value="Other">Driver</option>
+                          <option value="Supervisor">Supervisor</option>
+                          <option value="Guard">Guard</option>
+                          <option value="Driver">Driver</option>
                         </select>
                       </div>
                       <div className="mb-3">
-                        <label>Joined Date</label>
+                        <label>Guard Number</label>
                         <input
                           type="text"
                           className="form-control"
-                          maxLength="10"
+                          value={guardNo}
+                          onChange={(e) => setGuardNo(e.target.value)}
+                          required
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label>Date Joined</label>
+                        <input
+                          type="date"
+                          className="form-control"
                           value={dateJoined}
                           onChange={(e) => setDateJoined(e.target.value)}
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label>Password</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label>Shirt Size</label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          value={shirtsize}
+                          onChange={(e) => setShirtSize(e.target.value)}
+                          required
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label>Shoe Size</label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          value={shoeSize}
+                          onChange={(e) => setShoeSize(e.target.value)}
                           required
                         />
                       </div>
                     </div>
                   </div>
-
-                  <div className="d-flex flex-wrap gap-2">
+                  <div className="d-flex flex-wrap gap-2 mt-3">
                     <button type="submit" className="btn btn-primary">
                       {loading ? <LoadHandler /> : "Add Guard"}
                     </button>
