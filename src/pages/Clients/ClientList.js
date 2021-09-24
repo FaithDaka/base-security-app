@@ -4,12 +4,16 @@ import LoadSpinner from "../../components/Handlers/Loadspinner";
 import Pagination from "../../components/Pagination";
 import API from "../../helpers/api";
 import AlertDialog from "../../utils/Dialog";
+import Deploy from "./Deploy";
 import Client from "./index";
+import Modal from "../../components/Modal";
 
 const ClientList = () => {
   const [clients, setClients] = useState([]);
   const [open, setOpen] = useState(false);
   const [dId, setDId] = useState();
+  const [userId, setUserId] = useState();
+  const [deploy, setDeploy] = useState();
   const user = JSON.parse(localStorage.getItem("user")).user;
 
   const [currentpage, setCurrentPage] = useState(1);
@@ -26,6 +30,12 @@ const ClientList = () => {
   const [success, setSuccess] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const hideAlert = () => setShowAlert(false);
+
+  const openDeploy = (id) => {
+    setUserId(id);
+    setDeploy(true);
+  };
+  const closeDeploy = () => setDeploy(false);
 
   const handleOpen = () => setOpen(true);
   const handleNo = () => setOpen(false);
@@ -95,11 +105,14 @@ const ClientList = () => {
 
   return (
     <Client>
+      <Modal show={deploy} close={closeDeploy} title="Deploy to Premise">
+        <Deploy close={closeDeploy} clients={()=>getClients()} id={userId} />
+      </Modal>
       <div className="container-fluid">
         <div className="row">
           <div className="col-12">
             <div className="page-title-box d-sm-flex align-items-center justify-content-between">
-              <h4 className="mb-sm-0 font-size-18">Available clients</h4>
+              <h4 className="mb-sm-0 font-size-18">clients</h4>
               <button
                 onClick={addClient}
                 type="button"
@@ -107,6 +120,36 @@ const ClientList = () => {
               >
                 <i className="fa fa-plus-circle me-1"></i> Add New Client
               </button>
+            </div>
+          </div>
+        </div>
+        <div className="row justify-content-around visual-card">
+          <div className="col-lg-4 col-sm-6 mt-3 mb-3">
+            <div className="card">
+              <div className="card-body">
+                <div className="d-flex flex-column align-items-center justify-content-center">
+                  <span>
+                    <h2 className="text-info font-size-70">10</h2>
+                    <span className="text-muted font-size-14 text-uppercase">
+                      Premise Deployments
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-lg-4 col-sm-6 mt-3 mb-3">
+            <div className="card">
+              <div className="card-body">
+                <div className="d-flex flex-column align-items-center justify-content-center">
+                  <span>
+                    <h2 className="text-danger font-size-70">30</h2>
+                    <span className="text-muted font-size-14 text-uppercase">
+                      Undeployed premises
+                    </span>
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -129,10 +172,10 @@ const ClientList = () => {
                     </div>
                   </div>
                 </div>
-                <div className="table-responsive">
-                  <table className="table align-middle table-nowrap table-check table-bordered">
+                <div className="table-responsive mt-3">
+                  <table className="table align-middle table-nowrap table-check table-bordered table-striped">
                     {loading && <LoadSpinner />}
-                    <thead className="table-primary">
+                    <thead className="table-dark">
                       <tr className="tr-head">
                         <th style={{ width: "20px" }} className="align-middle">
                           <div className="form-check font-size-16">
@@ -177,6 +220,9 @@ const ClientList = () => {
                                 onClick={() => getProfile(client._id)}
                               >
                                 {client.fname} {client.lname}
+                              </span>
+                              <span onClick={() => openDeploy(client._id)} className="ml-3">
+                                <i className="float-right fas fa-user-lock font-size-16 text-info"></i>
                               </span>
                             </td>
                             <td className="tr_email">{client.userId.email}</td>

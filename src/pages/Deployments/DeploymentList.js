@@ -49,38 +49,17 @@ const DeploymentList = () => {
 
   const history = useHistory();
 
-  const addDeployment = () => {
-    setLoading(true);
-    setTimeout(() => {
-      history.push(`/admin/${user._id}/deployment/new`);
-    }, 1000);
-  };
-
-  const updateClient = (id) => {
-    setLoading(true);
-    setTimeout(() => {
-      history.push(`/admin/${user._id}/clientele/update/${id}`);
-    }, 2000);
-  };
-
-  const getProfile = (id) => {
-    setLoading(true);
-    setTimeout(() => {
-      history.push(`/admin/${user._id}/clientele/profile/${id}`);
-    }, 2000);
-  };
-
-  const deleteClient = async () => {
+  const deleteDeployment = async () => {
     setLoading(true);
     await API.delete(`/api/deploy/${dId}`)
       .then(() => {
-        console.log("Client deleted");
+        console.log("Deployment annulled");
         setLoading(false);
         setSuccess(true);
         setShowAlert(true);
       })
       .catch((error) => {
-        console.log("Client delete error", error);
+        console.log("Deployment delete error", error);
         setLoading(false);
         setError(true);
         setShowAlert(true);
@@ -100,21 +79,10 @@ const DeploymentList = () => {
           <div className="col-12">
             <div className="page-title-box d-sm-flex align-items-center justify-content-between">
               <h4 className="mb-sm-0 font-size-18">Guard Deployments</h4>
-              <div className="col-3">
-                <div className="text-sm-end" style={{ textAlign: "right" }}>
-                  <button
-                    onClick={addDeployment}
-                    type="button"
-                    className="btn btn-success btn-rounded waves-effect waves-light me-2"
-                  >
-                    <i className="fa fa-plus-circle me-1"></i> Deploy Guard
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         </div>
-        <AlertDialog open={open} Yes={() => deleteClient()} No={handleNo} />
+        <AlertDialog open={open} Yes={() => deleteDeployment()} No={handleNo} />
         <div className="row">
           <div className="col-12">
             <div className="card">
@@ -178,7 +146,6 @@ const DeploymentList = () => {
                             <td>
                               <span
                                 className="td-hover"
-                                onClick={() => getProfile(deploy._id)}
                               >
                                 {deploy.client.fname} {deploy.client.lname}
                               </span>
@@ -194,7 +161,6 @@ const DeploymentList = () => {
                                     marginRight: "20px",
                                     color: "green",
                                   }}
-                                  onClick={() => updateClient(deploy._id)}
                                 >
                                   <i className="fas fa-edit action" />
                                 </span>

@@ -64,6 +64,8 @@ const ArmoryList = () => {
       setLoading(false);
     }
   };
+  const assigned = guns.filter((gun) => gun.isAssigned === true);
+  const unAssigned = guns.filter((gun) => gun.isAssigned === false);
 
   const deleteGun = async (id) => {
     setLoading(true);
@@ -139,7 +141,7 @@ const ArmoryList = () => {
               <div className="card-body">
                 <div className="d-flex flex-column align-items-center justify-content-center">
                   <span>
-                    <h2 className="text-success font-size-70">80</h2>
+                    <h2 className="text-success font-size-70">{assigned.length}</h2>
                     <span className="text-muted font-size-14 text-uppercase">
                       Assigned guns
                     </span>
@@ -153,7 +155,7 @@ const ArmoryList = () => {
               <div className="card-body">
                 <div className="d-flex flex-column align-items-center justify-content-center">
                   <span>
-                    <h2 className="text-secondary font-size-70">53</h2>
+                    <h2 className="text-secondary font-size-70">{unAssigned.length}</h2>
                     <span className="text-muted font-size-14 text-uppercase">
                       Unassigned guns
                     </span>
@@ -231,7 +233,7 @@ const ArmoryList = () => {
                               <span>{gun.name}</span>
                               {gun.status === "Active" ? (
                                 <span className="badge badge-success badge-pill float-right">
-                                  Ready
+                                  In-field
                                 </span>
                               ) : (
                                 <span className="badge badge-secondary badge-pill float-right">

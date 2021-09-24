@@ -56,7 +56,7 @@ const AssignGun = ({ close, guards, id }) => {
                 value={assignedGun}
                 onChange={(e) => setAssignedGun(e.target.value)}
               >
-                <option>Assign Gun to Guard</option>
+                <option>Choose Gun</option>
                 {unAssigned.length > 0 ? (
                   unAssigned.map((gun) => (
                     <option key={gun._id} value={gun._id}>
