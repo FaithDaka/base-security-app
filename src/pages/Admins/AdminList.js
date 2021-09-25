@@ -10,21 +10,20 @@ const AdminList = () => {
   const [open, setOpen] = useState(false);
   const [admin, setAdmin] = useState([]);
   const [loading, setLoading] = useState(true);
-  const admins = admin.filter((a) => a.role === "admin");
   const user = JSON.parse(localStorage.getItem("user")).user;
 
   const [currentpage, setCurrentPage] = useState(1);
   const [adminsPerPage] = useState(10);
   const lastAdmin = currentpage * adminsPerPage;
   const firstAdmin = lastAdmin - adminsPerPage;
-  const currentAdmins = admins.slice(firstAdmin, lastAdmin);
-  const totalAdmins = admins.length;
+  const currentAdmins = admin.slice(firstAdmin, lastAdmin);
+  const totalAdmins = admin.length;
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const getAdminUsers = async () => {
     try {
-      const res = await API.get("/api/user");
+      const res = await API.get("/api/admin");
       console.log("Users Backend ===>", res);
       setAdmin(res.data);
       setLoading(false);
@@ -170,8 +169,8 @@ const AdminList = () => {
                                 {user.fname} {user.lname}
                               </Link>
                             </td>
-                            <td className="tr_email">{user.email}</td>
-                            <td>{user.status}</td>
+                            <td className="tr_email">{user.user.email}</td>
+                            <td>{user.phone}</td>
                             <td>
                               <div className="row ml-2">
                                 <span title="Update details">

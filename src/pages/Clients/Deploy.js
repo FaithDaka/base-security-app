@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import Select from "react-select";
+
 import LoadHandler from "../../components/Handlers/LoadHandler";
 import LoadSpinner from "../../components/Handlers/Loadspinner";
 import API from "../../helpers/api";
@@ -7,8 +9,20 @@ const Deploy = ({ close, clients, id }) => {
   const [site, setSite] = useState("");
   const [location, setLocation] = useState("");
   const [address, setAddress] = useState("");
-  const [deployed, setDeployed] = useState([]);
+  const [guard, setGuard] = useState();
   const [guards, setGuards] = useState([]);
+
+  let options = guards.map((guard) => {
+    return { value: guard._id, label: guard.fname + " " + guard.lname };
+  });
+
+  const handleChange = (selectedOptions) => {
+    let values = [];
+    selectedOptions.map((v) => values.push(v.value));
+    setGuard(values);
+  };
+
+  const deployGuard = guard && guard.toString();
 
   const [loading, setLoading] = useState(false);
 
@@ -33,13 +47,13 @@ const Deploy = ({ close, clients, id }) => {
       site,
       location,
       address,
-      deployed,
+      guard,
       client: id,
     };
 
     try {
       const response = await API.post("/api/deployment", data);
-      console.log("Posted Data ===>", response);
+      console.log("Deployment Data ===>", response);
       setLoading(false);
     } catch (error) {
       console.log("error", error);
@@ -88,24 +102,13 @@ const Deploy = ({ close, clients, id }) => {
               />
             </div>
             <div className="mb-3">
-              <label>Guards</label>
-              <select
-                className="form-control select2 select2-hidden-accessible"
-                value={deployed}
-                onChange={(e) => setDeployed(e.target.value)}
-              >
-                <optgroup label="Choose guards">
-                  {guards.length > 0 ? (
-                    guards.map((guard) => (
-                      <option key={guard._id} value={guard._id}>
-                        {guard.fname} {guard.lname}
-                      </option>
-                    ))
-                  ) : (
-                    <LoadSpinner />
-                  )}
-                </optgroup>
-              </select>
+            <label>Select Guards to Deploy</label>
+              <Select
+                isMulti={true}
+                options={options}
+                closeMenuOnSelect={false}
+                onChange={handleChange}
+              />
             </div>
             <button type="submit" className="btn btn-primary">
               {loading ? <LoadHandler /> : "Deploy"}
