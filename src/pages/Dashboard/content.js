@@ -106,12 +106,12 @@ const Content = ({ history }) => {
                     <div className="pt-4">
                       <div className="row">
                         <div className="col-6">
-                          <h5 className="font-size-15">125</h5>
+                          <h5 className="font-size-15">25</h5>
                           <p className="text-muted mb-0">Reports</p>
                         </div>
                         <div className="col-6">
-                          <h5 className="font-size-15">45</h5>
-                          <p className="text-muted mb-0">Tasks</p>
+                          <h5 className="font-size-15">5</h5>
+                          <p className="text-muted mb-0">Alerts</p>
                         </div>
                       </div>
                       <div className="mt-4">

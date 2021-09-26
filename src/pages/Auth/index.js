@@ -1,9 +1,9 @@
-import React , { useState} from "react";
-import API from '../../helpers/api';
-import img from '../../assets/img/plainlogo.png'
+import React, { useState } from "react";
+import API from "../../helpers/api";
+import img from "../../assets/img/plainlogo.png";
 import LoadSpinner from "../../components/Handlers/Loadspinner";
 
-const Login = ({history}) => {
+const Login = ({ history }) => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [success, setSuccess] = useState(false);
@@ -16,21 +16,21 @@ const Login = ({history}) => {
 
     API.post("/api/auth/login", data)
       .then((res) => {
-        console.log("Login Response Data ====>", res)
+        console.log("Login Response Data ====>", res);
         setSuccess(true);
         if (res.data.accessToken) {
           localStorage.setItem("user", JSON.stringify(res.data));
           setLoading(true);
-          setTimeout(()=>{
-            history.push(`/admin/${res.data.user._id}/dashboard`)
-          }, 2000)
+          setTimeout(() => {
+            history.push(`/admin/${res.data.user._id}/dashboard`);
+          }, 2000);
         }
       })
       .catch((err) => {
         setError(true);
         setTimeout(() => {
           setError(false);
-        }, 3000)
+        }, 3000);
         console.log(err.message);
       });
   };
@@ -50,11 +50,7 @@ const Login = ({history}) => {
                       </div>
                     </div>
                     <div className="col-5 align-self-end">
-                      <img
-                        src={img}
-                        alt=""
-                        className="img-fluid"
-                      />
+                      <img src={img} alt="" className="img-fluid" />
                     </div>
                   </div>
                 </div>
@@ -83,7 +79,7 @@ const Login = ({history}) => {
                       </div>
                     </a>
                   </div>
-                  {loading && <LoadSpinner/>}
+                  {loading && <LoadSpinner />}
                   <div className="p-2">
                     <form className="form-horizontal" onSubmit={handleSubmit}>
                       <div className="mb-3">
@@ -109,13 +105,15 @@ const Login = ({history}) => {
                             placeholder="Enter password"
                             aria-label="Password"
                             aria-describedby="password-addon"
+                            minLength="8"
+                            maxLength="20"
+                            autoComplete="current-password"
+                            pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            required
                           />
-                          <button
-                            className="btn btn-light"
-                            type="button"
-                          >
+                          <button className="btn btn-light" type="button">
                             <i className="fas fa-eye"></i>
                           </button>
                         </div>
@@ -126,14 +124,10 @@ const Login = ({history}) => {
                           type="checkbox"
                           id="remember-check"
                         />
-                        <label className="form-check-label">
-                          Remember me
-                        </label>
+                        <label className="form-check-label">Remember me</label>
                       </div>
                       <div className="mt-3 d-grid">
-                        <button
-                          className="btn btn-primary waves-effect waves-light"
-                        >
+                        <button className="btn btn-primary waves-effect waves-light">
                           Log In
                         </button>
                       </div>
@@ -148,9 +142,7 @@ const Login = ({history}) => {
                   </div>
                 </div>
               </div>
-              <div className="mt-5 text-center">
-
-              </div>
+              <div className="mt-5 text-center"></div>
             </div>
           </div>
         </div>

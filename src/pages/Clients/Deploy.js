@@ -49,6 +49,8 @@ const Deploy = ({ close, clients, id }) => {
     clients();
   };
 
+  const postDependants = async (e) => {};
+
   useEffect(() => {
     getGuards();
   }, [id]);
@@ -80,33 +82,48 @@ const Deploy = ({ close, clients, id }) => {
             <div className="mb-3">
               <label>Address</label>
               <input
-                type="address"
+                type="text"
                 className="form-control"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 required
               />
             </div>
-            <div className="mb-3">
-              <label>Guards</label>
-              <select
-                className="form-control select2 select2-hidden-accessible"
-                value={deployed}
-                onChange={(e) => setDeployed(e.target.value)}
+            <form
+              onSubmit={postDependants}
+              style={{ width: "auto" }}
+              className="mb-3"
+            >
+              <label className="font-size-17">Select Guards to deploy</label>
+              <fieldset
+                style={{
+                  backgroundColor: "#eee",
+                  borderLeft: "4px solid green",
+                  padding: "5px",
+                  overflowY: "scroll"
+                }}
               >
-                <optgroup label="Choose guards">
-                  {guards.length > 0 ? (
-                    guards.map((guard) => (
-                      <option key={guard._id} value={guard._id}>
+                {guards.length > 0 ? (
+                  guards.map((guard) => (
+                    <div>
+                      <input
+                        type="checkbox"
+                        id="deployment"
+                        name="deployment"
+                        value={guard._id}
+                        onChange={(e) => setDeployed(e.target.value)}
+                        required
+                      />
+                      <label for={guard._id} className="ml-2 font-size-16">
                         {guard.fname} {guard.lname}
-                      </option>
-                    ))
-                  ) : (
-                    <LoadSpinner />
-                  )}
-                </optgroup>
-              </select>
-            </div>
+                      </label>
+                    </div>
+                  ))
+                ) : (
+                  <LoadSpinner />
+                )}
+              </fieldset>
+            </form>
             <button type="submit" className="btn btn-primary">
               {loading ? <LoadHandler /> : "Deploy"}
             </button>
