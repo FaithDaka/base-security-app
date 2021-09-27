@@ -40,16 +40,17 @@ const Deploy = ({ close, clients, id }) => {
     try {
       const response = await API.post("/api/deployment", data);
       console.log("Posted Data ===>", response);
+      setSite('')
+      setLocation('')
+      setAddress('')
       setLoading(false);
     } catch (error) {
-      console.log("error", error);
+      console.log("Deployment Post Error", error);
       setLoading(false);
     }
     close();
     clients();
   };
-
-  const postDependants = async (e) => {};
 
   useEffect(() => {
     getGuards();
@@ -89,41 +90,34 @@ const Deploy = ({ close, clients, id }) => {
                 required
               />
             </div>
-            <form
-              onSubmit={postDependants}
-              style={{ width: "auto" }}
-              className="mb-3"
+            <label className="font-size-17">Select Guards to deploy</label>
+            <fieldset
+              style={{
+                backgroundColor: "#eee",
+                borderLeft: "4px solid green",
+                padding: "5px",
+                overflowY: "scroll",
+              }}
             >
-              <label className="font-size-17">Select Guards to deploy</label>
-              <fieldset
-                style={{
-                  backgroundColor: "#eee",
-                  borderLeft: "4px solid green",
-                  padding: "5px",
-                  overflowY: "scroll"
-                }}
-              >
-                {guards.length > 0 ? (
-                  guards.map((guard) => (
-                    <div>
-                      <input
-                        type="checkbox"
-                        id="deployment"
-                        name="deployment"
-                        value={guard._id}
-                        onChange={(e) => setDeployed(e.target.value)}
-                        required
-                      />
-                      <label for={guard._id} className="ml-2 font-size-16">
-                        {guard.fname} {guard.lname}
-                      </label>
-                    </div>
-                  ))
-                ) : (
-                  <LoadSpinner />
-                )}
-              </fieldset>
-            </form>
+              {guards.length > 0 ? (
+                guards.map((guard) => (
+                  <div key={guard._id}>
+                    <input
+                      type="checkbox"
+                      id="deployment"
+                      name="deployment"
+                      value={deployed}
+                      onChange={(e) => setDeployed(e.target.value)}
+                    />
+                    <label for={guard._id} className="ml-2 font-size-16">
+                      {guard.fname} {guard.lname}
+                    </label>
+                  </div>
+                ))
+              ) : (
+                <LoadSpinner />
+              )}
+            </fieldset>
             <button type="submit" className="btn btn-primary">
               {loading ? <LoadHandler /> : "Deploy"}
             </button>
