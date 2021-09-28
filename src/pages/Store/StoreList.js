@@ -1,9 +1,69 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import API from "../../helpers/api";
+import AddItem from "./AddItem";
+import UpdateItem from "./UpdateItem";
+import Modal from "../../components/Modal";
+
+import LoadSpinner from "../../components/Handlers/Loadspinner";
+
 import Store from ".";
 
 const StoreList = () => {
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const [add, setAdd] = useState();
+  const [update, setUpdate] = useState();
+  const [uId, setUid] = useState();
+  const [dId, setDid] = useState();
+  const [open, setOpen] = useState(false);
+
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const hideAlert = () => setShowAlert(false);
+
+  const openAdd = () => setAdd(true);
+  const closeAdd = () => setAdd(false);
+
+  const openUpdate = (e, _id) => {
+    if (e) {
+      setUid(_id);
+      setUpdate(true);
+    }
+  };
+  const closeUpdate = () => setUpdate(false);
+
+  const getItems = async () => {
+    setLoading(true);
+    try {
+      const res = await API.get("/api/store");
+      console.log("Store Items Backend ===>", res);
+      setItems(res.data.items);
+      setLoading(false);
+    } catch (error) {
+      console.log("error", error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getItems();
+  }, []);
+
   return (
     <Store>
+      <Modal show={add} close={closeAdd} title="Add Store Item">
+        <AddItem close={closeAdd} items={getItems} />
+      </Modal>
+      <Modal show={update} close={closeUpdate} title="Update Store Item">
+        <UpdateItem
+          close={closeUpdate}
+          items={getItems}
+          id={uId}
+          show={update}
+        />
+      </Modal>
       <div className="container-fluid">
         <div className="col-sm-12 col-lg-12">
           <div className="row">
@@ -13,10 +73,11 @@ const StoreList = () => {
                 <div className="col-3">
                   <div className="text-sm-end" style={{ textAlign: "right" }}>
                     <button
+                      onClick={openAdd}
                       type="button"
                       className="btn btn-success btn-rounded waves-effect waves-light me-2"
                     >
-                      <i className="fa fa-plus-circle me-1"></i> Add New Item
+                      <i className="fa fa-plus-circle me-1"></i> Add Store Item
                     </button>
                   </div>
                 </div>
@@ -191,6 +252,7 @@ const StoreList = () => {
           </div>
           <div className="table-responsive mt-5">
             <table className="table align-middle table-nowrap table-check table-bordered table-striped">
+              {loading && <LoadSpinner />}
               <thead className="table-dark">
                 <tr className="tr-head">
                   <th style={{ width: "20px" }} className="align-middle">
@@ -206,6 +268,7 @@ const StoreList = () => {
                       ></label>
                     </div>
                   </th>
+                  <th className="align-middle"> Category</th>
                   <th className="align-middle"> Item</th>
                   <th className="align-middle"> Quantity</th>
                   <th className="align-middle"> Used</th>
@@ -213,25 +276,53 @@ const StoreList = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td></td>
-                  <td>Boots</td>
-                  <td>140</td>
-                  <td>20</td>
-                  <td>
-                    <div className="row ml-2">
-                      <span
-                        title="Update details"
-                        style={{ marginRight: "20px", color: "green" }}
-                      >
-                        <i className="fas fa-edit action" />
-                      </span>
-                      <span style={{ color: "red" }} title="Delete Item">
-                        <i className="far fa-trash-alt action" />
-                      </span>
-                    </div>
-                  </td>
-                </tr>
+                {
+                  items.map((item) => (
+                    <tr key={item._id} className="tr-body">
+                      <td>
+                        <div className="form-check font-size-16">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="orderidcheck01"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="orderidcheck01"
+                          ></label>
+                        </div>
+                      </td>
+                      <td>{item.category}</td>
+                      <td>
+                        <span
+                          className="td-hover"
+                          // onClick={() => getProfile(item._id)}
+                        >
+                          {item.itemName}
+                        </span>
+                      </td>
+                      <td>{item.quantity}</td>
+                      <td>{item.used}</td>
+                      <td>
+                        <div className="row ml-2">
+                          <span
+                            title="Update details"
+                            style={{
+                              marginRight: "20px",
+                              color: "green",
+                            }}
+                            onClick={(e) => openUpdate(e, item._id)}
+                          >
+                            <i className="fas fa-edit action" />
+                          </span>
+                          <span style={{ color: "red" }} title="Delete Client">
+                            <i className="far fa-trash-alt action" />
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                }
               </tbody>
             </table>
           </div>

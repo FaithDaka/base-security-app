@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import Select from "react-select";
+
 import LoadHandler from "../../components/Handlers/LoadHandler";
 import LoadSpinner from "../../components/Handlers/Loadspinner";
 import API from "../../helpers/api";
@@ -7,8 +9,20 @@ const Deploy = ({ close, clients, id }) => {
   const [site, setSite] = useState("");
   const [location, setLocation] = useState("");
   const [address, setAddress] = useState("");
-  const [deployed, setDeployed] = useState([]);
+  const [guard, setGuard] = useState();
   const [guards, setGuards] = useState([]);
+
+  let options = guards.map((guard) => {
+    return { value: guard._id, label: guard.fname + " " + guard.lname };
+  });
+
+  const handleChange = (selectedOptions) => {
+    let values = [];
+    selectedOptions.map((v) => values.push(v.value));
+    setGuard(values);
+  };
+
+  const deployGuard = guard && guard.toString();
 
   const [loading, setLoading] = useState(false);
 
@@ -33,7 +47,7 @@ const Deploy = ({ close, clients, id }) => {
       site,
       location,
       address,
-      deployed,
+      guard,
       client: id,
     };
 

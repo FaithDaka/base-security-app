@@ -70,30 +70,27 @@ const UpdateGuard = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newData = {
-      fname: fName,
-      lname: lName,
-      sex,
-      email,
-      phone: parseInt(phone),
-      role,
-      maritalStatus: status,
-      address,
-      nationalId,
-      nextOfKin,
-      size:shirtsize,
-      shoeSize,
-      district,
-      village,
-      guardNo:parseInt(guardNo),
-      payGrade,
-      dateJoined,
-      emergencyNo: parseInt(emergencyNo),
-    };
     setLoading(true);
 
     try {
-      const res = await API.patch(`/api/guard/${id}`, newData);
+      const res = await API.patch(`/api/guard/${id}`, {fname: fName,
+        lname: lName,
+        sex,
+        email,
+        phone: parseInt(phone),
+        role,
+        maritalStatus: status,
+        address,
+        nationalId,
+        nextOfKin,
+        size:shirtsize,
+        shoeSize,
+        district,
+        village,
+        guardNo:parseInt(guardNo),
+        payGrade,
+        dateJoined,
+        emergencyNo: parseInt(emergencyNo),});
       setLoading(false);
       setSuccess(true);
       setShowAlert(true);
