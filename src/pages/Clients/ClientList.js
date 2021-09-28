@@ -14,6 +14,7 @@ const ClientList = () => {
   const [dId, setDId] = useState();
   const [userId, setUserId] = useState();
   const [deploy, setDeploy] = useState();
+  const [clientName, setClientName] =useState('')
   const user = JSON.parse(localStorage.getItem("user")).user;
 
   const [currentpage, setCurrentPage] = useState(1);
@@ -31,7 +32,8 @@ const ClientList = () => {
   const [showAlert, setShowAlert] = useState(false);
   const hideAlert = () => setShowAlert(false);
 
-  const openDeploy = (id) => {
+  const openDeploy = (id, name) => {
+    setClientName(name)
     setUserId(id);
     setDeploy(true);
   };
@@ -105,7 +107,7 @@ const ClientList = () => {
 
   return (
     <Client>
-      <Modal show={deploy} close={closeDeploy} title="Deploy to Premise">
+      <Modal show={deploy} close={closeDeploy} title={`Deploy to ${clientName}`}>
         <Deploy close={closeDeploy} clients={()=>getClients()} id={userId} />
       </Modal>
       <div className="container-fluid">
@@ -221,7 +223,7 @@ const ClientList = () => {
                               >
                                 {client.fname} {client.lname}
                               </span>
-                              <span onClick={() => openDeploy(client._id)} className="ml-3">
+                              <span onClick={() => openDeploy(client._id, client.fname)} className="ml-3 td-hover">
                                 <i className="float-right fas fa-user-lock font-size-16 text-info"></i>
                               </span>
                             </td>

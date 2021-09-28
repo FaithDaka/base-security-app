@@ -53,10 +53,13 @@ const Deploy = ({ close, clients, id }) => {
 
     try {
       const response = await API.post("/api/deployment", data);
-      console.log("Deployment Data ===>", response);
+      console.log("Posted Data ===>", response);
+      setSite('')
+      setLocation('')
+      setAddress('')
       setLoading(false);
     } catch (error) {
-      console.log("error", error);
+      console.log("Deployment Post Error", error);
       setLoading(false);
     }
     close();
@@ -94,22 +97,41 @@ const Deploy = ({ close, clients, id }) => {
             <div className="mb-3">
               <label>Address</label>
               <input
-                type="address"
+                type="text"
                 className="form-control"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 required
               />
             </div>
-            <div className="mb-3">
-            <label>Select Guards to Deploy</label>
-              <Select
-                isMulti={true}
-                options={options}
-                closeMenuOnSelect={false}
-                onChange={handleChange}
-              />
-            </div>
+            <label className="font-size-17">Select Guards to deploy</label>
+            <fieldset
+              style={{
+                backgroundColor: "#eee",
+                borderLeft: "4px solid green",
+                padding: "5px",
+                overflowY: "scroll",
+              }}
+            >
+              {guards.length > 0 ? (
+                guards.map((guard) => (
+                  <div key={guard._id}>
+                    <input
+                      type="checkbox"
+                      id="deployment"
+                      name="deployment"
+                      value={deployed}
+                      onChange={(e) => setDeployed(e.target.value)}
+                    />
+                    <label for={guard._id} className="ml-2 font-size-16">
+                      {guard.fname} {guard.lname}
+                    </label>
+                  </div>
+                ))
+              ) : (
+                <LoadSpinner />
+              )}
+            </fieldset>
             <button type="submit" className="btn btn-primary">
               {loading ? <LoadHandler /> : "Deploy"}
             </button>
