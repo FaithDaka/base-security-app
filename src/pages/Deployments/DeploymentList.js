@@ -181,7 +181,7 @@ const DeploymentList = () => {
                         <th className="align-middle"> Site</th>
                         <th className="align-middle"> Location</th>
                         <th className="align-middle"> Address</th>
-                        <th className="align-middle"> Actions</th>
+                        <th className="align-middle"> </th>
                       </tr>
                     </thead>
                     <tbody>
