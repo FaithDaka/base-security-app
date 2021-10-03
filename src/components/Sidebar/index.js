@@ -188,6 +188,20 @@ const Sidebar = ({ width, xPos }) => {
                               <span key="t-dashboards">Deployment</span>
                             </Link>
                           </li>
+                          <li onClick={() => setTab(10)}>
+                            <Link
+                              to={`/admin/${user._id}/invoices`}
+                              className={
+                                tab === 10
+                                  ? "waves-effect mm-active"
+                                  : "waves-effect"
+                              }
+                              id="icon-link"
+                            >
+                              <i className="fas fa-file-invoice"></i>
+                              <span key="t-dashboards">Invoices</span>
+                            </Link>
+                          </li>
                         </ul>
                       </div>
                     </div>

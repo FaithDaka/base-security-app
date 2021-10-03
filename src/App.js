@@ -24,6 +24,9 @@ import StoreList from './pages/Store/StoreList';
 import LiveTracking from './pages/Tracking/LiveTracking';
 
 import DeploymentList from './pages/Deployments/DeploymentList';
+import InvoiceList from './pages/Invoices/InvoiceList';
+import InvoiceDetails from './pages/Invoices/InvoiceDetails';
+import AddInvoice from './pages/Invoices/AddInvoice';
 
 const App = () => {
   return (
@@ -49,6 +52,9 @@ const App = () => {
       <ProtectedRoute exact path="/admin/:id/store" component={ StoreList }/>
       <ProtectedRoute exact path="/admin/:id/livetracking" component={ LiveTracking }/>
       <ProtectedRoute exact path="/admin/:id/deployment" component={ DeploymentList }/>
+      <ProtectedRoute exact path="/admin/:id/invoices" component={ InvoiceList }/>
+      <ProtectedRoute exact path="/admin/:id/invoices/add_new" component={ AddInvoice }/>
+      <ProtectedRoute exact path="/admin/:id/invoices/:invoice_id/details" component={ InvoiceDetails }/>
     </Switch>
     </BrowserRouter>
   )
