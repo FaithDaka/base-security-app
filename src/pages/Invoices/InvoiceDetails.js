@@ -1,14 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import InvoicePage from ".";
 import headerimg from "../../assets/img/base-dashboard-logo-black.png";
+import API from "../../helpers/api";
 
-const InvoiceDetails = () => {
+const InvoiceDetails = ({props}) => {
+  const id = props.match.params.id;
+  const [invoice, setInvoice] = useState({})
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const hideAlert = () => setShowAlert(false);
+
+  const getInvoice=async()=>{
+    setLoading(true);
+    try {
+      const res = await API.get(`/api/invoice/${id}`);
+      console.log("Invoice ===>", res);
+      setInvoice(res.data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log("Error fetching invoice", error);
+    }
+  }
+
+  useEffect(()=>{
+    getInvoice()
+  }, [id])
 
   const user = JSON.parse(localStorage.getItem("user")).user;
   return (
@@ -21,7 +41,7 @@ const InvoiceDetails = () => {
                 <Link to={`/admin/${user._id}/invoices`}>
                   <i className="fa fa-arrow-left"></i>
                 </Link>
-                <h4 className="ml-3 mb-sm-0 font-size-16">Invoice {}</h4>
+                <h4 className="ml-3 mb-sm-0 font-size-16">Invoice {invoice.invoiceNo}</h4>
               </span>
             </div>
           </div>
@@ -59,7 +79,7 @@ const InvoiceDetails = () => {
                         Plot 26 Golf Course Road
                       </p>
                       <p>P.O.Box 6111, Kampala</p>
-                      <p>Bill-to-Customer No. {}</p>
+                      <p>Bill-to-Customer No. {invoice.customerNo}</p>
                     </div>
                     <span className="text-uppercase font-weight-600">
                       Tax Invoice
@@ -69,34 +89,34 @@ const InvoiceDetails = () => {
                         <tbody>
                           <tr>
                             <td>Invoice No.</td>
-                            <td>{}</td>
+                            <td>{invoice.invoiceNo}</td>
                           </tr>
                           <tr>
                             <td>Vat Registration No.</td>
-                            <td>{}</td>
+                            <td>{invoice.vatNo}</td>
                           </tr>
                           <tr>
                             <td>TIN No.</td>
-                            <td>{}</td>
+                            <td>{invoice.tinNo}</td>
                           </tr>
                           <tr>
                             <td>Customer No.</td>
-                            <td>{}</td>
+                            <td>{invoice.customerNo}</td>
                           </tr>
                           <tr>
                             <td>Terms</td>
-                            <td>{}</td>
+                            <td>{invoice.paymentTerms}</td>
                           </tr>
                         </tbody>
                       </table>
                       <div className="mt-3 invoice-dates">
                         <span>
                           <p className="text-capitalize">Posting Date:</p>
-                          <span>{}</span>
+                          <span>{invoice.timeStamp}</span>
                         </span>
                         <span>
                           <p className="text-capitalize">Next Bill date:</p>
-                          <span>{}</span>
+                          <span>{invoice.nextBillDate}</span>
                         </span>
                       </div>
                     </div>
@@ -116,24 +136,24 @@ const InvoiceDetails = () => {
                       </thead>
                       <tbody>
                         <tr>
-                          <td>21-10-21</td>
-                          <td>guards</td>
-                          <td>10</td>
-                          <td>18% vat</td>
-                          <td>$1,000</td>
+                          <td>{invoice.timeStamp}</td>
+                          <td>{invoice.item}</td>
+                          <td>{invoice.quantity}</td>
+                          <td>{invoice.vatNo}</td>
+                          <td>{invoice.currency} {invoice.subtotal}</td>
                         </tr>
                         <div className="table-lower-section text-align-right">
                           <tr>
                             <td className="text-uppercase">Sub total</td>
-                            <td>{}</td>
+                            <td>{invoice.subtotal}</td>
                           </tr>
                           <tr>
                             <td className="text-uppercase">VAT</td>
-                            <td>{}</td>
+                            <td>{invoice.vat}</td>
                           </tr>
                           <tr>
                             <td className="text-uppercase">Total</td>
-                            <td>{}</td>
+                            <td>{invoice.total}</td>
                           </tr>
                         </div>
                       </tbody>
@@ -145,13 +165,13 @@ const InvoiceDetails = () => {
                     <div className="col-lg-4 col-sm-4">
                       <span className="row">
                         <h4>Checked By:</h4>
-                        <p>#####</p>
+                        <p>{invoice.checkedBy}</p>
                       </span>
                     </div>
                     <div className="col-lg-4 col-sm-4">
                       <span className="row">
                         <h4>Authorised By:</h4>
-                        <p>#####</p>
+                        <p>{invoice.authorisedBy}</p>
                       </span>
                     </div>
                   </div>
