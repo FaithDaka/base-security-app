@@ -236,7 +236,7 @@ const GuardsList = () => {
                         <th className="align-middle"> Phone</th>
                         <th className="align-middle"> Sex</th>
                         <th className="align-middle"> Weapon</th>
-                        <th className="align-middle"> Actions</th>
+                        <th className="align-middle"> </th>
                       </tr>
                     </thead>
                     <tbody>

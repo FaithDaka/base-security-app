@@ -141,7 +141,7 @@ const AdminList = () => {
                         <th className="align-middle"> Name</th>
                         <th className="align-middle"> Email</th>
                         <th className="align-middle"> Status</th>
-                        <th className="align-middle"> Actions</th>
+                        <th className="align-middle"> </th>
                       </tr>
                     </thead>
                     <tbody>

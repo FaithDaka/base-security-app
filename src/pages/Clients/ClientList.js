@@ -196,7 +196,7 @@ const ClientList = () => {
                         <th className="align-middle"> Email</th>
                         <th className="align-middle"> Phone</th>
                         <th className="align-middle"> Location</th>
-                        <th className="align-middle"> Actions</th>
+                        <th className="align-middle"> </th>
                       </tr>
                     </thead>
                     <tbody>

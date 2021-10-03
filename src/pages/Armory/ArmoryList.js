@@ -209,7 +209,7 @@ const ArmoryList = () => {
                         <th className="align-middle"> Name</th>
                         <th className="align-middle"> Serial Number</th>
                         <th className="align-middle"> Assigned</th>
-                        <th className="align-middle"> Actions</th>
+                        <th className="align-middle"> </th>
                       </tr>
                     </thead>
                     <tbody>
