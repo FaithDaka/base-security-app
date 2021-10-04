@@ -1,11 +1,65 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import API from "../../helpers/api";
 import InvoicePage from ".";
 import LoadHandler from "../../components/Handlers/LoadHandler";
 
 const AddInvoice = () => {
+  const [invoiceNo, setInvoiceNo] = useState("");
+  const [vatNo, setVatNo] = useState("");
+  const [tinNo, setTinNo] = useState("");
+  const [billAddress, setBillAddress] = useState("");
+  const [invoiceDate, setInvoiceDate] = useState("");
+  const [nextBillDate, setNextBillDate] = useState("");
+  const [issueDate, setIssueDate] = useState("");
+  const [paymentTerms, setPaymentTerms] = useState("");
+  const [item, setItem] = useState("");
+  const [description, setDescription] = useState("");
+  const [unitPrice, setUnitPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [subTotal, setSubTotal] = useState("");
+  const [currency, setCurrency] = useState("");
+  const [checkedBy, setCheckedBy] = useState("");
+  const [authorisedBy, setAuthorisedBy] = useState("");
+  const [client, setClient] = useState("");
+
   const [loading, setLoading] = useState(false);
   const user = JSON.parse(localStorage.getItem("user")).user;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const data = {
+      invoiceNo,
+      vatNo,
+      tinNo,
+      billAddress,
+      invoiceDate,
+      nextBillDate,
+      issueDate,
+      paymentTerms,
+      item,
+      description,
+      unitPrice,
+      quantity,
+      subTotal,
+      currency,
+      checkedBy,
+      authorisedBy,
+      client,
+    };
+
+    try {
+      const response = await API.post("/api/invoice", data);
+      console.log("Posted Invoice Data ===>", response);
+      setLoading(false);
+    } catch (error) {
+      console.log("error", error);
+      setLoading(false);
+    }
+  };
+
   const deleterow = () => {};
   return (
     <InvoicePage>
@@ -29,22 +83,37 @@ const AddInvoice = () => {
             <h4 className="card-title mb-5 font-size-18 text-capitalize">
               Fill in all the necessary details
             </h4>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="row justify-content-between ml-2">
                 <div className="col-lg-5 mb-3">
                   <div className="card">
                     <div className="card-body bg-light bg-soft">
                       <div className="mb-2 text-align-right">
                         <label>Invoice Date:</label>
-                        <input type="date" className="invoice-input" required />
+                        <input
+                          type="date"
+                          className="invoice-input"
+                          value={invoiceDate}
+                          onChange={(e) => setInvoiceDate(e.target.value)}
+                        />
                       </div>
                       <div className="mb-2 text-align-right">
                         <label>Issue Date:</label>
-                        <input type="date" className="invoice-input" required />
+                        <input
+                          type="date"
+                          className="invoice-input"
+                          value={issueDate}
+                          onChange={(e) => setIssueDate(e.target.value)}
+                        />
                       </div>
                       <div className="text-align-right">
                         <label>Next Bill Date:</label>
-                        <input type="date" className="invoice-input" required />
+                        <input
+                          type="date"
+                          className="invoice-input"
+                          value={nextBillDate}
+                          onChange={(e) => setNextBillDate(e.target.value)}
+                        />
                       </div>
                     </div>
                   </div>
@@ -54,15 +123,30 @@ const AddInvoice = () => {
                     <div className="card-body bg-light bg-soft">
                       <div className="mb-2 text-align-right">
                         <label>Vat No:</label>
-                        <input type="text" className="invoice-input" required />
+                        <input
+                          type="text"
+                          className="invoice-input"
+                          value={vatNo}
+                          onChange={(e) => setVatNo(e.target.value)}
+                        />
                       </div>
                       <div className="mb-2 text-align-right">
                         <label>Tin No:</label>
-                        <input type="text" className="invoice-input" required />
+                        <input
+                          type="text"
+                          className="invoice-input"
+                          value={tinNo}
+                          onChange={(e) => setTinNo(e.target.value)}
+                        />
                       </div>
                       <div className="text-align-right">
                         <label>Payment Terms:</label>
-                        <input type="text" className="invoice-input" required />
+                        <input
+                          type="text"
+                          className="invoice-input"
+                          value={paymentTerms}
+                          onChange={(e) => setPaymentTerms(e.target.value)}
+                        />
                       </div>
                     </div>
                   </div>
@@ -78,7 +162,8 @@ const AddInvoice = () => {
                           <input
                             type="text"
                             className="invoice-input"
-                            required
+                            value={billAddress}
+                            onChange={(e) => setBillAddress(e.target.value)}
                           />
                         </div>
                         <div className="mb-2 text-align-right">
@@ -86,7 +171,8 @@ const AddInvoice = () => {
                           <input
                             type="text"
                             className="invoice-input"
-                            required
+                            value={client}
+                            onChange={(e) => setClient(e.target.value)}
                           />
                         </div>
                         <div className="text-align-right">
@@ -94,7 +180,8 @@ const AddInvoice = () => {
                           <input
                             type="text"
                             className="invoice-input"
-                            required
+                            value={paymentTerms}
+                            onChange={(e) => setPaymentTerms(e.target.value)}
                           />
                         </div>
                       </div>
@@ -108,7 +195,8 @@ const AddInvoice = () => {
                           <input
                             type="text"
                             className="invoice-input"
-                            required
+                            value={checkedBy}
+                            onChange={(e) => setCheckedBy(e.target.value)}
                           />
                         </div>
                         <div className="text-align-right">
@@ -116,7 +204,8 @@ const AddInvoice = () => {
                           <input
                             type="text"
                             className="invoice-input"
-                            required
+                            value={authorisedBy}
+                            onChange={(e) => setAuthorisedBy(e.target.value)}
                           />
                         </div>
                       </div>
@@ -124,15 +213,14 @@ const AddInvoice = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-12 table-responsiveness mt-5">
-                <table className="table table-nowrap table-bordered">
+              <div className="col-lg-12 mt-5">
+                <table className="table table-responsiveness table-nowrap table-bordered">
                   <thead>
                     <tr>
                       <td style={{ width: "60px" }}>Item </td>
                       <td>Description</td>
                       <td style={{ width: "20px" }}>Unit Price</td>
                       <td style={{ width: "20px" }}>Quantity</td>
-                      <td>Tax</td>
                       <td style={{ width: "60px" }}>Sub total</td>
                       <td style={{ width: "60px" }}></td>
                     </tr>
@@ -140,44 +228,44 @@ const AddInvoice = () => {
                   <tbody>
                     <tr>
                       <td>
-                        <span
-                          class="input"
-                          role="textbox"
-                          className="span-text-area"
-                          contentEditable
-                        ></span>
+                        <input
+                          type="text"
+                          className="invoice-input"
+                          value={item}
+                          onChange={(e) => setItem(e.target.value)}
+                        />
                       </td>
                       <td>
-                        <span
-                          class="input"
-                          role="textbox"
-                          className="span-text-area"
-                          contentEditable
-                        ></span>
+                        <input
+                          type="text"
+                          className="invoice-input"
+                          value={description}
+                          onChange={(e) => setDescription(e.target.value)}
+                        />
                       </td>
                       <td>
-                        <span
-                          class="input"
-                          role="textbox"
-                          className="span-text-area"
-                          contentEditable
-                        ></span>
+                        <input
+                          type="text"
+                          className="invoice-input"
+                          value={unitPrice}
+                          onChange={(e) => setUnitPrice(e.target.value)}
+                        />
                       </td>
                       <td>
-                        <span
-                          class="input"
-                          role="textbox"
-                          className="span-text-area"
-                          contentEditable
-                        ></span>
+                        <input
+                          type="text"
+                          className="invoice-input"
+                          value={quantity}
+                          onChange={(e) => setQuantity(e.target.value)}
+                        />
                       </td>
                       <td>
-                        <span
-                          class="input"
-                          role="textbox"
-                          className="span-text-area"
-                          contentEditable
-                        ></span>
+                        <input
+                          type="text"
+                          className="invoice-input"
+                          value={subTotal}
+                          onChange={(e) => setSubTotal(e.target.value)}
+                        />
                       </td>
                       <td>{}</td>
                       <td>
