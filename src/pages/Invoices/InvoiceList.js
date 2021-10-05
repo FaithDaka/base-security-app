@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import moment from "moment";
+import { Link } from 'react-router-dom';
 import InvoicePage from ".";
 import LoadSpinner from "../../components/Handlers/Loadspinner";
 import Pagination from "../../components/Pagination";
@@ -46,7 +48,7 @@ const InvoiceList = ({history}) => {
   const getInvoice = (id) => {
     setLoading(true);
     setTimeout(() => {
-      history.push(`/admin/${user._id}/invoices/${id}/details`);
+      history.push(`/admin/invoices/${id}`);
     }, 1000);
   };
 
@@ -98,7 +100,7 @@ const InvoiceList = ({history}) => {
                     <thead className="table-dark">
                       <tr className="tr-head">
                         <th className="align-middle"> Invoice No.</th>
-                        <th className="align-middle"> Date</th>
+                        <th className="align-middle"> Invoice Date</th>
                         <th className="align-middle"> Description</th>
                         <th className="align-middle"> Amount</th>
                         <th className="align-middle"> </th>
@@ -110,13 +112,14 @@ const InvoiceList = ({history}) => {
                           <tr key={invoice._id} className="tr-body">
                             <td>{invoice.invoiceNo}</td>
                             <td>
-                              <span className="td-hover"
-                              onclick={()=>getInvoice(invoice._id)}>
-                                {invoice.timestamp}
+                              <span className="td-hover">
+                                <Link to={`/admin/invoices/${invoice._id}`}>
+                                  {moment(invoice.invoiceDate).format('l')}
+                                </Link>
                               </span>
                             </td>
                             <td>{invoice.description}</td>
-                            <td>{invoice.subtotal}</td>
+                            <td>{invoice.subTotal}</td>
                             <td>
                               <div className="row ml-2">
                                 <span

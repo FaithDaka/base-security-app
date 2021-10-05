@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
+import moment from "moment";
 import { Link } from "react-router-dom";
 import InvoicePage from ".";
 import headerimg from "../../assets/img/base-dashboard-logo-black.png";
 import API from "../../helpers/api";
 
-const InvoiceDetails = ({props}) => {
+const InvoiceDetails = (props) => {
   const id = props.match.params.id;
   const [invoice, setInvoice] = useState({})
   const [loading, setLoading] = useState(false);
@@ -112,11 +113,11 @@ const InvoiceDetails = ({props}) => {
                       <div className="mt-3 invoice-dates">
                         <span>
                           <p className="text-capitalize">Posting Date:</p>
-                          <span>{invoice.timeStamp}</span>
+                          <span>{moment(invoice.invoiceDate).format('l')}</span>
                         </span>
                         <span>
                           <p className="text-capitalize">Next Bill date:</p>
-                          <span>{invoice.nextBillDate}</span>
+                          <span>{moment(invoice.nextBillDate).format('l')}</span>
                         </span>
                       </div>
                     </div>
@@ -127,20 +128,20 @@ const InvoiceDetails = ({props}) => {
                     <table className="table table-nowrap table-bordered">
                       <thead className="bg-info text-light">
                         <tr>
-                          <td>Date</td>
-                          <td>Particulars</td>
-                          <td>Units</td>
-                          <td>Rate</td>
+                          <td>Invoice Date</td>
+                          <td>Description</td>
+                          <td>Unit Price</td>
+                          <td>Quantity</td>
                           <td>Amount</td>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td>{invoice.timeStamp}</td>
-                          <td>{invoice.item}</td>
+                          <td>{moment(invoice.invoiceDate).format('l')}</td>
+                          <td>{invoice.description}</td>
+                          <td>{invoice.unitPrice}</td>
                           <td>{invoice.quantity}</td>
-                          <td>{invoice.vatNo}</td>
-                          <td>{invoice.currency} {invoice.subtotal}</td>
+                          <td>{invoice.currency} {invoice.subTotal}</td>
                         </tr>
                         <div className="table-lower-section text-align-right">
                           <tr>
