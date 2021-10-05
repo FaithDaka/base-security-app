@@ -85,7 +85,15 @@ const InvoiceDetails = (props) => {
                         Plot 26 Golf Course Road
                       </p>
                       <p>P.O.Box 6111, Kampala</p>
-                      <p>Bill-to-Customer No. {invoice.customerNo}</p>
+                      <span className="row ml-2">
+                        <p>
+                          Bill-to-Customer No.{" "}
+                          <span className="text-primary font-size-22 ml-2">
+                            {" "}
+                            #{invoice.customerNo}
+                          </span>
+                        </p>
+                      </span>
                     </div>
                     <span className="text-uppercase font-weight-600">
                       Tax Invoice
@@ -95,19 +103,23 @@ const InvoiceDetails = (props) => {
                         <tbody>
                           <tr>
                             <td>Invoice No.</td>
-                            <td>{invoice.invoiceNo}</td>
+                            <td className="text-danger font-size-22">
+                              #{invoice.invoiceNo}
+                            </td>
                           </tr>
                           <tr>
                             <td>Vat Registration No.</td>
-                            <td>{invoice.vatNo}</td>
+                            <td className="font-size-16">{invoice.vatNo}</td>
                           </tr>
                           <tr>
                             <td>TIN No.</td>
-                            <td>{invoice.tinNo}</td>
+                            <td className="font-size-16">{invoice.tinNo}</td>
                           </tr>
                           <tr>
                             <td>Customer No.</td>
-                            <td>{invoice.customerNo}</td>
+                            <td className="text-primary font-size-18">
+                              #{invoice.customerNo}
+                            </td>
                           </tr>
                           <tr>
                             <td>Terms</td>
@@ -117,11 +129,15 @@ const InvoiceDetails = (props) => {
                       </table>
                       <div className="mt-3 invoice-dates">
                         <span className="row">
-                          <span className="text-capitalize mr-2">Posting Date:</span>
+                          <span className="text-capitalize mr-2">
+                            Posting Date:
+                          </span>
                           <span>{moment(invoice.invoiceDate).format("l")}</span>
                         </span>
                         <span className="row">
-                          <span className="text-capitalize mr-2">Next Bill date:</span>
+                          <span className="text-capitalize mr-2">
+                            Next Bill date:
+                          </span>
                           <span>
                             {moment(invoice.nextBillDate).format("l")}
                           </span>
