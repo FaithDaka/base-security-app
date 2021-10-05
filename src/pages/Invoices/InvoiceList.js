@@ -45,13 +45,6 @@ const InvoiceList = ({history}) => {
     }, 1000);
   };
 
-  const getInvoice = (id) => {
-    setLoading(true);
-    setTimeout(() => {
-      history.push(`/admin/invoices/${id}`);
-    }, 1000);
-  };
-
   useEffect(() => {
     getInvoices();
   }, [totalInvoices]);
@@ -113,7 +106,7 @@ const InvoiceList = ({history}) => {
                             <td>{invoice.invoiceNo}</td>
                             <td>
                               <span className="td-hover">
-                                <Link to={`/admin/invoices/${invoice._id}`}>
+                                <Link to={`/admin/${user.id}invoices/${invoice._id}`}>
                                   {moment(invoice.invoiceDate).format('l')}
                                 </Link>
                               </span>
@@ -122,15 +115,6 @@ const InvoiceList = ({history}) => {
                             <td>{invoice.subTotal}</td>
                             <td>
                               <div className="row ml-2">
-                                <span
-                                  title="Download"
-                                  style={{
-                                    marginRight: "20px",
-                                    color: "blue",
-                                  }}
-                                >
-                                  <i className="fas fa-download action" />
-                                </span>
                                 <span
                                   style={{ color: "red" }}
                                   title="Delete invoice"
