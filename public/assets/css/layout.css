@@ -381,14 +381,14 @@
   min-width:280px;
 }
 .invoice-form .invoice-address{
-  font-size: 13px;
+  font-size: 15px;
   margin-top:12px;
 }
 .invoice-form .invoice-address p{
   margin-top:-15px
 }
 .invoice-bill-to{
-  font-size:15px;
+  font-size:17px;
   padding-top:20px;
 }
 .invoice-bill-to p:nth-child(3){
@@ -402,8 +402,6 @@
   padding:5px;
 }
 .invoice-table table td:first-child{
-  font-size: 15px;
-  font-weight:500;
   color:#555;
 }
 .invoice-table table td:nth-child(2){
@@ -415,10 +413,10 @@
 }
 .table-lower-section td{
  padding:6px;
- font-size:15px
+ font-size:17px
 }
 .invoice-form .invoice-authority div h4{
-  font-size:20px;
+  font-size:21px;
 }
 .invoice-form .invoice-authority div p{
   font-size:18px;
@@ -431,13 +429,13 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .invoice-form .invoice-terms h2{
-  font-size:17px;
+  font-size:20px;
 }
 .invoice-form .invoice-terms div h3{
-  font-size:16px;
+  font-size:18px;
 }
 .invoice-form .invoice-terms div ul li{
-  font-size:14px;
+  font-size:17px;
   list-style-type: decimal;
 }
 .add-invoice{
