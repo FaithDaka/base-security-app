@@ -106,7 +106,7 @@ const InvoiceList = ({history}) => {
                             <td>{invoice.invoiceNo}</td>
                             <td>
                               <span className="td-hover">
-                                <Link to={`/admin/${user.id}invoices/${invoice._id}`}>
+                                <Link to={`/admin/${user._id}/invoices/${invoice._id}`}>
                                   {moment(invoice.invoiceDate).format('l')}
                                 </Link>
                               </span>
