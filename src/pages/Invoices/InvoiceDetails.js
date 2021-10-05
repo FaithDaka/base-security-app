@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from "react";
-import moment from "moment";
 import { Link } from "react-router-dom";
 import InvoicePage from ".";
-import headerimg from "../../assets/img/base-dashboard-logo-black.png";
 import API from "../../helpers/api";
+import ReactToPdf from "react-to-pdf";
+import moment from "moment";
+import headerimg from "../../assets/img/base-dashboard-logo-black.png";
+import LoadSpinner from "../../components/Handlers/Loadspinner";
 
 const InvoiceDetails = (props) => {
   const id = props.match.params.id;
-  const [invoice, setInvoice] = useState({})
+  var componentRef = React.createRef();
+  const options = {
+    orientation: "portrait",
+  };
+  const [invoice, setInvoice] = useState({});
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-  const hideAlert = () => setShowAlert(false);
 
-  const getInvoice=async()=>{
+  const getInvoice = async () => {
     setLoading(true);
     try {
       const res = await API.get(`/api/invoice/${id}`);
@@ -25,11 +27,11 @@ const InvoiceDetails = (props) => {
       setLoading(false);
       console.log("Error fetching invoice", error);
     }
-  }
+  };
 
-  useEffect(()=>{
-    getInvoice()
-  }, [id])
+  useEffect(() => {
+    getInvoice();
+  }, [id]);
 
   const user = JSON.parse(localStorage.getItem("user")).user;
   return (
@@ -42,14 +44,17 @@ const InvoiceDetails = (props) => {
                 <Link to={`/admin/${user._id}/invoices`}>
                   <i className="fa fa-arrow-left"></i>
                 </Link>
-                <h4 className="ml-3 mb-sm-0 font-size-16">Invoice {invoice.invoiceNo}</h4>
+                <h4 className="ml-3 mb-sm-0 font-size-16">
+                  Invoice {invoice.invoiceNo}
+                </h4>
               </span>
             </div>
           </div>
         </div>
+        {loading && <LoadSpinner />}
         <div className="row invoice-form">
           <div className="col-12">
-            <div className="card">
+            <div className="card" ref={componentRef}>
               <div className="card-body">
                 <div className="col-lg-12">
                   <div className="row justify-content-between">
@@ -111,13 +116,15 @@ const InvoiceDetails = (props) => {
                         </tbody>
                       </table>
                       <div className="mt-3 invoice-dates">
-                        <span>
-                          <p className="text-capitalize">Posting Date:</p>
-                          <span>{moment(invoice.invoiceDate).format('l')}</span>
+                        <span className="row">
+                          <span className="text-capitalize mr-2">Posting Date:</span>
+                          <span>{moment(invoice.invoiceDate).format("l")}</span>
                         </span>
-                        <span>
-                          <p className="text-capitalize">Next Bill date:</p>
-                          <span>{moment(invoice.nextBillDate).format('l')}</span>
+                        <span className="row">
+                          <span className="text-capitalize mr-2">Next Bill date:</span>
+                          <span>
+                            {moment(invoice.nextBillDate).format("l")}
+                          </span>
                         </span>
                       </div>
                     </div>
@@ -137,11 +144,13 @@ const InvoiceDetails = (props) => {
                       </thead>
                       <tbody>
                         <tr>
-                          <td>{moment(invoice.invoiceDate).format('l')}</td>
+                          <td>{moment(invoice.invoiceDate).format("l")}</td>
                           <td>{invoice.description}</td>
                           <td>{invoice.unitPrice}</td>
                           <td>{invoice.quantity}</td>
-                          <td>{invoice.currency} {invoice.subTotal}</td>
+                          <td>
+                            {invoice.currency} {invoice.subTotal}
+                          </td>
                         </tr>
                         <div className="table-lower-section text-align-right">
                           <tr>
@@ -213,6 +222,21 @@ const InvoiceDetails = (props) => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="mt-5 mb-3">
+          <ReactToPdf
+            targetRef={componentRef}
+            filename={`Invoice ${invoice.invoiceNo}.pdf`}
+            options={options}
+            scale={0.77}
+          >
+            {({ toPdf }) => (
+              <button className="btn btn-danger" onClick={toPdf}>
+                <i className="fas fa-download action mr-2" />
+                Download as PDF
+              </button>
+            )}
+          </ReactToPdf>
         </div>
       </div>
     </InvoicePage>
