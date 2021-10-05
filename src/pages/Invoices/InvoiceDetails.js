@@ -149,7 +149,7 @@ const InvoiceDetails = (props) => {
                 <div className="col-lg-12 mt-3">
                   <div className="table-responsive">
                     <table className="table table-nowrap table-bordered">
-                      <thead className="bg-info text-light">
+                      <thead className="bg-info text-light font-size-18">
                         <tr>
                           <td>Invoice Date</td>
                           <td>Description</td>
@@ -202,7 +202,7 @@ const InvoiceDetails = (props) => {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-12 mt-3 invoice-terms">
+                <div className="col-lg-12 mt-5 invoice-terms">
                   <h2 className="text-uppercase font-weight-600">
                     terms of payment:
                   </h2>
@@ -229,7 +229,7 @@ const InvoiceDetails = (props) => {
                       <li> Rent is payable quarterly and in advance.</li>
                       <li>
                         {" "}
-                        Non-payment of rentmay lead to eviction and recovery of
+                        Non-payment of rent may lead to eviction and recovery of
                         rent by other measures.
                       </li>
                     </ul>
