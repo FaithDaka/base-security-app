@@ -4,26 +4,46 @@ import LoadHandler from "../../components/Handlers/LoadHandler";
 import API from "../../helpers/api";
 import Guards from "./index";
 import SweetAlert from "react-bootstrap-sweetalert";
+import Biodata from "./forms/Biodata";
+import Indentification from "./forms/Indentification";
+import Payroll from "./forms/Payroll";
 
 const AddGuard = ({ history }) => {
   const [role] = useState("guard");
-  const [fName, setFName] = useState("");
-  const [lName, setLName] = useState("");
-  const [sex, setSex] = useState("");
-  const [phone, setPhone] = useState();
-  const [status, setStatus] = useState("");
-  const [address, setAddress] = useState("");
-  const [nationalId, setNationalId] = useState("");
-  const [nextOfKin, setNextOfKin] = useState("");
-  const [dateOfBirth, setDOB] = useState("");
-  const [shirtsize, setShirtSize] = useState();
-  const [shoeSize, setShoeSize] = useState();
-  const [district, setDistrict] = useState("");
-  const [village, setVillage] = useState();
-  const [guardNo, setGuardNo] = useState();
-  const [payGrade, setPayGrade] = useState("");
-  const [dateJoined, setDateJoined] = useState("");
-  const [emergencyNo, setEmergencyNo] = useState();
+  
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [gender, setGender] = useState("");
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState("");
+  const [employeeID, setEmployeeID] = useState("");
+  const [phoneNo, setPhoneNo] = useState("");
+  const [joiningDate, setJoiningDate] = useState();
+  const [department, setDepartment] = useState("");
+  const [designation, setDesignation] = useState("");
+  const [shoeSize, setShoeSize] = useState("");
+  const [shirtSize, setShirtSize] = useState();
+
+  const [nationality, setNationality] = useState("");
+  const [nin, setNIN] = useState("");
+  const [passport, setPassport] = useState("");
+  const [district, setDistrict] = useState();
+  const [county, setCounty] = useState("");
+  const [village, setVillage] = useState("");
+  const [parish, setParish] = useState("");
+  const [dob, setDOB] = useState();
+  const [birth, setBirth] = useState("");
+  const [education, setEducation] = useState("");
+  const [maritalStatus, setMaritalStatus] = useState("");
+  const [address, setAddress] = useState();
+
+  const [grossPay, setGrossPay] = useState("");
+  const [lst, setLST] = useState(25000);
+  const [netPay, setNetPay] = useState("");
+  const [deductions, setDeductions] = useState();
+  const [paye, setPaye] = useState("");
+  const [employerNssf, setEmployerNSSF] = useState("");
+  const [employeeNssf, setEmployeeNSSF] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -37,42 +57,30 @@ const AddGuard = ({ history }) => {
     e.preventDefault();
     setLoading(true);
     const data = {
-      fname: fName,
-      lname: lName,
-      sex,
-      phone: parseInt(phone),
-      role,
-      maritalStatus: status,
-      address,
-      nationalId,
-      nextOfKin,
-      size:shirtsize,
-      shoeSize,
-      district,
-      village,
-      guardNo:parseInt(guardNo),
-      payGrade,
-      dateJoined,
-      emergencyNo: parseInt(emergencyNo),
-      dateOfBirth,
+      firstname, lastname, gender, email, password, employeeID, phoneNo, joiningDate,department, 
+      designation, shoeSize, shirtSize,role, nationality, nin, passport, district, county, village, 
+      parish, dob, education, birth, address, maritalStatus, grossPay, lst, netPay, employeeNssf, 
+      employerNssf, deductions, paye
     };
 
-    await API.post("/api/auth/register", data)
-      .then((res) => {
-        setLoading(false);
-        setSuccess(true);
-        setShowAlert(true);
-        setTimeout(() => {
-          history.push(`/admin/${user.id}/guards`);
-        }, 2000);
-        console.log("Guard added successfully", res);
-      })
-      .catch((res) => {
-        setLoading(false);
-        setError(true);
-        setShowAlert(true);
-        console.log("Failed to add guard", res);
-      });
+    console.log("Guard added successfully", data);
+
+    // await API.post("/api/auth/register", data)
+    //   .then((res) => {
+    //     setLoading(false);
+    //     setSuccess(true);
+    //     setShowAlert(true);
+    //     setTimeout(() => {
+    //       history.push(`/admin/${user.id}/guards`);
+    //     }, 2000);
+    //     console.log("Guard added successfully", res);
+    //   })
+    //   .catch((res) => {
+    //     setLoading(false);
+    //     setError(true);
+    //     setShowAlert(true);
+    //     console.log("Failed to add guard", res);
+    //   });
   };
 
   return (
@@ -113,201 +121,65 @@ const AddGuard = ({ history }) => {
             <div className="card">
               <div className="card-body">
                 <h4 className="card-title mb-5">Guard Bio Data Form</h4>
-                <form onSubmit={handleSubmit}>
-                  <div className="row guard">
-                    <div className="col-md-4">
-                      <div className="mb-3">
-                        <label>First Name</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={fName}
-                          onChange={(e) => setFName(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label>Last Name</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={lName}
-                          onChange={(e) => setLName(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label>Sex</label>
-                        <select
-                          className="form-control select2 select2-hidden-accessible"
-                          value={sex}
-                          onChange={(e) => setSex(e.target.value)}
-                        >
-                          <option>Sex</option>
-                          <option value="Male">Male</option>
-                          <option value="Female">Female</option>
-                        </select>
-                      </div>
-                      <div className="mb-3">
-                        <label>Phone Number</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          maxLength="10"
-                          value={phone}
-                          onChange={(e) => setPhone(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label>Date of Birth</label>
-                        <input
-                          type="date"
-                          className="form-control"
-                          value={dateOfBirth}
-                          onChange={(e) => setDOB(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label>Area of Residence</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={address}
-                          onChange={(e) => setAddress(e.target.value)}
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-4">
-                      <div className="mb-3">
-                        <label>Marital Status</label>
-                        <select
-                          className="form-control select2 select2-hidden-accessible"
-                          value={status}
-                          onChange={(e) => setStatus(e.target.value)}
-                        >
-                          <option>Marital Status</option>
-                          <option value="Single" selected>
-                            Single
-                          </option>
-                          <option value="Married">Married</option>
-                          <option value="Divorced">Divorced</option>
-                        </select>
-                      </div>
-                      <div className="mb-3">
-                        <label>Next Of Kin [Name]</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={nextOfKin}
-                          onChange={(e) => setNextOfKin(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label>Emergency Contact</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          maxLength="10"
-                          value={emergencyNo}
-                          onChange={(e) => setEmergencyNo(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label>District of Origin</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={district}
-                          onChange={(e) => setDistrict(e.target.value)}
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label>Village</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={village}
-                          onChange={(e) => setVillage(e.target.value)}
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label>NIN Number</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          maxLength="14"
-                          value={nationalId}
-                          onChange={(e) => setNationalId(e.target.value)}
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-4">
-                      <div className="mb-3">
-                        <label>Pay Grade</label>
-                        <select
-                          className="form-control select2 select2-hidden-accessible"
-                          value={payGrade}
-                          onChange={(e) => setPayGrade(e.target.value)}
-                        >
-                          <option >Pay Grade</option>
-                          <option value="Supervisor">Supervisor</option>
-                          <option value="Guard">Guard</option>
-                          <option value="Driver">Driver</option>
-                        </select>
-                      </div>
-                      <div className="mb-3">
-                        <label>Guard Number</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={guardNo}
-                          onChange={(e) => setGuardNo(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label>Date Joined</label>
-                        <input
-                          type="date"
-                          className="form-control"
-                          value={dateJoined}
-                          onChange={(e) => setDateJoined(e.target.value)}
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label>Shirt Size</label>
-                        <input
-                          type="number"
-                          className="form-control"
-                          value={shirtsize}
-                          onChange={(e) => setShirtSize(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label>Shoe Size</label>
-                        <input
-                          type="number"
-                          className="form-control"
-                          value={shoeSize}
-                          onChange={(e) => setShoeSize(e.target.value)}
-                          required
-                        />
+                <div class="tab-box">
+                  <div class="row user-tabs">
+                    <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
+                      <div class="card">
+                        <ul class="nav nav-tabs nav-tabs-bottom">
+                          <li class="nav-item">
+                            <a
+                              href="#bio-data"
+                              data-toggle="tab"
+                              class="nav-link active"
+                            >
+                              Bio Data
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                            <a
+                              href="#ident-data"
+                              data-toggle="tab"
+                              class="nav-link"
+                            >
+                              Indentification Data
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                            <a
+                              href="#payroll-data"
+                              data-toggle="tab"
+                              class="nav-link"
+                            >
+                              Payroll Data
+                            </a>
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   </div>
-                  <div className="d-flex flex-wrap gap-2 mt-3">
-                    <button type="submit" className="btn btn-primary">
-                      {loading ? <LoadHandler /> : "Add Guard"}
-                    </button>
+
+                  <div class="tab-content">
+                    <Biodata firstname={firstname} lastname={lastname} gender={gender} email={email}
+                    password={password} employeeID={employeeID} phoneNo={phoneNo} joiningDate={joiningDate}
+                    department={department} designation={designation} shoeSize={shoeSize} shirtSize={shirtSize}
+                    setFirstName={setFirstName} setLastName={setLastName} setGender={setGender} 
+                    setEmail={setEmail} setPassword={setPassword} setEmployeeID={setEmployeeID} 
+                    setJoiningDate={setJoiningDate} setDepartment={setDepartment} setDesignation={setDesignation}
+                    setShirtSize={setShirtSize} setShoeSize={setShoeSize} setPhoneNo={setPhoneNo} />
+
+                    <Indentification nationality={nationality} nin={nin} passport={passport} district={district}
+                    county={county} village={village} parish={parish} dob={dob} education={education} birth={birth} 
+                    address={address} maritalStatus={maritalStatus} setNationality={setNationality} setNIN={setNIN} 
+                    setPassport={setPassport} setDistrict={setDistrict} setCounty={setCounty} setVillage={setVillage} 
+                    setParish={setParish} setDOB={setDOB} setEducation={setEducation} 
+                    setBirth={setBirth} setMaritalStatus={setMaritalStatus} setAddress={setAddress}/>
+
+                    <Payroll guardSubmit={handleSubmit} grossPay={grossPay} lst={lst} netPay={netPay} 
+                    employeeNssf={employeeNssf} employerNssf={employerNssf} deductions={deductions} paye={paye}
+                    setEmployeeNSSF={setEmployeeNSSF} setEmployerNSSF={setEmployerNSSF} setGrossPay={setGrossPay}
+                    setNetPay={setNetPay} setLST={setLST} setDeductions={setDeductions} setPaye={setPaye} />
                   </div>
-                </form>
+                </div>
               </div>
             </div>
           </div>
