@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import avatar from "../../assets/img/avatar.jpg";
 import { Link } from "react-router-dom";
+import AddSalary from "./AddSalary";
 import API from "../../helpers/api";
+import Modal from "../../components/Modal";
 import LoadSpinner from "../../components/Handlers/Loadspinner";
 
 const GuardProfile = (props) => {
@@ -29,6 +31,11 @@ const GuardProfile = (props) => {
   const [assignedGun, setAssignedGun] = useState("");
   const [loading, setLoading] = useState(false);
   const [guns, setGuns] = useState([]);
+  const [payroll, setPayRoll] = useState([]);
+
+  const [add, setAdd] = useState();
+  const openAdd = () => setAdd(true);
+  const closeAdd = () => setAdd(false);
 
   const user = JSON.parse(localStorage.getItem("user")).user;
 
@@ -88,14 +95,35 @@ const GuardProfile = (props) => {
     }
   };
 
+  const getPayRoll = async () => {
+    setLoading(true);
+    try {
+      const res = await API.get("/api/payroll");
+      console.log("Payroll Backend ===>", res);
+      setPayRoll(res.data);
+      setLoading(false);
+    } catch (error) {
+      console.log("error", error);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     getGuard(id);
     getEmail();
     getGuns();
+    getPayRoll();
   }, [id]);
+
+  const empsalary = payroll.length > 0 ? payroll.filter(pay => pay.employee._id === id) : '';
+  
+  console.log("Salary Filterd Backend ====>", empsalary)
 
   return (
     <Layout>
+      <Modal show={add} close={closeAdd} title="Add Basic Salary">
+        <AddSalary close={closeAdd} emplId={id} />
+      </Modal>
       <div className="container-fluid">
         <div className="row">
           <div className="col-12">
@@ -106,6 +134,17 @@ const GuardProfile = (props) => {
                 </Link>
                 <h4 className="ml-3 mb-sm-0 font-size-16">{fName}'s Profile</h4>
               </span>
+              <div className="col-3">
+                  <div className="text-sm-end" style={{ textAlign: "right" }}>
+                    <button
+                      onClick={openAdd}
+                      type="button"
+                      className="btn btn-success btn-rounded waves-effect waves-light me-2"
+                    >
+                      <i className="fa fa-plus-circle me-1"></i> Add Basic Salary
+                    </button>
+                  </div>
+                </div>
             </div>
           </div>
         </div>
@@ -142,6 +181,27 @@ const GuardProfile = (props) => {
                 </div>
               </div>
             </div>
+
+            <div className="card mt-3">
+              <div
+                className="card-header bg-success"
+                style={{ height: "50px", color: "#fff" }}
+              >
+                Salary Details
+              </div>
+              <div className="card-body profile-body">
+                <div className="mt-3">
+                  <p><span>Gross Pay : {empsalary.grossPay}</span></p>
+                  <p><span>NSSF Empl : {empsalary.empContr}</span></p>
+                  <p><span>NSSF Emp : {empsalary.emplContr}</span></p>
+                  <p><span>PAYE : {empsalary.paye}</span></p>
+                  <p><span>LST : {empsalary.lst}</span></p>
+                  <p><span>Deductions : {empsalary.deductions}</span></p>
+                  <p><span>Net Pay : {empsalary.netPay}</span></p>
+                </div>
+              </div>
+            </div>
+
           </div>
           <div className="col-md-8 col-xl-9">
             <div className="card">
