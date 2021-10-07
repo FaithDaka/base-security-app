@@ -1,9 +1,32 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
-import ClientForm from './ClientForm'
+import React, { useEffect, useState } from "react";
+import {Link} from 'react-router-dom';
+import API from "../../helpers/api";
+import ClientInvoices from "./ClientInvoices";
 import Client from ".";
 
-const ClientProfile = () => {
+const ClientProfile = ({match}) => {
+  const id = match.params.client_id;
+
+  const [client, setClient] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  const getClient = async (id) => {
+    setLoading(true);
+    try {
+      const res = await API.get(`/api/client/${id}`);
+      setClient(res.data)
+      console.log("Client Fetch Backend ===>", res);
+      
+    } catch (error) {
+      console.log("Error fetching guard", error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getClient(id);
+  }, [id]);
   return (
     <Client>
       <div class="">
@@ -36,17 +59,23 @@ const ClientProfile = () => {
                     <div class="row">
                       <div class="col-md-5">
                         <div class="profile-info-left">
-                          <h3 class="user-name m-t-0 mb-0">John Doe</h3>
-                          <h6 class="text-muted">UI/UX Design Team</h6>
-                          <small class="text-muted">Web Designer</small>
-                          <div class="staff-id">Employee ID : FT-0001</div>
+                          <h3 class="user-name m-t-0 mb-0">{client.fname} {client.lname}</h3>
+                          <h6 class="text-muted">{client.company}</h6>
+                          <div class="staff-id">Client ID : {client._id}</div>
                           <div class="small doj text-muted">
                             Date of Join : 1st Jan 2013
                           </div>
+                          <div className="d-flex">
                           <div class="staff-msg">
-                            <a class="btn btn-custom" href="chat.html">
-                              Send Message
-                            </a>
+                            <Link class="btn btn-custom" to={`/admin/invoices/${client._id}`}>
+                              Deploy Guards
+                            </Link>
+                          </div>
+                          <div class="staff-msg ml-2">
+                            <Link class="btn btn-custom" to={`/admin/invoices/${client._id}`}>
+                              Generate Invoice
+                            </Link>
+                          </div>
                           </div>
                         </div>
                       </div>
@@ -55,7 +84,7 @@ const ClientProfile = () => {
                           <li>
                             <div class="title-profile">Phone:</div>
                             <div class="text">
-                              <a href="">9876543210</a>
+                              <a href="">{client.phone}</a>
                             </div>
                           </li>
                           <li>
@@ -65,28 +94,24 @@ const ClientProfile = () => {
                             </div>
                           </li>
                           <li>
-                            <div class="title-profile">Birthday:</div>
-                            <div class="text">24th July</div>
-                          </li>
-                          <li>
                             <div class="title-profile">Address:</div>
                             <div class="text">
-                              1861 Bayonne Ave, Manchester Township, NJ, 08759
+                              {client.address}
                             </div>
                           </li>
                           <li>
-                            <div class="title-profile">Gender:</div>
-                            <div class="text">Male</div>
+                            <div class="title-profile">Location:</div>
+                            <div class="text">{client.location}</div>
                           </li>
                           <li>
-                            <div class="title-profile">Reports to:</div>
+                            <div class="title-profile">Relationship Manager:</div>
                             <div class="text">
                               <div class="avatar-box">
                                 <div class="avatar avatar-xs">
                                   <img src="/assets/images/avatar.jpg" alt="" />
                                 </div>
                               </div>
-                              <a href="profile.html">Jeffery Lalor</a>
+                              <a href="">Jeffery Lalor</a>
                             </div>
                           </li>
                         </ul>
@@ -115,26 +140,21 @@ const ClientProfile = () => {
                 <ul class="nav nav-tabs nav-tabs-bottom">
                   <li class="nav-item">
                     <a
-                      href="#emp_profile"
+                      href="#guards"
                       data-toggle="tab"
                       class="nav-link active"
                     >
-                      Profile
+                      Guards Deployed
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="#emp_projects" data-toggle="tab" class="nav-link">
-                      Projects
+                    <a href="#invoice" data-toggle="tab" class="nav-link">
+                      Invoices
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a
-                      href="#bank_statutory"
-                      data-toggle="tab"
-                      class="nav-link"
-                    >
-                      Bank &amp; Statutory{" "}
-                      <small class="text-danger">(Admin Only)</small>
+                    <a href="#payments" data-toggle="tab" class="nav-link">
+                      Payments
                     </a>
                   </li>
                 </ul>
@@ -143,322 +163,9 @@ const ClientProfile = () => {
           </div>
           <div class="tab-content">
             <div
-              id="emp_profile"
+              id="guards"
               class="pro-overview tab-pane fade show active"
             >
-              <div class="row">
-                <div class="col-md-6 d-flex">
-                  <div class="card profile-box flex-fill">
-                    <div class="card-body">
-                      <h3 class="card-title">
-                        Personal Informations{" "}
-                        <a
-                          href="#"
-                          class="edit-icon"
-                          data-toggle="modal"
-                          data-target="#personal_info_modal"
-                        >
-                          <i class="fas fa-pen"></i>
-                        </a>
-                      </h3>
-                      <ul class="personal-info">
-                        <li>
-                          <div class="title-profile-tab">Passport No.</div>
-                          <div class="text">9876543210</div>
-                        </li>
-                        <li>
-                          <div class="title-profile-tab">
-                            Passport Exp Date.
-                          </div>
-                          <div class="text">9876543210</div>
-                        </li>
-                        <li>
-                          <div class="title-profile-tab">Tel</div>
-                          <div class="text">
-                            <a href="">9876543210</a>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="title-profile-tab">Nationality</div>
-                          <div class="text">Indian</div>
-                        </li>
-                        <li>
-                          <div class="title-profile-tab">Religion</div>
-                          <div class="text">Christian</div>
-                        </li>
-                        <li>
-                          <div class="title-profile-tab">Marital status</div>
-                          <div class="text">Married</div>
-                        </li>
-                        <li>
-                          <div class="title-profile-tab">
-                            Employment of spouse
-                          </div>
-                          <div class="text">No</div>
-                        </li>
-                        <li>
-                          <div class="title-profile-tab">No. of children</div>
-                          <div class="text">2</div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 d-flex">
-                  <div class="card profile-box flex-fill">
-                    <div class="card-body">
-                      <h3 class="card-title">
-                        Emergency Contact{" "}
-                        <a
-                          href="#"
-                          class="edit-icon"
-                          data-toggle="modal"
-                          data-target="#emergency_contact_modal"
-                        >
-                          <i class="fas fa-pen"></i>
-                        </a>
-                      </h3>
-                      <h5 class="section-title">Primary</h5>
-                      <ul class="personal-info">
-                        <li>
-                          <div class="title-profile-tab">Name</div>
-                          <div class="text">John Doe</div>
-                        </li>
-                        <li>
-                          <div class="title-profile-tab">Relationship</div>
-                          <div class="text">Father</div>
-                        </li>
-                        <li>
-                          <div class="title-profile-tab">Phone </div>
-                          <div class="text">9876543210, 9876543210</div>
-                        </li>
-                      </ul>
-                      <hr />
-                      <h5 class="section-title-profile-tab">Secondary</h5>
-                      <ul class="personal-info">
-                        <li>
-                          <div class="title-profile-tab">Name</div>
-                          <div class="text">Karen Wills</div>
-                        </li>
-                        <li>
-                          <div class="title-profile-tab">Relationship</div>
-                          <div class="text">Brother</div>
-                        </li>
-                        <li>
-                          <div class="title-profile-tab">Phone </div>
-                          <div class="text">9876543210, 9876543210</div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 d-flex">
-                  <div class="card profile-box flex-fill">
-                    <div class="card-body">
-                      <h3 class="card-title">Bank information</h3>
-                      <ul class="personal-info">
-                        <li>
-                          <div class="title-profile-tab">Bank name</div>
-                          <div class="text">ICICI Bank</div>
-                        </li>
-                        <li>
-                          <div class="title-profile-tab">Bank account No.</div>
-                          <div class="text">159843014641</div>
-                        </li>
-                        <li>
-                          <div class="title-profile-tab">IFSC Code</div>
-                          <div class="text">ICI24504</div>
-                        </li>
-                        <li>
-                          <div class="title-profile-tab">PAN No</div>
-                          <div class="text">TC000Y56</div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 d-flex">
-                  <div class="card profile-box flex-fill">
-                    <div class="card-body">
-                      <h3 class="card-title">
-                        Family Informations{" "}
-                        <a
-                          href="#"
-                          class="edit-icon"
-                          data-toggle="modal"
-                          data-target="#family_info_modal"
-                        >
-                          <i class="fas fa-pen"></i>
-                        </a>
-                      </h3>
-                      <div class="table-responsive">
-                        <table class="table table-nowrap">
-                          <thead>
-                            <tr>
-                              <th>Name</th>
-                              <th>Relationship</th>
-                              <th>Date of Birth</th>
-                              <th>Phone</th>
-                              <th></th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>Leo</td>
-                              <td>Brother</td>
-                              <td>Feb 16th, 2019</td>
-                              <td>9876543210</td>
-                              <td class="text-right">
-                                <div class="dropdown dropdown-action">
-                                  <a
-                                    aria-expanded="false"
-                                    data-toggle="dropdown"
-                                    class="action-icon dropdown-toggle"
-                                    href="#"
-                                  >
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </a>
-                                  <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="#" class="dropdown-item">
-                                      <i class="far fa-edit m-r-5"></i> Edit
-                                    </a>
-                                    <a href="#" class="dropdown-item">
-                                      <i class="far fa-trash-alt m-r-5"></i>{" "}
-                                      Delete
-                                    </a>
-                                  </div>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 d-flex">
-                  <div class="card profile-box flex-fill">
-                    <div class="card-body">
-                      <h3 class="card-title">
-                        Education Informations{" "}
-                        <a
-                          href="#"
-                          class="edit-icon"
-                          data-toggle="modal"
-                          data-target="#education_info"
-                        >
-                          <i class="fa fa-pencil"></i>
-                        </a>
-                      </h3>
-                      <div class="experience-box">
-                        <ul class="experience-list">
-                          <li>
-                            <div class="experience-user">
-                              <div class="before-circle"></div>
-                            </div>
-                            <div class="experience-content">
-                              <div class="timeline-content">
-                                <a href="#/" class="name">
-                                  International College of Arts and Science (UG)
-                                </a>
-                                <div>Bsc Computer Science</div>
-                                <span class="time">2000 - 2003</span>
-                              </div>
-                            </div>
-                          </li>
-                          <li>
-                            <div class="experience-user">
-                              <div class="before-circle"></div>
-                            </div>
-                            <div class="experience-content">
-                              <div class="timeline-content">
-                                <a href="#/" class="name">
-                                  International College of Arts and Science (PG)
-                                </a>
-                                <div>Msc Computer Science</div>
-                                <span class="time">2000 - 2003</span>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 d-flex">
-                  <div class="card profile-box flex-fill">
-                    <div class="card-body">
-                      <h3 class="card-title">
-                        Experience{" "}
-                        <a
-                          href="#"
-                          class="edit-icon"
-                          data-toggle="modal"
-                          data-target="#experience_info"
-                        >
-                          <i class="fa fa-pencil"></i>
-                        </a>
-                      </h3>
-                      <div class="experience-box">
-                        <ul class="experience-list">
-                          <li>
-                            <div class="experience-user">
-                              <div class="before-circle"></div>
-                            </div>
-                            <div class="experience-content">
-                              <div class="timeline-content">
-                                <a href="#/" class="name">
-                                  Web Designer at Zen Corporation
-                                </a>
-                                <span class="time">
-                                  Jan 2013 - Present (5 years 2 months)
-                                </span>
-                              </div>
-                            </div>
-                          </li>
-                          <li>
-                            <div class="experience-user">
-                              <div class="before-circle"></div>
-                            </div>
-                            <div class="experience-content">
-                              <div class="timeline-content">
-                                <a href="#/" class="name">
-                                  Web Designer at Ron-tech
-                                </a>
-                                <span class="time">
-                                  Jan 2013 - Present (5 years 2 months)
-                                </span>
-                              </div>
-                            </div>
-                          </li>
-                          <li>
-                            <div class="experience-user">
-                              <div class="before-circle"></div>
-                            </div>
-                            <div class="experience-content">
-                              <div class="timeline-content">
-                                <a href="#/" class="name">
-                                  Web Designer at Dalt Technology
-                                </a>
-                                <span class="time">
-                                  Jan 2013 - Present (5 years 2 months)
-                                </span>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="tab-pane fade" id="emp_projects">
               <div class="row staff-grid-row">
                 <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
                   <div class="profile-widget">
@@ -625,10 +332,11 @@ const ClientProfile = () => {
                   </div>
                 </div>
               </div>
-            </div>
+              
+              </div>
 
-            <div class="tab-pane fade" id="bank_statutory">
-                <ClientForm />
+            <div class="tab-pane fade" id="invoice">
+              <ClientInvoices clientId={id} />
             </div>
           </div>
         </div>

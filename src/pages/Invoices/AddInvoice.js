@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import API from "../../helpers/api";
 import InvoicePage from ".";
 import LoadHandler from "../../components/Handlers/LoadHandler";
 
-const AddInvoice = () => {
+const AddInvoice = ({match}) => {
   const [invoiceNo, setInvoiceNo] = useState("");
   const [vatNo, setVatNo] = useState("");
   const [tinNo, setTinNo] = useState("");
@@ -25,6 +25,26 @@ const AddInvoice = () => {
 
   const [loading, setLoading] = useState(false);
   const user = JSON.parse(localStorage.getItem("user")).user;
+
+  const id = match.params.id;
+  const [clientInfo, setClientInfo] = useState({});
+
+  const getClient = async (id) => {
+    try {
+      const res = await API.get(`/api/client/${id}`);
+      setClientInfo(res.data)
+      setClient(res.data.fname)
+      console.log("Client Fetch Backend ===>", res);
+      
+    } catch (error) {
+      console.log("Error fetching guard", error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getClient(id);
+  }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,7 +67,7 @@ const AddInvoice = () => {
       currency,
       checkedBy,
       authorisedBy,
-      client,
+      client: id,
     };
 
     try {
@@ -173,6 +193,7 @@ const AddInvoice = () => {
                             className="invoice-input"
                             value={client}
                             onChange={(e) => setClient(e.target.value)}
+                            disabled
                           />
                         </div>
                         <div className="text-align-right">
