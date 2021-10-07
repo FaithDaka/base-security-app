@@ -53,7 +53,7 @@ const App = () => {
       <ProtectedRoute exact path="/admin/:id/livetracking" component={ LiveTracking }/>
       <ProtectedRoute exact path="/admin/:id/deployment" component={ DeploymentList }/>
       <ProtectedRoute exact path="/admin/:id/invoices" component={ InvoiceList }/>
-      <ProtectedRoute exact path="/admin/:id/invoices/add_new" component={ AddInvoice }/>
+      <ProtectedRoute exact path="/admin/invoices/:id" component={ AddInvoice }/>
       <ProtectedRoute exact path="/admin/:id/invoices/:id" component={ InvoiceDetails }/>
     </Switch>
     </BrowserRouter>

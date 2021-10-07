@@ -63,24 +63,22 @@ const AddGuard = ({ history }) => {
       employerNssf, deductions, paye
     };
 
-    console.log("Guard added successfully", data);
-
-    // await API.post("/api/auth/register", data)
-    //   .then((res) => {
-    //     setLoading(false);
-    //     setSuccess(true);
-    //     setShowAlert(true);
-    //     setTimeout(() => {
-    //       history.push(`/admin/${user.id}/guards`);
-    //     }, 2000);
-    //     console.log("Guard added successfully", res);
-    //   })
-    //   .catch((res) => {
-    //     setLoading(false);
-    //     setError(true);
-    //     setShowAlert(true);
-    //     console.log("Failed to add guard", res);
-    //   });
+    await API.post("/api/auth/register", data)
+      .then((res) => {
+        setLoading(false);
+        setSuccess(true);
+        setShowAlert(true);
+        setTimeout(() => {
+          history.push(`/admin/${user.id}/guards`);
+        }, 2000);
+        console.log("Guard added successfully", res);
+      })
+      .catch((res) => {
+        setLoading(false);
+        setError(true);
+        setShowAlert(true);
+        console.log("Failed to add guard", res);
+      });
   };
 
   return (
@@ -177,7 +175,8 @@ const AddGuard = ({ history }) => {
                     <Payroll guardSubmit={handleSubmit} grossPay={grossPay} lst={lst} netPay={netPay} 
                     employeeNssf={employeeNssf} employerNssf={employerNssf} deductions={deductions} paye={paye}
                     setEmployeeNSSF={setEmployeeNSSF} setEmployerNSSF={setEmployerNSSF} setGrossPay={setGrossPay}
-                    setNetPay={setNetPay} setLST={setLST} setDeductions={setDeductions} setPaye={setPaye} />
+                    setNetPay={setNetPay} setLST={setLST} setDeductions={setDeductions} setPaye={setPaye} 
+                    loading={loading} />
                   </div>
                 </div>
               </div>

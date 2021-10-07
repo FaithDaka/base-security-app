@@ -132,6 +132,7 @@ const Deploy = ({ close, clients, id }) => {
                 <LoadSpinner />
               )}
             </fieldset>
+            {deployed}
             <button type="submit" className="btn btn-primary">
               {loading ? <LoadHandler /> : "Deploy"}
             </button>

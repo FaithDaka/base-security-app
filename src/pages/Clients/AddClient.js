@@ -8,8 +8,11 @@ const AddClient = ({ history }) => {
   const [fname, setFName] = useState("");
   const [lname, setLName] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [phone, setPhone] = useState();
   const [location, setLocation] = useState("");
+  const [company, setCompany] = useState("");
+  const [address, setAddress] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -22,7 +25,7 @@ const AddClient = ({ history }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const data = { fname, lname, email, phone, loading, role };
+    const data = { fname, lname, email, phone, loading, role, company, address, password,location };
 
     await API.post("/api/auth/register", data)
       .then((res) => {
@@ -30,7 +33,7 @@ const AddClient = ({ history }) => {
         setSuccess(true);
         setShowAlert(true);
         setTimeout(() => {
-          history.push(`admin/${user.id}/clientele`);
+          history.push(`/admin/${user._id}/clientele`);
         }, 2000);
         console.log("Guard added successfully", res);
       })
@@ -73,7 +76,6 @@ const AddClient = ({ history }) => {
                           className="form-control"
                           value={fname}
                           onChange={(e) => setFName(e.target.value)}
-                          required
                         />
                       </div>
                       <div className="mb-3">
@@ -83,7 +85,6 @@ const AddClient = ({ history }) => {
                           className="form-control"
                           value={lname}
                           onChange={(e) => setLName(e.target.value)}
-                          required
                         />
                       </div>
                       <div className="mb-3">
@@ -93,7 +94,15 @@ const AddClient = ({ history }) => {
                           className="form-control"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          required
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label>Password</label>
+                        <input
+                          type="password"
+                          className="form-control"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
                         />
                       </div>
                     </div>
@@ -106,7 +115,6 @@ const AddClient = ({ history }) => {
                           maxLength="10"
                           value={phone}
                           onChange={(e) => setPhone(e.target.value)}
-                          required
                         />
                       </div>
                       <div className="mb-3">
@@ -116,6 +124,24 @@ const AddClient = ({ history }) => {
                           className="form-control"
                           value={location}
                           onChange={(e) => setLocation(e.target.value)}
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label>Billing Address</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={address}
+                          onChange={(e) => setAddress(e.target.value)}
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label>Company Name</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={company}
+                          onChange={(e) => setCompany(e.target.value)}
                         />
                       </div>
                     </div>
