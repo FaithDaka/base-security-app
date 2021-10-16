@@ -83,236 +83,233 @@ const AddInvoice = ({match}) => {
   const deleterow = () => {};
   return (
     <InvoicePage>
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-12">
-            <div className="page-title-box d-sm-flex align-items-center justify-content-between">
-              <span className="col-4 row" title="Go back">
-                <Link to={`/admin/${user._id}/invoices`}>
-                  <i className="fa fa-arrow-left"></i>
-                </Link>
-                <h4 className="ml-3 mb-sm-0 font-size-16">
-                  Create new invoice
-                </h4>
-              </span>
-            </div>
-          </div>
-        </div>
-        <div className="row add-invoice">
-          <div className="col-12">
-            <h4 className="card-title mb-5 font-size-18 text-capitalize">
-              Fill in all the necessary details
-            </h4>
-            <form onSubmit={handleSubmit}>
-              <div className="row justify-content-between ml-2">
-                <div className="col-lg-5 mb-3">
-                  <div className="card">
-                    <div className="card-body bg-light bg-soft">
-                      <div className="mb-2 text-align-right">
-                        <label>Invoice Date:</label>
-                        <input
-                          type="date"
-                          className="invoice-input"
-                          value={invoiceDate}
-                          onChange={(e) => setInvoiceDate(e.target.value)}
-                        />
-                      </div>
-                      <div className="mb-2 text-align-right">
-                        <label>Issue Date:</label>
-                        <input
-                          type="date"
-                          className="invoice-input"
-                          value={issueDate}
-                          onChange={(e) => setIssueDate(e.target.value)}
-                        />
-                      </div>
-                      <div className="text-align-right">
-                        <label>Next Bill Date:</label>
-                        <input
-                          type="date"
-                          className="invoice-input"
-                          value={nextBillDate}
-                          onChange={(e) => setNextBillDate(e.target.value)}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-5 mb-3">
-                  <div className="card">
-                    <div className="card-body bg-light bg-soft">
-                      <div className="mb-2 text-align-right">
-                        <label>Vat No:</label>
-                        <input
-                          type="text"
-                          className="invoice-input"
-                          value={vatNo}
-                          onChange={(e) => setVatNo(e.target.value)}
-                        />
-                      </div>
-                      <div className="mb-2 text-align-right">
-                        <label>Tin No:</label>
-                        <input
-                          type="text"
-                          className="invoice-input"
-                          value={tinNo}
-                          onChange={(e) => setTinNo(e.target.value)}
-                        />
-                      </div>
-                      <div className="text-align-right">
-                        <label>Payment Terms:</label>
-                        <input
-                          type="text"
-                          className="invoice-input"
-                          value={paymentTerms}
-                          onChange={(e) => setPaymentTerms(e.target.value)}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-12">
-                <div className="row">
-                  <div className="col-lg-7 mb-3">
-                    <div className="card">
-                      <div className="card-body bg-info bg-soft text-light">
-                        <div className="mb-2 text-align-right">
-                          <label>Bill Address:</label>
-                          <input
-                            type="text"
-                            className="invoice-input"
-                            value={billAddress}
-                            onChange={(e) => setBillAddress(e.target.value)}
-                          />
-                        </div>
-                        <div className="mb-2 text-align-right">
-                          <label>Customer No:</label>
-                          <input
-                            type="text"
-                            className="invoice-input"
-                            value={client}
-                            onChange={(e) => setClient(e.target.value)}
-                            disabled
-                          />
-                        </div>
-                        <div className="text-align-right">
-                          <label>Payment Terms:</label>
-                          <input
-                            type="text"
-                            className="invoice-input"
-                            value={paymentTerms}
-                            onChange={(e) => setPaymentTerms(e.target.value)}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-5 mb-3">
-                    <div className="card">
-                      <div className="card-body bg-danger bg-soft text-light">
-                        <div className="mb-2 text-align-right">
-                          <label>Checked By:</label>
-                          <input
-                            type="text"
-                            className="invoice-input"
-                            value={checkedBy}
-                            onChange={(e) => setCheckedBy(e.target.value)}
-                          />
-                        </div>
-                        <div className="text-align-right">
-                          <label>Authorised By:</label>
-                          <input
-                            type="text"
-                            className="invoice-input"
-                            value={authorisedBy}
-                            onChange={(e) => setAuthorisedBy(e.target.value)}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-12 mt-5">
-                <table className="table table-responsiveness table-nowrap table-bordered">
-                  <thead>
-                    <tr>
-                      <td style={{ width: "60px" }}>Item </td>
-                      <td>Description</td>
-                      <td style={{ width: "20px" }}>Unit Price</td>
-                      <td style={{ width: "20px" }}>Quantity</td>
-                      <td style={{ width: "60px" }}>Sub total</td>
-                      <td style={{ width: "60px" }}></td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <input
-                          type="text"
-                          className="invoice-input"
-                          value={item}
-                          onChange={(e) => setItem(e.target.value)}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          type="text"
-                          className="invoice-input"
-                          value={description}
-                          onChange={(e) => setDescription(e.target.value)}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          type="text"
-                          className="invoice-input"
-                          value={unitPrice}
-                          onChange={(e) => setUnitPrice(e.target.value)}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          type="text"
-                          className="invoice-input"
-                          value={quantity}
-                          onChange={(e) => setQuantity(e.target.value)}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          type="text"
-                          className="invoice-input"
-                          value={subTotal}
-                          onChange={(e) => setSubTotal(e.target.value)}
-                        />
-                      </td>
-                      <td>{}</td>
-                      <td>
-                        <span onClick={() => deleterow()}>
-                          <i className="fas fa-minus-square text-danger"></i>
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <span>
-                  <button className="btn btn-success font-size-15 text-light">
-                    <i className="fas fa-plus-square font-size-18 text-light mr-2"></i>
-                    Add New Item
-                  </button>
-                </span>
-              </div>
-              <div className="d-flex flex-wrap gap-2 mt-5">
-                <button type="submit" className="btn btn-primary">
-                  {loading ? <LoadHandler /> : "Create Invoice"}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
+      <div class="container-fluid">
+   <div class="page-header">
+      <div class="row">
+         <div class="col-sm-12">
+            <h3 class="page-title">Create Client Invoice for - {clientInfo.fname} {clientInfo.lname}</h3>
+         </div>
       </div>
+   </div>
+   <div class="row">
+      <div class="col-sm-12">
+      
+         <form onSubmit={handleSubmit}>
+            <div class="row">
+               <div class="col-sm-6 col-md-3">
+                  <div class="form-group">
+                     <label>Client ID <span class="text-danger">*</span></label>
+                     <input class="form-control" type="text" 
+                     value={id}
+                     onChange={(e) => setClient(e.target.value)}
+                     disabled
+                     />
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-3">
+                  <div class="form-group">
+                     <label>Authorised By</label>
+                     <input class="form-control" type="text" 
+                     value={authorisedBy}
+                     onChange={(e) => setAuthorisedBy(e.target.value)}
+                     />
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-3">
+                  <div class="form-group">
+                     <label>Payment Terms <span class="text-danger">*</span></label>
+                     <input class="form-control" type="text" 
+                     value={paymentTerms}
+                     onChange={(e) => setPaymentTerms(e.target.value)}
+                     />
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-3">
+                  <div class="form-group">
+                     <label>VAT</label>
+                     <input class="form-control" type="text" 
+                     value={vatNo}
+                     onChange={(e) => setVatNo(e.target.value)}
+                     />
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-3">
+                  <div class="form-group">
+                     <label>Client Address</label>
+                     <textarea class="form-control" rows="3"
+                     value={billAddress}
+                     onChange={(e) => setBillAddress(e.target.value)}
+                     />
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-3">
+                  <div class="form-group">
+                     <label>Billing Address</label>
+                     <textarea class="form-control" rows="3"
+                     value={billAddress}
+                     onChange={(e) => setBillAddress(e.target.value)}
+                     />
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-3">
+                  <div class="form-group">
+                     <label>Invoice date <span class="text-danger">*</span></label>
+                     <div class="cal-icon">
+                        <input class="form-control" type="date" 
+                        value={invoiceDate}
+                        onChange={(e) => setInvoiceDate(e.target.value)}
+                        />
+                     </div>
+                  </div>
+               </div>
+               <div class="col-sm-6 col-md-3">
+                  <div class="form-group">
+                     <label>Due Date <span class="text-danger">*</span></label>
+                     <div class="cal-icon">
+                        <input class="form-control" type="date"
+                        value={issueDate}
+                        onChange={(e) => setIssueDate(e.target.value)}
+                        />
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-12 col-sm-12">
+                  <div class="table-responsive">
+                  <div className="card">
+              <div className="card-body">
+                     <table class="table table-hover table-white">
+                        <thead>
+                           <tr>
+                              <th style={{width: '20px'}}>#</th>
+                              <th class="col-sm-2">Item</th>
+                              <th class="col-md-6">Description</th>
+                              <th style={{width:'100px'}}>Unit Cost</th>
+                              <th style={{width:'80px'}}>Qty</th>
+                              <th>Amount</th>
+                              <th> </th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td>1</td>
+                              <td>
+                                 <input class="form-control" type="text" style={{minWidth:'150px'}}
+                                 value={item}
+                                 onChange={(e) => setItem(e.target.value)}
+                                 />
+                              </td>
+                              <td>
+                                 <input class="form-control" type="text" style={{minWidth:'150px'}} 
+                                 value={description}
+                                 onChange={(e) => setDescription(e.target.value)}
+                                 />
+                              </td>
+                              <td>
+                                 <input class="form-control" style={{width:'100px'}} type="text" 
+                                 value={unitPrice}
+                                 onChange={(e) => setUnitPrice(e.target.value)}
+                                 />
+                              </td>
+                              <td>
+                                 <input class="form-control" style={{width:'80px'}} type="text" 
+                                 value={quantity}
+                                 onChange={(e) => setQuantity(e.target.value)}
+                                 />
+                              </td>
+                              <td>
+                                 <input class="form-control" readonly="" style={{width:'120px'}} type="text"
+                                 value={subTotal}
+                                 onChange={(e) => setSubTotal(e.target.value)}
+                                 />
+                              </td>
+                              <td><a href="javascript:void(0)" class="text-success font-18" title="Add"><i class="fa fa-plus"></i></a></td>
+                           </tr>
+                           <tr>
+                              <td>2</td>
+                              <td>
+                                 <input class="form-control" type="text" style={{minWidth:'150px'}}/>
+                              </td>
+                              <td>
+                                 <input class="form-control" type="text" style={{minWidth:'150px'}}/>
+                              </td>
+                              <td>
+                                 <input class="form-control" style={{width:'100px'}} type="text"/>
+                              </td>
+                              <td>
+                                 <input class="form-control" style={{width:'80px'}} type="text"/>
+                              </td>
+                              <td>
+                                 <input class="form-control" readonly="" style={{width:'120px'}}type="text"/>
+                              </td>
+                              <td><a href="javascript:void(0)" class="text-danger font-18" title="Remove"><i class="fa fa-trash-o"></i></a></td>
+                           </tr>
+                        </tbody>
+                     </table>
+                     </div>
+                     </div>
+                  </div>
+                  <div class="table-responsive">
+                  <div className="card">
+              <div className="card-body">
+                     <table class="table table-hover table-white">
+                        <tbody>
+                           <tr>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td class="text-right">Total</td>
+                              <td style={{textAlign: 'right', paddingRight: '30px', width: '230px'}}>0</td>
+                           </tr>
+                           <tr>
+                              <td colspan="5" class="text-right">Tax</td>
+                              <td style={{textAlign: 'right', paddingRight: '30px', width: '230px'}}>
+                                 <input class="form-control text-right" value="0" readonly="" type="text"/>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td colspan="5" class="text-right">
+                                 Discount %
+                              </td>
+                              <td style={{textAlign: 'right', paddingRight: '30px', width: '230px'}}>
+                                 <input class="form-control text-right" type="text"/>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td colspan="5" style={{textAlign: 'right', fontWeight: 'bold'}}>
+                                 Grand Total
+                              </td>
+                              <td style={{textAlign: 'right', paddingRight: '30px', fontWeight: 'bold', fontSize: '16px',width: '230px'}}>
+                                 UGX 0.00
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                     </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-12">
+                        <div class="form-group">
+                           <label>Other Information</label>
+                           <textarea class="form-control"/>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="submit-section">
+               <button class="btn btn-custom m-r-10">Save &amp; Send</button>
+               <button class="btn btn-custom ml-3">Save</button>
+            </div>
+            
+         </form>
+
+      </div>
+   </div>
+</div>
     </InvoicePage>
   );
 };

@@ -28,7 +28,7 @@ const Content = ({ history }) => {
     try {
       const res = await API.get("/api/deployment");
       console.log("Deployments ===>", res);
-      setDeployments(res.data.deployments);
+      setDeployments(res.data);
       setLoading(false);
     } catch (error) {
       console.log("error", error);
