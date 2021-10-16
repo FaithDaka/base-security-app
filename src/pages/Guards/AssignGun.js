@@ -3,7 +3,7 @@ import LoadHandler from "../../components/Handlers/LoadHandler";
 import LoadSpinner from "../../components/Handlers/Loadspinner";
 import API from "../../helpers/api";
 
-const AssignGun = ({ close, guards, id }) => {
+const AssignGun = ({ close, guardId }) => {
   const [assignedGun, setAssignedGun] = useState();
   const [guns, setGuns] = useState([]);
   const unAssigned = guns.filter((gun) => gun.isAssigned === false);
@@ -28,7 +28,7 @@ const AssignGun = ({ close, guards, id }) => {
     setLoading(true);
 
     try {
-      const response = await API.patch(`/api/guard/assign/${id}`, {
+      const response = await API.patch(`/api/guard/assign/${guardId}`, {
         assignedGun,
       });
       console.log("Posted Data ===>", response);
@@ -38,12 +38,11 @@ const AssignGun = ({ close, guards, id }) => {
       setLoading(false);
     }
     close();
-    guards();
   };
 
   useEffect(() => {
     getGuns();
-  }, [id]);
+  }, [guardId]);
   return (
     <>
       <div className="card">

@@ -231,10 +231,11 @@ const GuardsList = () => {
                             ></label>
                           </div>
                         </th>
-                        <th className="align-middle"> Name</th>
-                        <th className="align-middle"> Village</th>
-                        <th className="align-middle"> Phone</th>
-                        <th className="align-middle"> Sex</th>
+                        <th className="align-middle"> Guard Names</th>
+                        <th className="align-middle"> District</th>
+                        <th className="align-middle"> NetPay</th>
+                        <th className="align-middle"> Contact</th>
+                        <th className="align-middle"> Gender</th>
                         <th className="align-middle"> Weapon</th>
                         <th className="align-middle"> </th>
                       </tr>
@@ -261,7 +262,7 @@ const GuardsList = () => {
                                 className="td-hover"
                                 onClick={() => getProfile(guard._id)}
                               >
-                                {guard.fname} {guard.lname}
+                                {guard.firstname} {guard.lastname}
                               </span>
                               {guard.assignedGun === null ? (
                                 <span onClick={() => openAssign(guard._id)} className="assign-icon ml-3">
@@ -273,9 +274,10 @@ const GuardsList = () => {
                                 </span>
                               )}
                             </td>
-                            <td className="text-capitalize">{guard.village}, {guard.district}</td>
-                            <td>0{guard.phone}</td>
-                            <td>{guard.sex}</td>
+                            <td className="text-capitalize">{guard.district}, {guard.subcounty}, {guard.village}, </td>
+                            <td>{guard.netPay}</td>
+                            <td>{guard.phoneNo}</td>
+                            <td>{guard.gender}</td>
                             {guard.assignedGun === null ? (
                               <td>Unassigned</td>
                             ) : (

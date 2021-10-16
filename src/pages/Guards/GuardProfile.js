@@ -1,41 +1,28 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import avatar from "../../assets/img/avatar.jpg";
 import { Link } from "react-router-dom";
-import AddSalary from "./AddSalary";
+import AssignGun from "./AssignGun";
+import DeployGuard from "../Clients/Deploy";
 import API from "../../helpers/api";
 import Modal from "../../components/Modal";
 import LoadSpinner from "../../components/Handlers/Loadspinner";
 
 const GuardProfile = (props) => {
   const id = props.match.params.guard_id;
-  const [userId, setUserId] = useState()
-  const [fName, setFName] = useState("");
-  const [lName, setLName] = useState("");
-  const [sex, setSex] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState();
-  const [status, setStatus] = useState("");
-  const [nextOfKin, setNOK] = useState("");
-  const [shirtsize, setShirtSize] = useState();
-  const [shoeSize, setShoeSize] = useState("");
-  const [address, setAddress] = useState("");
-  const [nationalId, setNationalId] = useState("");
-  const [district, setDistrict] = useState("");
-  const [village, setVillage] = useState();
-  const [guardNo, setGuardNo] = useState();
-  const [payGrade, setPayGrade] = useState("");
-  const [dateJoined, setDateJoined] = useState("");
-  const [dob, setDOB] = useState("");
-  const [emergencyNo, setEmergencyNo] = useState();
-  const [assignedGun, setAssignedGun] = useState("");
+  const [userId, setUserId] = useState();
+  const [guard, setGuard] = useState({})
   const [loading, setLoading] = useState(false);
-  const [guns, setGuns] = useState([]);
-  const [payroll, setPayRoll] = useState([]);
+ 
 
   const [add, setAdd] = useState();
+  const [assign, setAssign] = useState();
+
   const openAdd = () => setAdd(true);
   const closeAdd = () => setAdd(false);
+  const openAssign = () => setAssign(true);
+  const closeAssign = () => setAssign(false);
 
   const user = JSON.parse(localStorage.getItem("user")).user;
 
@@ -45,24 +32,7 @@ const GuardProfile = (props) => {
       const res = await API.get(`/api/guard/${id}`);
       console.log("Guard Backend ===>", res);
       setUserId(res.data.userId);
-      setFName(res.data.fname);
-      setLName(res.data.lname);
-      setPhone(res.data.phone);
-      setSex(res.data.sex);
-      setStatus(res.data.status);
-      setAddress(res.data.address);
-      setDistrict(res.data.district);
-      setVillage(res.data.village);
-      setGuardNo(res.data.guardNo);
-      setPayGrade(res.data.payGrade);
-      setDateJoined(res.data.dateJoined);
-      setEmergencyNo(res.data.emergencyNo);
-      setNationalId(res.data.nationalId);
-      setNOK(res.data.nextOfKin);
-      setDOB(res.data.dateOfBirth);
-      setShirtSize(res.data.size);
-      setShoeSize(res.data.shoeSize);
-      setAssignedGun(res.data.assignedGun);
+      setGuard(res.data);
       setLoading(false);
     } catch (error) {
       console.log("Error fetching guard", error);
@@ -70,228 +40,660 @@ const GuardProfile = (props) => {
     }
   };
 
-  const getEmail = async () => {
-    setLoading(true);
-    try {
-      const res = await API.get(`api/user/${userId}`);
-      console.log("User backend =>", res);
-      setEmail(res.data.email);
-    } catch (error) {
-      console.log("Error fetching user", error);
-      setLoading(false);
-    }
-  };
-
-  const getGuns = async () => {
-    setLoading(true);
-    try {
-      const res = await API.get("/api/gun");
-      console.log("Guns Backend ===>", res);
-      setGuns(res.data.guns);
-      setLoading(false);
-    } catch (error) {
-      console.log("error", error);
-      setLoading(false);
-    }
-  };
-
-  const getPayRoll = async () => {
-    setLoading(true);
-    try {
-      const res = await API.get("/api/payroll");
-      console.log("Payroll Backend ===>", res);
-      setPayRoll(res.data);
-      setLoading(false);
-    } catch (error) {
-      console.log("error", error);
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
     getGuard(id);
-    getEmail();
-    getGuns();
-    getPayRoll();
   }, [id]);
-
-  const empsalary = payroll.length > 0 ? payroll.filter(pay => pay.employee._id === id) : '';
-  
-  console.log("Salary Filterd Backend ====>", empsalary)
 
   return (
     <Layout>
-      <Modal show={add} close={closeAdd} title="Add Basic Salary">
-        <AddSalary close={closeAdd} emplId={id} />
+      <Modal show={add} close={closeAdd} title="Deploy Guard To Site">
+        <DeployGuard close={closeAdd} guardId={id} />
       </Modal>
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-12">
-            <div className="page-title-box d-sm-flex align-items-center justify-content-between">
-              <span className="col-4 row" title="Go back">
-                <Link to={`/admin/${user._id}/guards`}>
-                  <i className="fa fa-arrow-left"></i>
-                </Link>
-                <h4 className="ml-3 mb-sm-0 font-size-16">{fName}'s Profile</h4>
-              </span>
-              <div className="col-3">
-                  <div className="text-sm-end" style={{ textAlign: "right" }}>
-                    <button
-                      onClick={openAdd}
-                      type="button"
-                      className="btn btn-success btn-rounded waves-effect waves-light me-2"
-                    >
-                      <i className="fa fa-plus-circle me-1"></i> Add Basic Salary
-                    </button>
-                  </div>
-                </div>
+      <Modal show={assign} close={closeAssign} title="Assign Gun">
+        <AssignGun close={closeAssign} guardId={id} />
+      </Modal>
+      <div class="">
+        <div class="page-header">
+          <div class="row">
+            <div class="col-sm-12">
+              <h3 class="page-title">Guard Profile</h3>
             </div>
           </div>
         </div>
-      </div>
-      {loading && <LoadSpinner />}
-      <div className="container-fluid profile">
-        <div className="row justify-content-center">
-          <div className="col-md-4 col-xl-3 mb-3">
-            <div className="card">
-              <div
-                className="card-header bg-danger"
-                style={{ height: "50px", color: "#fff" }}
-              >
-                Profile
-              </div>
-              <div className="card-body profile-body">
-                <div className="mt-5 text-center">
-                  <img
-                    className="avatar-md profile-user-wid mb-4 rounded-circle img-fluid"
-                    alt="profile"
-                    style={{ height: "128px", width: "128px" }}
-                    src={avatar}
-                  ></img>
-                  <h2 className="text-wrap">
-                    {fName} {lName}
-                  </h2>
-                  <p className="text-wrap text-muted">0{phone}</p>
-                  <p className="text-wrap text-muted text-uppercase">
-                    {payGrade}
-                    {":  "}
-                    {guardNo}
-                  </p>
-                  <p className="text-wrap text-muted nc">{email}</p>
+        <div class="card mb-0">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="profile-view">
+                  <div class="profile-img-wrap">
+                    <div class="profile-img">
+                      <a href="#">
+                        <img alt="" src="/assets/images/avatar.jpg" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="profile-basic">
+                    <div class="row">
+                      <div class="col-md-5">
+                        <div class="profile-info-left">
+                          <h3 class="user-name m-t-0 mb-0">{guard.firstname} {guard.lastname}</h3>
+                          <h6 class="text-muted">{guard.department}</h6>
+                          <small class="text-muted">{guard.gender}</small>
+                          <div class="staff-id">Employee ID : FT-{guard.employeeID}</div>
+                          <div class="small doj text-muted">
+                            Date of Join : {guard.joiningDate}
+                          </div>
+                          <div className="d-flex">
+                          <div class="staff-msg">
+                            <button class="btn btn-custom" onClick={openAdd}>
+                              Deploy Guard
+                            </button>
+                          </div>
+                          <div class="staff-msg ml-3">
+                            <button class="btn btn-custom" onClick={openAssign}>
+                              Assign Gun
+                            </button>
+                          </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-7">
+                        <ul class="personal-info">
+                          <li>
+                            <div class="title-profile">Phone:</div>
+                            <div class="text">
+                              <a href="">0{guard.phoneNo}</a>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="title-profile">Email:</div>
+                            <div class="text">
+                              <a href="">admin@gmail.com</a>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="title-profile">Birthday:</div>
+                            <div class="text">{guard.dob}</div>
+                          </li>
+                          <li>
+                            <div class="title-profile">Address:</div>
+                            <div class="text">
+                              {guard.address}
+                            </div>
+                          </li>
+                          <li>
+                            <div class="title-profile">Gender:</div>
+                            <div class="text">{guard.gender}</div>
+                          </li>
+                          <li>
+                            <div class="title-profile">Reports to:</div>
+                            <div class="text">
+                              <div class="avatar-box">
+                                <div class="avatar avatar-xs">
+                                  <img src="/assets/images/avatar.jpg" alt="" />
+                                </div>
+                              </div>
+                              <a href="profile.html">Ronald Mugisha</a>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pro-edit">
+                    <a
+                      data-target="#profile_info"
+                      data-toggle="modal"
+                      class="edit-icon"
+                      href="#"
+                    >
+                      <i class="fas fa-pen"></i>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
-
-            <div className="card mt-3">
-              <div
-                className="card-header bg-success"
-                style={{ height: "50px", color: "#fff" }}
-              >
-                Salary Details
-              </div>
-              <div className="card-body profile-body">
-                <div className="mt-3">
-                  <p><span>Gross Pay : {empsalary.grossPay}</span></p>
-                  <p><span>NSSF Empl : {empsalary.empContr}</span></p>
-                  <p><span>NSSF Emp : {empsalary.emplContr}</span></p>
-                  <p><span>PAYE : {empsalary.paye}</span></p>
-                  <p><span>LST : {empsalary.lst}</span></p>
-                  <p><span>Deductions : {empsalary.deductions}</span></p>
-                  <p><span>Net Pay : {empsalary.netPay}</span></p>
-                </div>
-              </div>
-            </div>
-
           </div>
-          <div className="col-md-8 col-xl-9">
-            <div className="card">
-              <div
-                className="card-header bg-info font-size-20"
-                style={{ height: "50px", color: "#fff" }}
-              >
-                DETAILS
+        </div>
+        <div class="tab-box">
+          <div class="row user-tabs">
+            <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
+              <div class="card">
+                <ul class="nav nav-tabs nav-tabs-bottom">
+                  <li class="nav-item">
+                    <a
+                      href="#emp_profile"
+                      data-toggle="tab"
+                      class="nav-link active"
+                    >
+                      Profile
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#emp_projects" data-toggle="tab" class="nav-link">
+                      Pay Slips
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      href="#bank_statutory"
+                      data-toggle="tab"
+                      class="nav-link"
+                    >
+                      Bank &amp; Statutory{" "}
+                      <small class="text-danger">(Admin Only)</small>
+                    </a>
+                  </li>
+                </ul>
               </div>
-              <div className="card-body profile-body">
-                <table className="table table-responsive table-borderless">
-                  <tbody>
-                    <tr>
-                      <td className="td-name">Date Joined</td>
-                      <td className="text-wrap">{dateJoined}</td>
-                    </tr>
-                    <tr>
-                      <td className="td-name">Gun Assigned</td>
-                      {assignedGun !== null ? (
-                        <td className="text-wrap">Yes</td>
-                      ) : (
-                        <td className="text-wrap">No</td>
-                      )}
-                    </tr>
-                    <tr>
-                      <td className="td-name">Gun Details</td>
-                      {assignedGun !== null ? (
-                        guns
-                          .filter((gun) => gun._id === assignedGun)
-                          .map((guardgun) => (
-                            <td className="text-wrap">
-                              {guardgun.name}
-                              <span>
-                              {" || serial number: "}
-                              {guardgun.serialNumber}
-                              </span>
-                            </td>
-                          ))
-                      ) : (
-                        <td className="text-wrap">Not Assigned</td>
-                      )}
-                    </tr>
-                    <tr>
-                      <td className="td-name">NIN</td>
-                      <td className="text-wrap">{nationalId}</td>
-                    </tr>
-                    <tr>
-                      <td className="td-name">D.O.B</td>
-                      <td className="text-wrap">{dob}</td>
-                    </tr>
-                    <tr>
-                      <td className="td-name">Sex</td>
-                      <td className="text-wrap">{sex}</td>
-                    </tr>
-                    <tr>
-                      <td className="td-name">Area of Residence</td>
-                      <td className="text-wrap">{address}</td>
-                    </tr>
-                    <tr>
-                      <td className="td-name">Area of Origin</td>
-                      <td className="text-wrap">
-                        {village}
-                        {", "}
-                        {district}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="td-name">Marital Status</td>
-                      <td className="text-wrap">{status}</td>
-                    </tr>
-                    <tr>
-                      <td className="td-name">Next of Kin</td>
-                      <td className="text-wrap">{nextOfKin}</td>
-                    </tr>
+            </div>
+          </div>
+          <div class="tab-content">
+            <div
+              id="emp_profile"
+              class="pro-overview tab-pane fade show active"
+            >
+              <div class="row">
+                <div class="col-md-6 d-flex">
+                  <div class="card profile-box flex-fill">
+                    <div class="card-body">
+                      <h3 class="card-title">
+                        Indentification Information{" "}
+                        <a
+                          href="#"
+                          class="edit-icon"
+                          data-toggle="modal"
+                          data-target="#personal_info_modal"
+                        >
+                          <i class="fas fa-pen"></i>
+                        </a>
+                      </h3>
+                      <ul class="personal-info">
+                      <li>
+                          <div class="title-profile-tab">National ID.</div>
+                          <div class="text">{guard.nin}</div>
+                        </li>
+                        <li>
+                          <div class="title-profile-tab">Passport No.</div>
+                          <div class="text">{guard.passport}</div>
+                        </li>
+                        <li>
+                          <div class="title-profile-tab">Nationality</div>
+                          <div class="text">{guard.nationality}</div>
+                        </li>
+                        <li>
+                          <div class="title-profile-tab">Religion</div>
+                          <div class="text">Christian</div>
+                        </li>
+                        <li>
+                          <div class="title-profile-tab">Marital status</div>
+                          <div class="text">{guard.maritalStatus}</div>
+                        </li>
+                        <li>
+                          <div class="title-profile-tab">
+                            District
+                          </div>
+                          <div class="text">{guard.district}</div>
+                        </li>
+                        <li>
+                          <div class="title-profile-tab">Sub County</div>
+                          <div class="text">{guard.county}</div>
+                        </li>
+                        <li>
+                          <div class="title-profile-tab">
+                            Parish
+                          </div>
+                          <div class="text">{guard.parish}</div>
+                        </li>
+                        <li>
+                          <div class="title-profile-tab">Village</div>
+                          <div class="text">{guard.village}</div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 d-flex">
+                  <div class="card profile-box flex-fill">
+                    <div class="card-body">
+                      <h3 class="card-title">
+                        Emergency Contact{" "}
+                        <a
+                          href="#"
+                          class="edit-icon"
+                          data-toggle="modal"
+                          data-target="#emergency_contact_modal"
+                        >
+                          <i class="fas fa-pen"></i>
+                        </a>
+                      </h3>
+                      <h5 class="section-title">Primary</h5>
+                      <ul class="personal-info">
+                        <li>
+                          <div class="title-profile-tab">Name</div>
+                          <div class="text">John Doe</div>
+                        </li>
+                        <li>
+                          <div class="title-profile-tab">Relationship</div>
+                          <div class="text">Father</div>
+                        </li>
+                        <li>
+                          <div class="title-profile-tab">Phone </div>
+                          <div class="text">9876543210, 9876543210</div>
+                        </li>
+                      </ul>
+                      <hr />
+                      <h5 class="section-title-profile-tab">Secondary</h5>
+                      <ul class="personal-info">
+                        <li>
+                          <div class="title-profile-tab">Name</div>
+                          <div class="text">Karen Wills</div>
+                        </li>
+                        <li>
+                          <div class="title-profile-tab">Relationship</div>
+                          <div class="text">Brother</div>
+                        </li>
+                        <li>
+                          <div class="title-profile-tab">Phone </div>
+                          <div class="text">9876543210, 9876543210</div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 d-flex">
+                  <div class="card profile-box flex-fill">
+                    <div class="card-body">
+                      <h3 class="card-title">Payroll information</h3>
+                      <ul class="personal-info">
+                        <li>
+                          <div class="title-profile-tab">Bank name</div>
+                          <div class="text">Housing Finance Bank</div>
+                        </li>
+                        <li>
+                          <div class="title-profile-tab">Bank account No.</div>
+                          <div class="text">159843014641</div>
+                        </li>
+                        <li>
+                          <div class="title-profile-tab">Gross Pay</div>
+                          <div class="text">{guard.grossPay}</div>
+                        </li>
+                        <li>
+                          <div class="title-profile-tab">Employer NSSF</div>
+                          <div class="text">{guard.employerNssf}</div>
+                        </li>
+                        <li>
+                          <div class="title-profile-tab">Employee NSSF</div>
+                          <div class="text">{guard.employeeNssf}</div>
+                        </li>
+                        <li>
+                          <div class="title-profile-tab">PAYE</div>
+                          <div class="text">{guard.paye}</div>
+                        </li>
+                        <li>
+                          <div class="title-profile-tab">Deductions</div>
+                          <div class="text">{guard.deductions}</div>
+                        </li>
+                        <li>
+                          <div class="title-profile-tab">Net Pay</div>
+                          <div class="text">{guard.netPay}</div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 d-flex">
+                  <div class="card profile-box flex-fill">
+                    <div class="card-body">
+                      <h3 class="card-title">
+                        Family Informations{" "}
+                        <a
+                          href="#"
+                          class="edit-icon"
+                          data-toggle="modal"
+                          data-target="#family_info_modal"
+                        >
+                          <i class="fas fa-pen"></i>
+                        </a>
+                      </h3>
+                      <div class="table-responsive">
+                        <table class="table table-nowrap">
+                          <thead>
+                            <tr>
+                              <th>Name</th>
+                              <th>Relationship</th>
+                              <th>Date of Birth</th>
+                              <th>Phone</th>
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>Leo</td>
+                              <td>Brother</td>
+                              <td>Feb 16th, 2019</td>
+                              <td>9876543210</td>
+                              <td class="text-right">
+                                <div class="dropdown dropdown-action">
+                                  <a
+                                    aria-expanded="false"
+                                    data-toggle="dropdown"
+                                    class="action-icon dropdown-toggle"
+                                    href="#"
+                                  >
+                                    <i class="fas fa-ellipsis-v"></i>
+                                  </a>
+                                  <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="#" class="dropdown-item">
+                                      <i class="far fa-edit m-r-5"></i> Edit
+                                    </a>
+                                    <a href="#" class="dropdown-item">
+                                      <i class="far fa-trash-alt m-r-5"></i>{" "}
+                                      Delete
+                                    </a>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* <div class="row">
+                <div class="col-md-6 d-flex">
+                  <div class="card profile-box flex-fill">
+                    <div class="card-body">
+                      <h3 class="card-title">
+                        Education Informations{" "}
+                        <a
+                          href="#"
+                          class="edit-icon"
+                          data-toggle="modal"
+                          data-target="#education_info"
+                        >
+                          <i class="fa fa-pencil"></i>
+                        </a>
+                      </h3>
+                      <div class="experience-box">
+                        <ul class="experience-list">
+                          <li>
+                            <div class="experience-user">
+                              <div class="before-circle"></div>
+                            </div>
+                            <div class="experience-content">
+                              <div class="timeline-content">
+                                <a href="#/" class="name">
+                                  International College of Arts and Science (UG)
+                                </a>
+                                <div>Bsc Computer Science</div>
+                                <span class="time">2000 - 2003</span>
+                              </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="experience-user">
+                              <div class="before-circle"></div>
+                            </div>
+                            <div class="experience-content">
+                              <div class="timeline-content">
+                                <a href="#/" class="name">
+                                  International College of Arts and Science (PG)
+                                </a>
+                                <div>Msc Computer Science</div>
+                                <span class="time">2000 - 2003</span>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 d-flex">
+                  <div class="card profile-box flex-fill">
+                    <div class="card-body">
+                      <h3 class="card-title">
+                        Experience{" "}
+                        <a
+                          href="#"
+                          class="edit-icon"
+                          data-toggle="modal"
+                          data-target="#experience_info"
+                        >
+                          <i class="fa fa-pencil"></i>
+                        </a>
+                      </h3>
+                      <div class="experience-box">
+                        <ul class="experience-list">
+                          <li>
+                            <div class="experience-user">
+                              <div class="before-circle"></div>
+                            </div>
+                            <div class="experience-content">
+                              <div class="timeline-content">
+                                <a href="#/" class="name">
+                                  Web Designer at Zen Corporation
+                                </a>
+                                <span class="time">
+                                  Jan 2013 - Present (5 years 2 months)
+                                </span>
+                              </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="experience-user">
+                              <div class="before-circle"></div>
+                            </div>
+                            <div class="experience-content">
+                              <div class="timeline-content">
+                                <a href="#/" class="name">
+                                  Web Designer at Ron-tech
+                                </a>
+                                <span class="time">
+                                  Jan 2013 - Present (5 years 2 months)
+                                </span>
+                              </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="experience-user">
+                              <div class="before-circle"></div>
+                            </div>
+                            <div class="experience-content">
+                              <div class="timeline-content">
+                                <a href="#/" class="name">
+                                  Web Designer at Dalt Technology
+                                </a>
+                                <span class="time">
+                                  Jan 2013 - Present (5 years 2 months)
+                                </span>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> */}
+            </div>
 
-                    <tr>
-                      <td className="td-name">Emergency Contact</td>
-                      <td className="text-wrap">{emergencyNo}</td>
-                    </tr>
-                    <tr>
-                      <td className="td-name">Shirt Size</td>
-                      <td className="text-wrap">{shirtsize}</td>
-                    </tr>
-                    <tr>
-                      <td className="td-name">Shoe Size</td>
-                      <td className="text-wrap">{shoeSize}</td>
-                    </tr>
-                  </tbody>
-                </table>
+            <div class="tab-pane fade" id="emp_projects">
+              <div class="row staff-grid-row">
+                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
+                  <div class="profile-widget">
+                    <div class="profile-img">
+                      <a href="profile.html" class="avatar">
+                        <img src="/assets/images/avatar.jpg" alt="" />
+                      </a>
+                    </div>
+                    <div class="dropdown profile-action">
+                      <a
+                        href="#"
+                        class="action-icon dropdown-toggle"
+                        data-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        <i class="fas fa-ellipsis-v"></i>
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-right" >
+                        <a
+                          class="dropdown-item"
+                          href="#"
+                          data-toggle="modal"
+                          data-target="#edit_employee"
+                        >
+                          <i class="far fa-edit"></i> Edit
+                        </a>
+                        <a
+                          class="dropdown-item"
+                          href="#"
+                          data-toggle="modal"
+                          data-target="#delete_employee"
+                        >
+                          <i class="far fa-trash-alt"></i> Delete
+                        </a>
+                      </div>
+                    </div>
+                    <h4 class="user-name m-t-10 mb-0 text-ellipsis">
+                      <a href="profile.html">John Doe</a>
+                    </h4>
+                    <div class="small text-muted">Web Designer</div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
+                  <div class="profile-widget">
+                    <div class="profile-img">
+                      <a href="profile.html" class="avatar">
+                        <img src="/assets/images/avatar.jpg" alt="" />
+                      </a>
+                    </div>
+                    <div class="dropdown profile-action">
+                      <a
+                        href="#"
+                        class="action-icon dropdown-toggle"
+                        data-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        <i class="fas fa-ellipsis-v"></i>
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-right" >
+                        <a
+                          class="dropdown-item"
+                          href="#"
+                          data-toggle="modal"
+                          data-target="#edit_employee"
+                        >
+                          <i class="far fa-edit"></i> Edit
+                        </a>
+                        <a
+                          class="dropdown-item"
+                          href="#"
+                          data-toggle="modal"
+                          data-target="#delete_employee"
+                        >
+                          <i class="far fa-trash-alt"></i> Delete
+                        </a>
+                      </div>
+                    </div>
+                    <h4 class="user-name m-t-10 mb-0 text-ellipsis">
+                      <a href="profile.html">John Doe</a>
+                    </h4>
+                    <div class="small text-muted">Web Designer</div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
+                  <div class="profile-widget">
+                    <div class="profile-img">
+                      <a href="profile.html" class="avatar">
+                        <img src="/assets/images/avatar.jpg" alt="" />
+                      </a>
+                    </div>
+                    <div class="dropdown profile-action">
+                      <a
+                        href="#"
+                        class="action-icon dropdown-toggle"
+                        data-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        <i class="fas fa-ellipsis-v"></i>
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-right" >
+                        <a
+                          class="dropdown-item"
+                          href="#"
+                          data-toggle="modal"
+                          data-target="#edit_employee"
+                        >
+                          <i class="far fa-edit"></i> Edit
+                        </a>
+                        <a
+                          class="dropdown-item"
+                          href="#"
+                          data-toggle="modal"
+                          data-target="#delete_employee"
+                        >
+                          <i class="far fa-trash-alt"></i> Delete
+                        </a>
+                      </div>
+                    </div>
+                    <h4 class="user-name m-t-10 mb-0 text-ellipsis">
+                      <a href="profile.html">John Doe</a>
+                    </h4>
+                    <div class="small text-muted">Web Designer</div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
+                  <div class="profile-widget">
+                    <div class="profile-img">
+                      <a href="profile.html" class="avatar">
+                        <img src="/assets/images/avatar.jpg" alt="" />
+                      </a>
+                    </div>
+                    <div class="dropdown profile-action">
+                      <a
+                        href="#"
+                        class="action-icon dropdown-toggle"
+                        data-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        <i class="fas fa-ellipsis-v"></i>
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-right" >
+                        <a
+                          class="dropdown-item"
+                          href="#"
+                          data-toggle="modal"
+                          data-target="#edit_employee"
+                        >
+                          <i class="far fa-edit"></i> Edit
+                        </a>
+                        <a
+                          class="dropdown-item"
+                          href="#"
+                          data-toggle="modal"
+                          data-target="#delete_employee"
+                        >
+                          <i class="far fa-trash-alt"></i> Delete
+                        </a>
+                      </div>
+                    </div>
+                    <h4 class="user-name m-t-10 mb-0 text-ellipsis">
+                      <a href="profile.html">John Doe</a>
+                    </h4>
+                    <div class="small text-muted">Web Designer</div>
+                  </div>
+                </div>
               </div>
+            </div>
+
+            <div class="tab-pane fade" id="bank_statutory">
+             <p>Bank Details Go Here!!!</p>
             </div>
           </div>
         </div>

@@ -1,79 +1,109 @@
 import React, { useEffect, useState } from "react";
-import Select from "react-select";
 
 import LoadHandler from "../../components/Handlers/LoadHandler";
 import LoadSpinner from "../../components/Handlers/Loadspinner";
 import API from "../../helpers/api";
 
-const Deploy = ({ close, clients, id }) => {
+const Deploy = ({ close, guardId }) => {
   const [site, setSite] = useState("");
+  const [client, setClient] = useState("");
+  const [clients, setClients] = useState([]);
   const [location, setLocation] = useState("");
-  const [address, setAddress] = useState("");
-  const [deployed, setDeployed] = useState();
-  const [guards, setGuards] = useState([]);
-
-  // let options = guards.map((guard) => {
-  //   return { value: guard._id, label: guard.fname + " " + guard.lname };
-  // });
-
-  // const handleChange = (selectedOptions) => {
-  //   let values = [];
-  //   selectedOptions.map((v) => values.push(v.value));
-  //   setGuard(values);
-  // };
-
-  // const deployGuard = guard && guard.toString();
-
+  // const [deployed, setDeployed] = useState([]);
+  // const [guards, setGuards] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const getGuards = async () => {
+  const getClients = async () => {
     setLoading(true);
     try {
-      const res = await API.get("/api/guard");
-      console.log("Guard Backend ===>", res);
-      setGuards(res.data);
+      const res = await API.get("/api/client");
+      console.log("Clients Backend ===>", res);
+      setClients(res.data);
       setLoading(false);
     } catch (error) {
-      setLoading(false);
       console.log("error", error);
+      setLoading(false);
     }
   };
+
+  // const handleToggle = (c) => () => {
+  //   const clickedGuard = deployed.indexOf(c);
+  //   const all = [...deployed];
+
+  //   if (clickedGuard === -1) {
+  //     all.push(c);
+  //   } else {
+  //     all.splice(clickedGuard, 1);
+  //   }
+  //   console.log(all);
+  //   setDeployed(all);
+  // };
+
+  // const getGuards = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const res = await API.get("/api/guard");
+  //     console.log("Guard Backend ===>", res);
+  //     setGuards(res.data);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     setLoading(false);
+  //     console.log("error", error);
+  //   }
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     const data = {
+      client,
       site,
       location,
-      address,
-      deployed,
-      client: id,
+      guard: guardId,
     };
 
     try {
       const response = await API.post("/api/deployment", data);
       console.log("Posted Data ===>", response);
-      setSite('')
-      setLocation('')
-      setAddress('')
+      setSite("");
+      setLocation("");
+      // setDeployed("");
       setLoading(false);
     } catch (error) {
       console.log("Deployment Post Error", error);
       setLoading(false);
     }
     close();
-    clients();
   };
 
   useEffect(() => {
-    getGuards();
-  }, [id]);
+    getClients();
+  }, [guardId]);
   return (
     <div>
       <div className="card">
         <div className="card-body gun">
           <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+              <label>Client</label>
+              <select
+                className="form-control select2 select2-hidden-accessible"
+                value={client}
+                onChange={(e) => setClient(e.target.value)}
+              >
+                <option>Select a client</option>
+                {clients.length > 0 ? (
+                  clients.map((c) => (
+                    <option key={c._id} value={c._id}>
+                      {c.fname} {c.lname}
+                    </option>
+                  ))
+                ) : (
+                  <LoadSpinner />
+                )}
+              </select>
+            </div>
             <div className="mb-3">
               <label>Site</label>
               <input
@@ -94,17 +124,7 @@ const Deploy = ({ close, clients, id }) => {
                 required
               />
             </div>
-            <div className="mb-3">
-              <label>Address</label>
-              <input
-                type="text"
-                className="form-control"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                required
-              />
-            </div>
-            <label className="font-size-17">Select Guards to deploy</label>
+            {/* <label className="font-size-17">Select Guards to deploy</label>
             <fieldset
               style={{
                 backgroundColor: "#eee",
@@ -121,7 +141,7 @@ const Deploy = ({ close, clients, id }) => {
                       id="deployment"
                       name="deployment"
                       value={deployed}
-                      onChange={(e) => setDeployed(e.target.value)}
+                      onChange={handleToggle(guard._id)}
                     />
                     <label for={guard._id} className="ml-2 font-size-16">
                       {guard.fname} {guard.lname}
@@ -131,8 +151,7 @@ const Deploy = ({ close, clients, id }) => {
               ) : (
                 <LoadSpinner />
               )}
-            </fieldset>
-            {deployed}
+            </fieldset> */}
             <button type="submit" className="btn btn-primary">
               {loading ? <LoadHandler /> : "Deploy"}
             </button>

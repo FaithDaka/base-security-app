@@ -2,14 +2,27 @@
 import React, { useEffect, useState } from "react";
 import {Link} from 'react-router-dom';
 import API from "../../helpers/api";
+import Deploy from "./Deploy";
+import Modal from "../../components/Modal";
 import ClientInvoices from "./ClientInvoices";
+import ClientGuards from "./ClientGuards";
 import Client from ".";
 
 const ClientProfile = ({match}) => {
   const id = match.params.client_id;
 
+  const [open, setOpen] = useState(false);
+  const [deploy, setDeploy] = useState();
   const [client, setClient] = useState({});
   const [loading, setLoading] = useState(false);
+
+  const openDeploy = (id) => {
+    setDeploy(true);
+  };
+  const closeDeploy = () => setDeploy(false);
+
+  const handleOpen = () => setOpen(true);
+
 
   const getClient = async (id) => {
     setLoading(true);
@@ -29,6 +42,9 @@ const ClientProfile = ({match}) => {
   }, [id]);
   return (
     <Client>
+      <Modal show={deploy} close={closeDeploy} title={`Deploy to ${client.fname} ${client.lname}`}>
+        <Deploy close={closeDeploy} clientId={id} />
+      </Modal>
       <div class="">
         <div class="page-header">
           <div class="row">
@@ -67,9 +83,9 @@ const ClientProfile = ({match}) => {
                           </div>
                           <div className="d-flex">
                           <div class="staff-msg">
-                            <Link class="btn btn-custom" to={`/admin/invoices/${client._id}`}>
+                            <button class="btn btn-custom" onClick={() => openDeploy(client._id)} >
                               Deploy Guards
-                            </Link>
+                            </button>
                           </div>
                           <div class="staff-msg ml-2">
                             <Link class="btn btn-custom" to={`/admin/invoices/${client._id}`}>
@@ -167,7 +183,7 @@ const ClientProfile = ({match}) => {
               class="pro-overview tab-pane fade show active"
             >
               <div class="row staff-grid-row">
-                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
+                {/* <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
                   <div class="profile-widget">
                     <div class="profile-img">
                       <a href="profile.html" class="avatar">
@@ -207,130 +223,10 @@ const ClientProfile = ({match}) => {
                     </h4>
                     <div class="small text-muted">Web Designer</div>
                   </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-                  <div class="profile-widget">
-                    <div class="profile-img">
-                      <a href="profile.html" class="avatar">
-                        <img src="/assets/images/avatar.jpg" alt="" />
-                      </a>
-                    </div>
-                    <div class="dropdown profile-action">
-                      <a
-                        href="#"
-                        class="action-icon dropdown-toggle"
-                        data-toggle="dropdown"
-                        aria-expanded="false"
-                      >
-                        <i class="fas fa-ellipsis-v"></i>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right" >
-                        <a
-                          class="dropdown-item"
-                          href="#"
-                          data-toggle="modal"
-                          data-target="#edit_employee"
-                        >
-                          <i class="far fa-edit"></i> Edit
-                        </a>
-                        <a
-                          class="dropdown-item"
-                          href="#"
-                          data-toggle="modal"
-                          data-target="#delete_employee"
-                        >
-                          <i class="far fa-trash-alt"></i> Delete
-                        </a>
-                      </div>
-                    </div>
-                    <h4 class="user-name m-t-10 mb-0 text-ellipsis">
-                      <a href="profile.html">John Doe</a>
-                    </h4>
-                    <div class="small text-muted">Web Designer</div>
-                  </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-                  <div class="profile-widget">
-                    <div class="profile-img">
-                      <a href="profile.html" class="avatar">
-                        <img src="/assets/images/avatar.jpg" alt="" />
-                      </a>
-                    </div>
-                    <div class="dropdown profile-action">
-                      <a
-                        href="#"
-                        class="action-icon dropdown-toggle"
-                        data-toggle="dropdown"
-                        aria-expanded="false"
-                      >
-                        <i class="fas fa-ellipsis-v"></i>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right" >
-                        <a
-                          class="dropdown-item"
-                          href="#"
-                          data-toggle="modal"
-                          data-target="#edit_employee"
-                        >
-                          <i class="far fa-edit"></i> Edit
-                        </a>
-                        <a
-                          class="dropdown-item"
-                          href="#"
-                          data-toggle="modal"
-                          data-target="#delete_employee"
-                        >
-                          <i class="far fa-trash-alt"></i> Delete
-                        </a>
-                      </div>
-                    </div>
-                    <h4 class="user-name m-t-10 mb-0 text-ellipsis">
-                      <a href="profile.html">John Doe</a>
-                    </h4>
-                    <div class="small text-muted">Web Designer</div>
-                  </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-                  <div class="profile-widget">
-                    <div class="profile-img">
-                      <a href="profile.html" class="avatar">
-                        <img src="/assets/images/avatar.jpg" alt="" />
-                      </a>
-                    </div>
-                    <div class="dropdown profile-action">
-                      <a
-                        href="#"
-                        class="action-icon dropdown-toggle"
-                        data-toggle="dropdown"
-                        aria-expanded="false"
-                      >
-                        <i class="fas fa-ellipsis-v"></i>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right" >
-                        <a
-                          class="dropdown-item"
-                          href="#"
-                          data-toggle="modal"
-                          data-target="#edit_employee"
-                        >
-                          <i class="far fa-edit"></i> Edit
-                        </a>
-                        <a
-                          class="dropdown-item"
-                          href="#"
-                          data-toggle="modal"
-                          data-target="#delete_employee"
-                        >
-                          <i class="far fa-trash-alt"></i> Delete
-                        </a>
-                      </div>
-                    </div>
-                    <h4 class="user-name m-t-10 mb-0 text-ellipsis">
-                      <a href="profile.html">John Doe</a>
-                    </h4>
-                    <div class="small text-muted">Web Designer</div>
-                  </div>
-                </div>
+                </div> */}
+                
+                <ClientGuards clientId={id} />
+                
               </div>
               
               </div>
