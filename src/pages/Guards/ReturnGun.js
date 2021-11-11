@@ -3,33 +3,33 @@ import LoadHandler from "../../components/Handlers/LoadHandler";
 import LoadSpinner from "../../components/Handlers/Loadspinner";
 import API from "../../helpers/api";
 
-const AssignGun = ({ close, guardId }) => {
+const ReturnGun = ({ close, guardId }) => {
   const [assignedGun, setAssignedGun] = useState();
   const [bulletsAssigned, setBulletsAssigned] = useState();
-  const [guns, setGuns] = useState([]);
-  const unAssigned = guns.filter((gun) => gun.isAssigned === false);
+  const [gun, setGun] = useState({});
 
   const [loading, setLoading] = useState(false);
 
-  const getGuns = async () => {
+  const getGun = async (id) => {
     setLoading(true);
     try {
-      const res = await API.get("/api/gun");
-      console.log("Guns Backend ===>", res);
-      setGuns(res.data.guns);
+      const res = await API.get(`/api/gun/${id}`);
+      console.log("Gun Fetch Backend ===>", res);
+      setGun(res.data);
       setLoading(false);
     } catch (error) {
-      console.log("error", error);
+      console.log("Error fetching guard", error);
       setLoading(false);
     }
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const response = await API.patch(`/api/guard/assign/${guardId}`, {
+      const response = await API.patch(`/api/guard/return/${guardId}`, {
         assignedGun, bulletsAssigned
       });
       console.log("Posted Data ===>", response);
@@ -42,7 +42,7 @@ const AssignGun = ({ close, guardId }) => {
   };
 
   useEffect(() => {
-    getGuns();
+    getGun();
   }, [guardId]);
   return (
     <>
@@ -88,4 +88,4 @@ const AssignGun = ({ close, guardId }) => {
   );
 };
 
-export default AssignGun;
+export default ReturnGun;

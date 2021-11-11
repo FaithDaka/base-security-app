@@ -19,12 +19,12 @@ const GuardsList = () => {
   const [assign, setAssign] = useState();
   const user = JSON.parse(localStorage.getItem("user")).user;
 
-  const [currentpage, setCurrentPage] = useState(1);
-  const [guardsPerPage] = useState(10);
-  const lastGuard = currentpage * guardsPerPage;
-  const firstGuard = lastGuard - guardsPerPage;
-  const currentGuards = guardUsers.slice(firstGuard, lastGuard);
-  const totalGuards = guardUsers.length;
+  // const [currentpage, setCurrentPage] = useState(1);
+  // const [guardsPerPage] = useState(10);
+  // const lastGuard = currentpage * guardsPerPage;
+  // const firstGuard = lastGuard - guardsPerPage;
+  // const currentGuards = guardUsers.slice(firstGuard, lastGuard);
+  // const totalGuards = guardUsers.length;
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -60,7 +60,7 @@ const GuardsList = () => {
       console.log("error", error);
     }
   };
-  const assigned = guardUsers.filter((guard) => guard.assignedGun !== null);
+  // const assigned = guardUsers.filter((guard) => guard.assignedGun !== null);
 
   const history = useHistory();
 
@@ -185,7 +185,7 @@ const GuardsList = () => {
               <div className="card-body">
                 <div className="d-flex flex-column align-items-center justify-content-center">
                   <span>
-                    <h2 className="text-danger font-size-70">{assigned.length}</h2>
+                    {/* <h2 className="text-danger font-size-70">{assigned.length}</h2> */}
                     <span className="text-muted font-size-14 text-uppercase">
                       Armed guards
                     </span>
@@ -241,8 +241,8 @@ const GuardsList = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {currentGuards.length > 0 ? (
-                        currentGuards.map((guard) => (
+                      {guardUsers.length > 0 ? (
+                        guardUsers.map((guard) => (
                           <tr key={guard._id} className="tr-body">
                             <td>
                               <div className="form-check font-size-16">
@@ -321,11 +321,11 @@ const GuardsList = () => {
             </div>
           </div>
         </div>
-        <Pagination
+        {/* <Pagination
           productsPerPage={guardsPerPage}
           totalProducts={totalGuards}
           paginate={paginate}
-        />
+        /> */}
       </div>
     </Guards>
   );

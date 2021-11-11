@@ -89,11 +89,16 @@ const GuardProfile = (props) => {
                               Deploy Guard
                             </button>
                           </div>
-                          <div class="staff-msg ml-3">
+                          {guard.isAssignedGun ? <div class="staff-msg ml-3">
+                            <button class="btn btn-custom" onClick={openAssign}>
+                              Return Gun
+                            </button>
+                          </div> : <div class="staff-msg ml-3">
                             <button class="btn btn-custom" onClick={openAssign}>
                               Assign Gun
                             </button>
-                          </div>
+                          </div>}
+                          
                           </div>
                         </div>
                       </div>
@@ -112,8 +117,8 @@ const GuardProfile = (props) => {
                             </div>
                           </li>
                           <li>
-                            <div class="title-profile">Birthday:</div>
-                            <div class="text">{guard.dob}</div>
+                            <div class="title-profile">Assigned Gun:</div>
+                            <div class="text">{guard.isAssignedGun ? 'YES' : 'NO'}</div>
                           </li>
                           <li>
                             <div class="title-profile">Address:</div>

@@ -3,25 +3,26 @@ import React, { useEffect, useState } from "react";
 import {Link} from 'react-router-dom';
 import API from "../../helpers/api";
 import Deploy from "./Deploy";
+import PostSite from "./PostSite";
 import Modal from "../../components/Modal";
 import ClientInvoices from "./ClientInvoices";
 import ClientGuards from "./ClientGuards";
 import Client from ".";
+import PostSiteList from "./PostSiteList";
 
 const ClientProfile = ({match}) => {
   const id = match.params.client_id;
 
-  const [open, setOpen] = useState(false);
+  const [site, setSite] = useState(false);
   const [deploy, setDeploy] = useState();
   const [client, setClient] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const openDeploy = (id) => {
-    setDeploy(true);
-  };
+  const openDeploy = (id) => setDeploy(true);
   const closeDeploy = () => setDeploy(false);
 
-  const handleOpen = () => setOpen(true);
+  const openSite = (id) => setSite(true);
+  const closeSite = () => setSite(false);
 
 
   const getClient = async (id) => {
@@ -44,6 +45,9 @@ const ClientProfile = ({match}) => {
     <Client>
       <Modal show={deploy} close={closeDeploy} title={`Deploy to ${client.fname} ${client.lname}`}>
         <Deploy close={closeDeploy} clientId={id} />
+      </Modal>
+      <Modal show={site} close={closeSite} title={`Post Site ${client.fname} ${client.lname}`}>
+        <PostSite close={closeSite} client={id} />
       </Modal>
       <div class="">
         <div class="page-header">
@@ -83,13 +87,18 @@ const ClientProfile = ({match}) => {
                           </div>
                           <div className="d-flex">
                           <div class="staff-msg">
+                            <button class="btn btn-custom" onClick={() => openSite(client._id)} >
+                              Site
+                            </button>
+                          </div>
+                          <div class="staff-msg ml-2">
                             <button class="btn btn-custom" onClick={() => openDeploy(client._id)} >
-                              Deploy Guards
+                              Guards
                             </button>
                           </div>
                           <div class="staff-msg ml-2">
                             <Link class="btn btn-custom" to={`/admin/invoices/${client._id}`}>
-                              Generate Invoice
+                              Invoice
                             </Link>
                           </div>
                           </div>
@@ -154,11 +163,20 @@ const ClientProfile = ({match}) => {
             <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
               <div class="card">
                 <ul class="nav nav-tabs nav-tabs-bottom">
+                <li class="nav-item">
+                    <a
+                      href="#sites"
+                      data-toggle="tab"
+                      class="nav-link active"
+                    >
+                      Post Sites
+                    </a>
+                  </li>
                   <li class="nav-item">
                     <a
                       href="#guards"
                       data-toggle="tab"
-                      class="nav-link active"
+                      class="nav-link"
                     >
                       Guards Deployed
                     </a>
@@ -178,6 +196,9 @@ const ClientProfile = ({match}) => {
             </div>
           </div>
           <div class="tab-content">
+          <div class="tab-pane fade" id="sites">
+              <PostSiteList clientId={id} />
+            </div>
             <div
               id="guards"
               class="pro-overview tab-pane fade show active"
