@@ -4,6 +4,7 @@ import LoadHandler from "../../components/Handlers/LoadHandler";
 
 const AddGun = ({ close, guns }) => {
   const [name, setName] = useState("");
+  const [gunType, setGunType] = useState("");
   const [serialNumber, setSerialNumber] = useState("");
   const [status, setStatus] = useState("InArmory");
   const [isAssigned, setisAssigned] = useState(false);
@@ -14,7 +15,7 @@ const AddGun = ({ close, guns }) => {
     e.preventDefault();
     setLoading(true);
 
-    const data = { name, serialNumber, status, isAssigned };
+    const data = { name, serialNumber, status, isAssigned, gunType };
 
     try {
       const response = await API.post("/api/gun", data);
@@ -23,6 +24,7 @@ const AddGun = ({ close, guns }) => {
       setName('');
       setSerialNumber('');
       setStatus();
+      setGunType();
       setisAssigned();
       close();
       guns();
@@ -37,6 +39,24 @@ const AddGun = ({ close, guns }) => {
       <div className="card">
         <div className="card-body gun">
           <form onSubmit={handleSubmit}>
+        <div className="form-group">
+              <label>Select Gun Type</label>
+              <select
+              className="form-control select2 select2-hidden-accessible"
+              value={gunType}
+              onChange={(e) => setGunType(e.target.value)}
+            >
+              <option>Gun Type</option>
+              <option value="AK 47">AK 47</option>
+              <option value="Pistol">Pistol</option>
+              <option value="SRT">SRT</option>
+              <option value="Heckler">Heckler</option>
+              <option value="Mossberg 590">Mossberg 590</option>
+              <option value="RMB 93">RMB 93</option>
+              <option value="Churchill SBS">Churchill SBS</option>
+              <option value="STG 44">STG 44</option>
+            </select>
+            </div>
             <div className="form-group">
               <label>Name</label>
               <input

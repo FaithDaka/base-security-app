@@ -193,22 +193,13 @@ const ArmoryList = () => {
                     {loading && <LoadSpinner />}
                     <thead className="table-dark">
                       <tr className="tr-head">
-                        <th style={{ width: "20px" }} className="align-middle">
-                          <div className="form-check font-size-16">
-                            <input
-                              className="form-check-input"
-                              type="checkbox"
-                              id="checkAll"
-                            />
-                            <label
-                              className="form-check-label"
-                              htmlFor="checkAll"
-                            ></label>
-                          </div>
-                        </th>
                         <th className="align-middle"> Name</th>
-                        <th className="align-middle"> Serial Number</th>
+                        <th className="align-middle"> Gun Type</th>
                         <th className="align-middle"> Assigned</th>
+                        <th className="align-middle"> Serial Number</th>
+                        <th className="align-middle"> Bullets Assigned</th>
+                        <th className="align-middle"> Bullets Used</th>
+                        <th className="align-middle"> Bullets Returned</th>
                         <th className="align-middle"> </th>
                       </tr>
                     </thead>
@@ -216,19 +207,6 @@ const ArmoryList = () => {
                       {currentGuns.length > 0 ? (
                         currentGuns.map((gun) => (
                           <tr key={gun._id} className="tr-body">
-                            <td>
-                              <div className="form-check font-size-16">
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  id="orderidcheck01"
-                                />
-                                <label
-                                  className="form-check-label"
-                                  htmlFor="orderidcheck01"
-                                ></label>
-                              </div>
-                            </td>
                             <td>
                               <span>{gun.name}</span>
                               {gun.isAssigned === true ? (
@@ -241,12 +219,16 @@ const ArmoryList = () => {
                                 </span>
                               )}
                             </td>
-                            <td>{gun.serialNumber}</td>
+                            <td>{gun.gunType}</td>
                             {gun.isAssigned === true ? (
                               <td>Yes</td>
                             ) : (
                               <td>No</td>
                             )}
+                            <td>{gun.serialNumber}</td>
+                            <td>{gun.bulletsAssigned}</td>
+                            <td>{gun.bulletsUsed}</td>
+                            <td>{gun.bulletsReturned}</td>
                             <td>
                               <div className="row ml-2">
                                 <span

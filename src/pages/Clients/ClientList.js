@@ -21,7 +21,7 @@ const ClientList = () => {
   const [clientsPerPage] = useState(10);
   const lastClient = currentpage * clientsPerPage;
   const firstClient = lastClient - clientsPerPage;
-  const currentClients = clients.slice(firstClient, lastClient);
+  // const currentClients = clients.slice(firstClient, lastClient);
   const totalClients = clients.length;
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -200,8 +200,8 @@ const ClientList = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {currentClients.length > 0 ? (
-                        currentClients.map((client) => (
+                      {clients.length > 0 ? (
+                        clients.map((client) => (
                           <tr key={client._id} className="tr-body">
                             <td>
                               <div className="form-check font-size-16">
