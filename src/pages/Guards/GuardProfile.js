@@ -111,9 +111,9 @@ const GuardProfile = (props) => {
                             </div>
                           </li>
                           <li>
-                            <div class="title-profile">Email:</div>
+                            <div class="title-profile">isDeployed:</div>
                             <div class="text">
-                              <a href="">admin@gmail.com</a>
+                              <a href="">{guard.isDeployed ? 'YES' : 'NO'}</a>
                             </div>
                           </li>
                           <li>
@@ -121,9 +121,9 @@ const GuardProfile = (props) => {
                             <div class="text">{guard.isAssignedGun ? 'YES' : 'NO'}</div>
                           </li>
                           <li>
-                            <div class="title-profile">Address:</div>
+                            <div class="title-profile">Post Site:</div>
                             <div class="text">
-                              {guard.address}
+                              {guard.postsite}
                             </div>
                           </li>
                           <li>
