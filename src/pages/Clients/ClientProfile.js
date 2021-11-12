@@ -1,8 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from "react";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 import API from "../../helpers/api";
-import Deploy from "./Deploy";
 import PostSite from "./PostSite";
 import Modal from "../../components/Modal";
 import ClientInvoices from "./ClientInvoices";
@@ -10,7 +9,7 @@ import ClientGuards from "./ClientGuards";
 import Client from ".";
 import PostSiteList from "./PostSiteList";
 
-const ClientProfile = ({match}) => {
+const ClientProfile = ({ match }) => {
   const id = match.params.client_id;
 
   const [site, setSite] = useState(false);
@@ -24,14 +23,12 @@ const ClientProfile = ({match}) => {
   const openSite = (id) => setSite(true);
   const closeSite = () => setSite(false);
 
-
   const getClient = async (id) => {
     setLoading(true);
     try {
       const res = await API.get(`/api/client/${id}`);
-      setClient(res.data)
+      setClient(res.data);
       console.log("Client Fetch Backend ===>", res);
-      
     } catch (error) {
       console.log("Error fetching guard", error);
       setLoading(false);
@@ -43,10 +40,11 @@ const ClientProfile = ({match}) => {
   }, [id]);
   return (
     <Client>
-      <Modal show={deploy} close={closeDeploy} title={`Deploy to ${client.fname} ${client.lname}`}>
-        <Deploy close={closeDeploy} clientId={id} />
-      </Modal>
-      <Modal show={site} close={closeSite} title={`Post Site ${client.fname} ${client.lname}`}>
+      <Modal
+        show={site}
+        close={closeSite}
+        title={`Post Site ${client.fname} ${client.lname}`}
+      >
         <PostSite close={closeSite} client={id} />
       </Modal>
       <div class="">
@@ -79,28 +77,31 @@ const ClientProfile = ({match}) => {
                     <div class="row">
                       <div class="col-md-5">
                         <div class="profile-info-left">
-                          <h3 class="user-name m-t-0 mb-0">{client.fname} {client.lname}</h3>
+                          <h3 class="user-name m-t-0 mb-0">
+                            {client.fname} {client.lname}
+                          </h3>
                           <h6 class="text-muted">{client.company}</h6>
                           <div class="staff-id">Client ID : {client._id}</div>
                           <div class="small doj text-muted">
                             Date of Join : 1st Jan 2013
                           </div>
                           <div className="d-flex">
-                          <div class="staff-msg">
-                            <button class="btn btn-custom" onClick={() => openSite(client._id)} >
-                              Site
-                            </button>
-                          </div>
-                          <div class="staff-msg ml-2">
-                            <button class="btn btn-custom" onClick={() => openDeploy(client._id)} >
-                              Guards
-                            </button>
-                          </div>
-                          <div class="staff-msg ml-2">
-                            <Link class="btn btn-custom" to={`/admin/invoices/${client._id}`}>
-                              Invoice
-                            </Link>
-                          </div>
+                            <div class="staff-msg">
+                              <button
+                                class="btn btn-custom"
+                                onClick={() => openSite(client._id)}
+                              >
+                                Add Post Site
+                              </button>
+                            </div>
+                            <div class="staff-msg ml-2">
+                              <Link
+                                class="btn btn-custom"
+                                to={`/admin/invoices/${client._id}`}
+                              >
+                                Generate Invoice
+                              </Link>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -120,16 +121,16 @@ const ClientProfile = ({match}) => {
                           </li>
                           <li>
                             <div class="title-profile">Address:</div>
-                            <div class="text">
-                              {client.address}
-                            </div>
+                            <div class="text">{client.address}</div>
                           </li>
                           <li>
                             <div class="title-profile">Location:</div>
                             <div class="text">{client.location}</div>
                           </li>
                           <li>
-                            <div class="title-profile">Relationship Manager:</div>
+                            <div class="title-profile">
+                              Relationship Manager:
+                            </div>
                             <div class="text">
                               <div class="avatar-box">
                                 <div class="avatar avatar-xs">
@@ -163,21 +164,13 @@ const ClientProfile = ({match}) => {
             <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
               <div class="card">
                 <ul class="nav nav-tabs nav-tabs-bottom">
-                <li class="nav-item">
-                    <a
-                      href="#sites"
-                      data-toggle="tab"
-                      class="nav-link active"
-                    >
+                  <li class="nav-item">
+                    <a href="#sites" data-toggle="tab" class="nav-link active">
                       Post Sites
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a
-                      href="#guards"
-                      data-toggle="tab"
-                      class="nav-link"
-                    >
+                    <a href="#guards" data-toggle="tab" class="nav-link">
                       Guards Deployed
                     </a>
                   </li>
@@ -196,62 +189,14 @@ const ClientProfile = ({match}) => {
             </div>
           </div>
           <div class="tab-content">
-          <div class="tab-pane fade" id="sites">
+            <div class="tab-pane fade" id="sites">
               <PostSiteList clientId={id} />
             </div>
-            <div
-              id="guards"
-              class="pro-overview tab-pane fade show active"
-            >
+            <div id="guards" class="pro-overview tab-pane fade show active">
               <div class="row staff-grid-row">
-                {/* <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-                  <div class="profile-widget">
-                    <div class="profile-img">
-                      <a href="profile.html" class="avatar">
-                        <img src="/assets/images/avatar.jpg" alt="" />
-                      </a>
-                    </div>
-                    <div class="dropdown profile-action">
-                      <a
-                        href="#"
-                        class="action-icon dropdown-toggle"
-                        data-toggle="dropdown"
-                        aria-expanded="false"
-                      >
-                        <i class="fas fa-ellipsis-v"></i>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right" >
-                        <a
-                          class="dropdown-item"
-                          href="#"
-                          data-toggle="modal"
-                          data-target="#edit_employee"
-                        >
-                          <i class="far fa-edit"></i> Edit
-                        </a>
-                        <a
-                          class="dropdown-item"
-                          href="#"
-                          data-toggle="modal"
-                          data-target="#delete_employee"
-                        >
-                          <i class="far fa-trash-alt"></i> Delete
-                        </a>
-                      </div>
-                    </div>
-                    <h4 class="user-name m-t-10 mb-0 text-ellipsis">
-                      <a href="profile.html">John Doe</a>
-                    </h4>
-                    <div class="small text-muted">Web Designer</div>
-                  </div>
-                </div> */}
-                
                 <ClientGuards clientId={id} />
-                
               </div>
-              
-              </div>
-
+            </div>
             <div class="tab-pane fade" id="invoice">
               <ClientInvoices clientId={id} />
             </div>
